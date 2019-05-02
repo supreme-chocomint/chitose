@@ -47,23 +47,22 @@ function getAllShowCharacterDatas(showDataArray) {
   return combinedCharaDataArray;
 }
 
-function collectVASearchResults(data) {
+function parseVASearchResults(data) {
 
   let staffDataArray = data.data.Page.staff;
+  let voiceActorArray = [];
 
   for (let staffData of staffDataArray) {
-    hasResult = true;
-    let metadata = {
-      name: parsedName(staffData.name),
-      url: staffData.siteUrl,
-      id: staffData.id
-    };
-    addVATableEntry(metadata);
+    let voiceActor = [
+      staffData.id,
+      parsedName(staffData.name),
+      null,
+      staffData.siteUrl
+    ]
+    voiceActorArray.push(voiceActor);
   }
 
-  if (staffDataArray.length == 0) {
-    addNoResultsIndicator("va-table-body");
-  }
+  return voiceActorArray;
 
 }
 

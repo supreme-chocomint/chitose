@@ -11,7 +11,7 @@ function searchButtonOnClick() {
 
   let searchTerm = document.getElementById("search-bar").value;
   let variables = {
-      perPage: 5,
+      perPage: 30,
       page: 1,
       search: searchTerm
   };

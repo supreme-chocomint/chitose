@@ -104,7 +104,7 @@ function appendEmptyRow(body) {
 }
 
 // populate with VAs and paginate
-function fillVATableAndPage(voiceActors) {
+function fillVATableAndPage(voiceActorArray) {
 
   let tableBody = document.getElementById("va-table-body");
   let pageSize = 5;
@@ -112,7 +112,7 @@ function fillVATableAndPage(voiceActors) {
   tableBody.style.visibility = "none";  // to hide build process
   let entryCount = 0;
 
-  for (let va of voiceActors) {
+  for (let va of voiceActorArray) {
     let metadata = {
       id: va[0],
       name: va[1],

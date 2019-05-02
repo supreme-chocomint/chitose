@@ -25,8 +25,8 @@ function collectSeasonalVAsCallback(data) {
 }
 
 function collectVASearchResultsCallback(data) {
-  collectVASearchResults(data);
-  document.getElementById("page-tracker").innerHTML = "1/1";
+  let voiceActorArray = parseVASearchResults(data);
+  fillVATableAndPage(voiceActorArray);
   unlock();
 }
 
