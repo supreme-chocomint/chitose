@@ -222,6 +222,11 @@ function addVATableEntry(metadata) {
     followState.innerHTML = toggleFollow(metadata);
   }
 
+  name.classList.add(metadata.id);
+  if (window.clicked == metadata.id) {
+    name.classList.add("clicked");
+  }
+
   nameCol.appendChild(name);
   urlCol.appendChild(url);
   followCol.appendChild(followState);

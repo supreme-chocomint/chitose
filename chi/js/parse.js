@@ -82,7 +82,6 @@ function collectSeasonalRoles(voiceActorId, data) {
           characterUrl: charaData.node.siteUrl
         };
         addRolesTableEntry(metadata);
-        hasEntry = true;
       }
     }
   }

@@ -91,6 +91,10 @@ function addFollowTableEntry(metadata) {
   let deleteLink = document.createElement("a");
 
   row.id = metadata.id;
+  name.classList.add(metadata.id);  // for coordinating with VA table
+  if (window.clicked == metadata.id) {
+    name.classList.add("clicked");
+  }
 
   name.innerHTML = metadata.name;
   name.href = "javascript:void(0)";

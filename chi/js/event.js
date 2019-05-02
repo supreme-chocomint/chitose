@@ -55,6 +55,7 @@ function VAOnClick(voiceActorId) {
 
     lock();
     clearRolesTable();
+    click(voiceActorId);
 
     for (let format of window.mediaFormats) {
 
@@ -201,4 +202,23 @@ function importButtonOnClick() {
 function exportButtonOnClick() {
   let transferBox = document.getElementById("transfer-box");
   transferBox.value = JSON.stringify(getFollowing());
+}
+
+function click(className) {
+
+  let allLinks = document.getElementsByClassName(className);
+  for (let link of allLinks) {
+    link.classList.add("clicked");
+  }
+
+  // replace old clicked
+  if (window.clicked) {
+    let allLinks = document.getElementsByClassName(window.clicked);
+    for (let link of allLinks) {
+      link.classList.remove("clicked");
+    }
+  }
+
+  window.clicked = className;
+
 }
