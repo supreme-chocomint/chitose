@@ -18,23 +18,31 @@ function searchButtonOnClick() {
 
   if (!isLocked()) {
 
-    lock();
-    clearVATable();
-    clearRolesTable();
+    if (searchTerm != "") {
 
-    if (searchTerm == "") {
-      fillVATableAndPage(window.sortedVoiceActors);
-      unlock();
-    }
-    else {
+      lock();
+      clearVATable();
+
+      let vaTableCaption = document.getElementById("va-table-caption");
+      vaTableCaption.setAttribute("data-content", " search '" + searchTerm + "'");
+
       makeRequest(
         getQuery("VA SEARCH"),
         variables,
         collectVASearchResultsCallback
       );
+
     }
 
   }
+}
+
+function onSeasonChange() {
+
+  if (window.clicked){
+    VAOnClick(window.clicked);
+  }
+
 }
 
 function VAOnClick(voiceActorId) {
@@ -55,6 +63,7 @@ function VAOnClick(voiceActorId) {
 
     lock();
     clearRolesTable();
+    unclick(window.clicked);
     click(voiceActorId);
 
     for (let format of window.mediaFormats) {
@@ -78,6 +87,7 @@ function refreshButtonOnClick() {
     document.getElementById("search-bar").value = "";
     clearVATable();
     clearRolesTable();
+    unclick(window.clicked);
     populateVATableWithSeason();
   }
 }
@@ -204,21 +214,22 @@ function exportButtonOnClick() {
   transferBox.value = JSON.stringify(getFollowing());
 }
 
+function unclick(className) {
+
+  let rolesTableCaption = document.getElementById("roles-table-caption");
+  rolesTableCaption.setAttribute("data-content", "");
+  window.clicked = "";
+
+}
+
 function click(className) {
 
-  let allLinks = document.getElementsByClassName(className);
-  for (let link of allLinks) {
-    link.classList.add("clicked");
-  }
+  let linkText = document.getElementsByClassName(className)[0].textContent;
+  let rolesTableCaption = document.getElementById("roles-table-caption");
+  let quarter = document.getElementById("quarter-picker").value;
+  let year = document.getElementById("year-picker").value;
 
-  // replace old clicked
-  if (window.clicked) {
-    let allLinks = document.getElementsByClassName(window.clicked);
-    for (let link of allLinks) {
-      link.classList.remove("clicked");
-    }
-  }
-
+  rolesTableCaption.setAttribute("data-content", " " + linkText + " for " + parsedSeason(quarter, year));
   window.clicked = className;
 
 }

@@ -33,7 +33,7 @@ function buildYearPicker() {
     option.innerHTML = year;
     yearPicker.appendChild(option);
   }
-  yearPicker.onchange = function() { refreshButtonOnClick() };
+  yearPicker.onchange = function() { onSeasonChange(); };
 }
 
 function buildQuarterPicker() {
@@ -45,7 +45,7 @@ function buildQuarterPicker() {
     option.innerHTML = quarter;
     quarterPicker.appendChild(option);
   }
-  quarterPicker.onchange = function() { refreshButtonOnClick() };
+  quarterPicker.onchange = function() { onSeasonChange(); };
 }
 
 function clearInputBoxes() {
@@ -244,6 +244,7 @@ function clearVATable() {
   tableBody.setAttribute("data-pageCount", 1);
   document.getElementById("left-nav").classList.add("inactive");
   document.getElementById("right-nav").classList.add("inactive");
+  document.getElementById("va-table-caption").setAttribute("data-content", "");
 }
 
 function clearRolesTable() {

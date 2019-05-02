@@ -13,6 +13,10 @@ function parsedName(rawName) {
   return name.trim();
 }
 
+function parsedSeason(quarter, year) {
+  return quarter.charAt(0).toUpperCase() + quarter.slice(1).toLowerCase() + " " + year;
+}
+
 function hasVoiceActor(charaData, voiceActorId) {
   for (let referenceVA of getVoiceActors(charaData)) {
     if (referenceVA.id == voiceActorId) {

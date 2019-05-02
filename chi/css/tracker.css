@@ -54,14 +54,6 @@ body {
   opacity: 0.5 !important;
 }
 
-/* The object being viewed in detail right now */
-.clicked {
-  outline-style: solid;
-  outline-width: 1px;
-  outline-offset: 2px;
-  outline-color: #1EAEDB;
-}
-
 /* General page spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -88,6 +80,15 @@ body {
 
 #header h2 {
   margin-right: 2rem;
+}
+
+caption {
+  font-weight: bold;
+}
+
+caption::after {
+  content: attr(data-content);
+  font-weight: normal;
 }
 
 a {

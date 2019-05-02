@@ -66,7 +66,7 @@
       <input type="search" id="search-bar" placeholder="Search voice actors">
       <input type="submit" class="button-primary" id="search-button" value="Search">
       <input type="submit" class="button" id="left-table-switch" value="Toggle Following">
-      <input type="submit" class="button" id="refresh-button" value="Refresh Seasonal Voice Actors">
+      <input type="submit" class="button" id="refresh-button" value="Refresh">
       <select id="year-picker"></select>
       <select id="quarter-picker"></select>
     </div>
@@ -76,6 +76,7 @@
       <div class="one-half column" id="left-col">
         <div id="left-table-wrapper">
           <table id="va-table">
+            <caption id="va-table-caption">Viewing:</caption>
             <thead><tr>
               <th class="text">Name</th>
               <th class="text">Link</th>
@@ -89,7 +90,9 @@
               <th class="text">Link</th>
               <th class="symbol">&nbsp;</th>
             </tr></thead>
-            <tbody id="follow-table-body"></tbody>
+            <tbody id="follow-table-body">
+              <caption id="follow-table-caption">Following</caption>
+            </tbody>
           </table>
           <div id="navigation">
             <a href="javascript:void(0)" id="left-nav" class="inactive"><</a>
@@ -108,10 +111,11 @@
 
       <div class="one-half column" id="right-col">
         <table id="roles-table">
+          <caption id="roles-table-caption">Viewing:</caption>
           <thead>
             <tr>
-              <th>Show Name</th>
-              <th>Character Name</th>
+              <th class="text">Show Name</th>
+              <th class="text">Character Name</th>
             <tr>
           </thead>
           <tbody id="roles-table-body"></tbody>

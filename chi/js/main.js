@@ -50,18 +50,21 @@ function setOnClicks() {
 
 function populateVATableWithSeason() {
 
-  let seasonElement = document.getElementById("quarter-picker");
-  let season = seasonElement.options[seasonElement.selectedIndex].value.toUpperCase();
+  let quarterElement = document.getElementById("quarter-picker");
+  let vaTableCaption = document.getElementById("va-table-caption");
+
+  let quarter = quarterElement.options[quarterElement.selectedIndex].value.toUpperCase();
   let year = document.getElementById("year-picker").value;
   let variables = {
       perPage: 50,
       page: 1,
-      season: season,
+      season: quarter,
       seasonYear: year,
   };
 
   lock();
   window.voiceActors = {};
+  vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
   for (let format of window.mediaFormats) {
     variables.format = format;
     makeRequest(getQuery(""), variables, collectSeasonalVAsCallback);
