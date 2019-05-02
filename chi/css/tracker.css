@@ -113,10 +113,6 @@ input#dark-mode-switch {
   display: inline-block; /* Allows all children divs to have the same width */
 }
 
-#va-table-tools, #search {
-  /*display: flex; /* Makes width same as widest sibling (i.e. va-table) */
-}
-
 #va-table-tools {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
 }
@@ -144,10 +140,5 @@ input#dark-mode-switch {
 }
 
 #search-bar {
-  /*flex: 1; /* Makes search bar cover rest of width */
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
-}
-
-#search-button, #year-picker, #quarter-picker {
-  /*margin-left: 0.5rem; /* Stops search bar from being flush against button */
 }

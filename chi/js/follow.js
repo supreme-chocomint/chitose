@@ -45,7 +45,6 @@ function disableFollowing() {
   vaTable.style.display = "";
 
   document.getElementById("follow-table").style.display = "none";
-  //document.getElementById("left-table-switch").classList.add("disabled");
   document.getElementById("left-table-switch").disabled = true;
 
 }

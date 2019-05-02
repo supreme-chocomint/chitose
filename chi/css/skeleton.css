@@ -423,13 +423,6 @@ there.
   th.text {
     min-width: 15ch;
   }
-  /*
-  #year-picker, #quarter-picker {
-    float: right;
-  }
-  #quarter-picker {
-    margin-right: 0.5rem;
-  }*/
 }
 
 /* Larger than Desktop HD */
