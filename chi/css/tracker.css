@@ -54,6 +54,11 @@ body {
   opacity: 0.5 !important;
 }
 
+#lock-icon {
+  display: inline;
+  margin: 1rem;
+}
+
 /* General page spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
