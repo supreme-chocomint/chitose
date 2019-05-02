@@ -1,11 +1,14 @@
 window.onload = function() {
 
   let body = document.getElementsByTagName("body")[0];
-  let defaultTheme = "dark";
+  let defaultTheme = "light";
 
   hasStorageAccess = setStorageState();  // handle browser disabling cookies
   if (hasStorageAccess) {
-    setThemeFromStorage();
+    let set = setThemeFromStorage();
+    if (!set) {
+      body.classList.add(defaultTheme);
+    }
   }
   else {
     body.classList.add(defaultTheme);
@@ -111,12 +114,11 @@ function setThemeFromStorage(defaultTheme) {
 
   let body = document.getElementsByTagName("body")[0];
   let theme = fetchTheme();
+  let set = false;
 
   if (theme) {
     body.classList.add(theme);
-  }
-  else {
-    body.classList.add(defaultTheme);
+    set = true;
   }
 
   switch (theme) {
@@ -128,5 +130,7 @@ function setThemeFromStorage(defaultTheme) {
       break;
     default:
   }
+
+  return set;
 
 }
