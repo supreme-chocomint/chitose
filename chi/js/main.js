@@ -15,6 +15,7 @@ window.onload = function() {
   }
 
   setOnClicks();
+  setOnKeyPresses();
   setDescription();
   hideElements();
   buildSeasonPickers();
@@ -45,6 +46,19 @@ function setOnClicks() {
   importButton.onclick = function() { importButtonOnClick(); }
   exportButton.onclick = function() { exportButtonOnClick(); }
   setNavigationOnClicks();
+
+}
+
+function setOnKeyPresses() {
+
+  let searchBar = document.getElementById("search-bar");
+  let ENTER = 13;
+
+  searchBar.addEventListener("keyup", function(event) {
+    if (event.keyCode == ENTER) {
+      searchButtonOnClick();
+    }
+  });
 
 }
 
