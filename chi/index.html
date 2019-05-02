@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>c h i 歳 - seasonal seiyuu tracker</title>
+  <meta name="description" content="Track and lookup anime voice actors by season.">
+  <meta name="author" content="someone who actually liked Girlish Number">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100&amp;subset=japanese" rel="stylesheet">
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/tracker.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script type="text/javascript" src="js/main.js"></script>
+  <script type="text/javascript" src="js/element.js"></script>
+  <script type="text/javascript" src="js/anilist.js"></script>
+  <script type="text/javascript" src="js/callback.js"></script>
+  <script type="text/javascript" src="js/parse.js"></script>
+  <script type="text/javascript" src="js/event.js"></script>
+  <script type="text/javascript" src="js/follow.js"></script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <!--I didn't hire an artist-->
+
+</head>
+
+<body>
+
+  <!-- Floating Menu Items
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div id="settings">
+    <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
+  </div>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+
+    <div class="row">
+      <div class="u-full-width" id="description">
+        <div id="header">
+          <h2>c h i <span class="jp">歳</span></h2>
+          <h5>seasonal voice actor tracker</h5>
+        </div>
+        <p id="description-text"></p>
+      </div>
+    </div>
+
+    <div class="row" id="interacts">
+
+      <div id="search" class="five columns">
+        <input type="search" id="search-bar" placeholder="Search voice actors">
+        <input type="submit" class="button-primary" id="search-button" value="Search">
+      </div>
+
+      <div id="va-table-tools" class="four columns">
+
+        <a href="javascript:void(0)" id="left-table-switch" title="Toggle following list">★ Toggle following list</a>
+        <a href="javascript:void(0)" id="refresh-button" title="Refresh all VAs">↺</a>
+
+      </div>
+
+      <div class="three columns">
+        <select id="year-picker"></select>
+        <select id="quarter-picker"></select>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="one-half column" id="left-col">
+        <div id="left-table-wrapper">
+          <!--<div id="search">
+            <input type="search" id="search-bar" placeholder="Search for a voice actor">
+            <input type="submit" class="button-primary" id="search-button" value="Search">
+          </div>
+          <div>
+            <div id="pickers">
+              <select id="year-picker"></select>
+              <select id="quarter-picker"></select>
+            </div>
+            <div id="va-table-tools">
+              <a href="javascript:void(0)" id="left-nav" class="inactive">◀</a>
+              <a href="javascript:void(0)" id="left-table-switch" title="Toggle following list">★</a>
+              <a href="javascript:void(0)" id="refresh-button" title="Refresh all VAs">↺</a>
+              <a href="javascript:void(0)" id="transfer-button" title="Toggle import/export form">⇅</a>
+              <a href="javascript:void(0)" id="right-nav">▶</a>
+            </div>
+          </div>-->
+          <table id="va-table">
+            <thead><tr>
+              <th class="text">Name</th>
+              <th class="text">Link</th>
+              <th class="symbol">Follow</th>
+            </tr></thead>
+            <tbody id="va-table-body"></tbody>
+          </table>
+          <table id="follow-table">
+            <thead><tr>
+              <th class="text">Name ★</th>
+              <th class="text">Link</th>
+              <th class="symbol">Delete</th>
+            </tr></thead>
+            <tbody id="follow-table-body"></tbody>
+          </table>
+          <div id="navigation">
+            <a href="javascript:void(0)" id="left-nav" class="inactive">◀</a>
+            <span href="javascript:void(0)" id="page-tracker">1/1</span>
+            <a href="javascript:void(0)" id="right-nav">▶</a>
+          </div>
+          <div id="transfer">
+            <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
+            <div>
+              <input type="submit" class="button-primary" id="import-button" value="Import">
+              <input type="submit" class="button-primary" id="export-button" value="Export">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="one-half column" id="right-col">
+        <table id="roles-table">
+          <thead>
+            <tr>
+              <th>Show Name</th>
+              <th>Character Name</th>
+            <tr>
+          </thead>
+          <tbody id="roles-table-body"></tbody>
+        </table>
+      </div>
+
+    </div>
+
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

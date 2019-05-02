@@ -1,0 +1,151 @@
+:root {
+  --bg-color: white;
+  --color: black;
+  --internal-link-color: #272C38;
+  --link-decoration: none;
+  --input-color: black;
+  --button-color: black;
+  --button-hover-color: #888;
+  --dark-mode-button-color: white;
+}
+
+.dark {
+  --bg-color: #272C38;
+  --color: white;
+  --internal-link-color: #E24B4B;
+  --link-decoration: none;
+  --input-color: black;
+  --button-color: white;
+  --button-hover-color: #666;
+  --dark-mode-button-color: white;
+}
+
+/* Inactive = clicking does nothing, so give user a hint (e.g. page nav)*/
+.inactive {
+  /* Man this is gross */
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}
+
+/* Disabled = turned off because not suitable for current view */
+.disabled {
+  pointer-events: none !important;
+  opacity: 0.5 !important;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--color);
+  font-family: 'Quicksand', sans-serif;
+}
+
+.jp {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 100;
+}
+
+#header h2, #header h5 {
+  display: inline-block;
+}
+
+#header h2 {
+  margin-right: 2rem;
+}
+
+#settings {
+  margin-top: 1rem;
+  text-align: right;
+  padding-right: 1rem;
+}
+
+#description {
+  margin-top: 10%;
+}
+
+#right-col {
+  margin-bottom: 10%;
+}
+
+.internal_link {
+  color: var(--internal-link-color);
+}
+
+a {
+  text-decoration: var(--link-decoration);
+}
+
+td.symbol {
+  text-align: center;
+}
+
+a.symbol {
+  font-size: 2rem;
+}
+
+input, select, textarea {
+  color: var(--input-color);
+}
+
+input:disabled {
+  opacity: 0.5;
+}
+
+input[type="submit"],
+input[type="button"] {
+  color: var(--button-color);
+}
+
+input[type="submit"]:hover,
+input[type="submit"]:focus,
+input[type="button"]:hover,
+input[type="button"]:focus {
+  color: var(--button-color); /* No change to text on hover/focus */
+  border-color: #33C3F0;
+}
+
+input#dark-mode-switch {
+  color: var(--dark-mode-button-color)
+  background-color: transparent;
+}
+
+
+#left-table-wrapper {
+  display: inline-block; /* Allows all children divs to have the same width */
+}
+
+#va-table-tools, #search {
+  /*display: flex; /* Makes width same as widest sibling (i.e. va-table) */
+}
+
+#va-table-tools {
+  padding-bottom: 1.5rem;  /* Makes it look better on mobile */
+}
+
+#va-table-tools a, #navigation a, #navigation #page-tracker {
+  color: white;
+  background-color: #33C3F0;
+  float: left;
+  padding: 0.1rem 1rem;
+  text-decoration: var(--link-decoration);
+  border: 1px solid var(--bg-color);
+  font-size: 2rem;
+  opacity: var(--obj-opacity);
+  pointer-events: var(--mouse-response);
+}
+
+#navigation a {
+  margin-bottom: 2rem;  /* Prevents transfer box from touching */
+}
+
+#navigation #page-tracker {
+  width: 6ch;
+  text-align: center;
+}
+
+#search-bar {
+  /*flex: 1; /* Makes search bar cover rest of width */
+}
+
+#search-button, #year-picker, #quarter-picker {
+  /*margin-left: 0.5rem; /* Stops search bar from being flush against button */
+}
