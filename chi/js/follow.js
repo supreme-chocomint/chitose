@@ -103,7 +103,8 @@ function addFollowTableEntry(metadata) {
 
   deleteLink.innerHTML = "x";
   deleteLink.href = "javascript:void(0)";
-  deleteCol.classList.add("symbol");  // centers character
+  deleteCol.classList.add("symbol");
+  deleteLink.classList.add("symbol");
   deleteLink.onclick = function() {
     unfollow(metadata);
   }

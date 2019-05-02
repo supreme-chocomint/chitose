@@ -101,13 +101,13 @@ function leftTableSwitchOnClick() {
   let vaTable = document.getElementById("va-table");
   let followTable = document.getElementById("follow-table");
   let followTableBody = document.getElementById("follow-table-body");
-  let refreshButton = document.getElementById("refresh-button");
-  let leftNav = document.getElementById("left-nav");
-  let rightNav = document.getElementById("right-nav");
-  let tranferDiv = document.getElementById("transfer");
+
   let searchBar = document.getElementById("search-bar");
   let searchButton = document.getElementById("search-button");
-  let pageTracker = document.getElementById("page-tracker");
+  let refreshButton = document.getElementById("refresh-button");
+
+  let navDiv = document.getElementById("navigation");
+  let tranferDiv = document.getElementById("transfer");
 
   // switch to VAs
   if (vaTable.style.display == "none") {
@@ -123,26 +123,22 @@ function leftTableSwitchOnClick() {
     // there's probably a better way to turn these all off
     vaTable.style.display = "";
     followTable.style.display = "none";
-    refreshButton.classList.remove("disabled");
-    leftNav.classList.remove("disabled");
-    rightNav.classList.remove("disabled"); //
-    transfer.style.display = "none";
     searchBar.disabled = false;
     searchButton.disabled = false;
-    pageTracker.classList.remove("disabled");
+    refreshButton.classList.remove("disabled");
+    navDiv.style.display = "";
+    tranferDiv.style.display = "none";
 
   }
   // switch to follows
   else {
     vaTable.style.display = "none";
     followTable.style.display = "";
-    refreshButton.classList.add("disabled");
-    leftNav.classList.add("disabled");
-    rightNav.classList.add("disabled");
-    transfer.style.display = "";
     searchBar.disabled = true;
     searchButton.disabled = true;
-    pageTracker.classList.add("disabled");
+    refreshButton.classList.add("disabled");
+    navDiv.style.display = "none";
+    tranferDiv.style.display = "";
   }
 
 }

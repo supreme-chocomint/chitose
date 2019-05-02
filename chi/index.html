@@ -80,34 +80,18 @@
         <select id="year-picker"></select>
         <select id="quarter-picker"></select>
       </div>
+
     </div>
 
     <div class="row">
 
       <div class="one-half column" id="left-col">
         <div id="left-table-wrapper">
-          <!--<div id="search">
-            <input type="search" id="search-bar" placeholder="Search for a voice actor">
-            <input type="submit" class="button-primary" id="search-button" value="Search">
-          </div>
-          <div>
-            <div id="pickers">
-              <select id="year-picker"></select>
-              <select id="quarter-picker"></select>
-            </div>
-            <div id="va-table-tools">
-              <a href="javascript:void(0)" id="left-nav" class="inactive">◀</a>
-              <a href="javascript:void(0)" id="left-table-switch" title="Toggle following list">★</a>
-              <a href="javascript:void(0)" id="refresh-button" title="Refresh all VAs">↺</a>
-              <a href="javascript:void(0)" id="transfer-button" title="Toggle import/export form">⇅</a>
-              <a href="javascript:void(0)" id="right-nav">▶</a>
-            </div>
-          </div>-->
           <table id="va-table">
             <thead><tr>
               <th class="text">Name</th>
               <th class="text">Link</th>
-              <th class="symbol">Follow</th>
+              <th class="symbol">&nbsp;</th>
             </tr></thead>
             <tbody id="va-table-body"></tbody>
           </table>
@@ -115,14 +99,14 @@
             <thead><tr>
               <th class="text">Name ★</th>
               <th class="text">Link</th>
-              <th class="symbol">Delete</th>
+              <th class="symbol">&nbsp;</th>
             </tr></thead>
             <tbody id="follow-table-body"></tbody>
           </table>
           <div id="navigation">
-            <a href="javascript:void(0)" id="left-nav" class="inactive">◀</a>
+            <a href="javascript:void(0)" id="left-nav" class="inactive"><</a>
             <span href="javascript:void(0)" id="page-tracker">1/1</span>
-            <a href="javascript:void(0)" id="right-nav">▶</a>
+            <a href="javascript:void(0)" id="right-nav">></a>
           </div>
           <div id="transfer">
             <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>

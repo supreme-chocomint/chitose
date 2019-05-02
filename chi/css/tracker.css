@@ -20,7 +20,7 @@
   --dark-mode-button-color: white;
 }
 
-/* Inactive = clicking does nothing, so give user a hint (e.g. page nav)*/
+/* Inactive = clicking does nothing, so give user a hint (e.g. page nav) */
 .inactive {
   /* Man this is gross */
   pointer-events: none !important;
@@ -76,10 +76,11 @@ a {
 
 td.symbol {
   text-align: center;
+  padding: 0;
 }
 
 a.symbol {
-  font-size: 2rem;
+  font-size: 3rem;
 }
 
 input, select, textarea {
@@ -128,6 +129,7 @@ input#dark-mode-switch {
   padding: 0.1rem 1rem;
   text-decoration: var(--link-decoration);
   border: 1px solid var(--bg-color);
+  border-radius: 4px;
   font-size: 2rem;
   opacity: var(--obj-opacity);
   pointer-events: var(--mouse-response);
