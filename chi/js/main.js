@@ -112,10 +112,12 @@ function isLocked() {
 
 function lock() {
   document.getElementsByTagName("body")[0].classList.add("locked");
+  document.getElementById("lock-icon").innerHTML = "🔒";
 }
 
 function unlock() {
   document.getElementsByTagName("body")[0].classList.remove("locked");
+  document.getElementById("lock-icon").innerHTML = "";
 }
 
 function fetchTheme() {
