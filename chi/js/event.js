@@ -63,7 +63,7 @@ function VAOnClick(voiceActorId) {
 
     lock();
     clearRolesTable();
-    unclick(window.clicked);
+    unclick();
     click(voiceActorId);
 
     for (let format of window.mediaFormats) {
@@ -87,7 +87,7 @@ function refreshButtonOnClick() {
     document.getElementById("search-bar").value = "";
     clearVATable();
     clearRolesTable();
-    unclick(window.clicked);
+    unclick();
     populateVATableWithSeason();
   }
 }
@@ -215,7 +215,7 @@ function exportButtonOnClick() {
   transferBox.value = JSON.stringify(getFollowing());
 }
 
-function unclick(className) {
+function unclick() {
 
   let rolesTableCaption = document.getElementById("roles-table-caption");
   rolesTableCaption.setAttribute("data-content", "");
@@ -223,14 +223,14 @@ function unclick(className) {
 
 }
 
-function click(className) {
+function click(vaId) {
 
-  let linkText = document.getElementsByClassName(className)[0].textContent;
+  let name = window.vaNames[vaId];
   let rolesTableCaption = document.getElementById("roles-table-caption");
   let quarter = document.getElementById("quarter-picker").value;
   let year = document.getElementById("year-picker").value;
 
-  rolesTableCaption.setAttribute("data-content", " " + linkText + " for " + parsedSeason(quarter, year));
-  window.clicked = className;
+  rolesTableCaption.setAttribute("data-content", " " + name + " for " + parsedSeason(quarter, year));
+  window.clicked = vaId;
 
 }

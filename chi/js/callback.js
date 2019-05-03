@@ -5,15 +5,15 @@ function collectSeasonalVAsCallback(data) {
   let vaTableBody = document.getElementById("va-table-body");
   let asyncCount = vaTableBody.getAttribute("data-async-count");
 
-  // keep running collection of VAs
-  window.voiceActors = extractVAs(window.voiceActors, data);
+  // build running collection of VAs, so all callbacks work with same data
+  extractVAs(window.seasonalVoiceActors, window.vaNames, data);
 
   if (asyncCount) {
     asyncCount = parseInt(asyncCount);
     asyncCount++;
     vaTableBody.setAttribute("data-async-count", asyncCount);
     if (asyncCount == window.mediaFormats.length) {
-      sortedVoiceActors = sortVAsByNumRoles(voiceActors);
+      sortedVoiceActors = sortVAsByNumRoles(window.seasonalVoiceActors);
       fillVATableAndPage(sortedVoiceActors);
       vaTableBody.setAttribute("data-async-count", 0);
       unlock();
@@ -25,9 +25,20 @@ function collectSeasonalVAsCallback(data) {
 }
 
 function collectVASearchResultsCallback(data) {
-  let voiceActorArray = parseVASearchResults(data);
+  let results = parseVASearchResults(data);
+  let voiceActorArray = results[0];
+  let vaNames = results[1];
   fillVATableAndPage(voiceActorArray);
+  updateVANames(vaNames);
   unlock();
+}
+
+function updateVANames(newVoiceActors) {
+  for (let id of Object.keys(newVoiceActors)) {
+    if (!(id in window.vaNames)) {
+      window.vaNames[id] = newVoiceActors[id];
+    }
+  }
 }
 
 // Allows for empty response reporting and unlocking

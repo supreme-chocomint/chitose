@@ -24,6 +24,7 @@ window.onload = function() {
   clearVATable();  // For those with itchy trigger fingers
   setSeason("", "");  // Set to current season
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
+  window.vaNames = {};
   populateVATableWithSeason();
 
   if (hasStorageAccess) { populateFollowTable(); }
@@ -77,7 +78,7 @@ function populateVATableWithSeason() {
   };
 
   lock();
-  window.voiceActors = {};
+  window.seasonalVoiceActors = {};
   vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
   for (let format of window.mediaFormats) {
     variables.format = format;

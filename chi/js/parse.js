@@ -51,18 +51,21 @@ function parseVASearchResults(data) {
 
   let staffDataArray = data.data.Page.staff;
   let voiceActorArray = [];
+  let vaNames = {};
 
   for (let staffData of staffDataArray) {
-    let voiceActor = [
-      staffData.id,
-      parsedName(staffData.name),
-      null,
-      staffData.siteUrl
-    ]
+
+    let id = staffData.id;
+    let name = parsedName(staffData.name);
+    let url = staffData.siteUrl;
+    let voiceActor = [id, name, null, url];
+
     voiceActorArray.push(voiceActor);
+    vaNames[id] = name;
+
   }
 
-  return voiceActorArray;
+  return [voiceActorArray, vaNames];
 
 }
 
@@ -91,13 +94,14 @@ function collectSeasonalRoles(voiceActorId, data) {
 
 }
 
-function extractVAs(voiceActors, rawData) {
+function extractVAs(voiceActors, vaNames, rawData) {
 
   let showDataArray = rawData.data.Page.media;
 
   // Get all VAs by ID and count number of roles
   for (let charaData of getAllShowCharacterDatas(showDataArray)) {
     for (let voiceActor of getVoiceActors(charaData)) {
+
       if (voiceActor.id in voiceActors) {
         voiceActors[voiceActor.id].numRoles += 1;
       }
@@ -108,10 +112,13 @@ function extractVAs(voiceActors, rawData) {
           url: voiceActor.url
         };
       }
+
+      if (!(voiceActor.id in vaNames)) {
+        vaNames[voiceActor.id] = voiceActor.name;
+      }
+
     }
   }
-
-  return voiceActors;
 
 }
 
@@ -133,7 +140,6 @@ function sortVAsByNumRoles(voiceActors) {
     return b[2] - a[2]; // sort in descending order
   });
 
-  window.sortedVoiceActors = sortedVoiceActors;  // globally cache result
   return sortedVoiceActors;
 
 }
