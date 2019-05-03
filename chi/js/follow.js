@@ -105,7 +105,7 @@ function addFollowTableEntry(metadata) {
   url.href = metadata.url;
   url.target = "_blank";  // open in new tab
 
-  deleteLink.innerHTML = "x";
+  deleteLink.innerHTML = "&times;";
   deleteLink.href = "javascript:void(0)";
   deleteCol.classList.add("symbol");
   deleteLink.classList.add("symbol");
