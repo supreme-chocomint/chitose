@@ -127,7 +127,8 @@ function leftTableSwitchOnClick() {
     // because refetching everything > writing a new function
     changed = followTableBody.getAttribute("data-changed");
     if (changed == "true") {
-      refreshButtonOnClick();
+      clearVATable();
+      populateVATableWithSeason();
       followTableBody.setAttribute("data-changed", "false");
     }
 
