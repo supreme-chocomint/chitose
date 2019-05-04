@@ -26,7 +26,7 @@
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script type="text/javascript" src="js/compressed.js"></script>
+  <script src="js/compressed.js"></script>
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -80,19 +80,18 @@
             <tbody id="va-table-body"></tbody>
           </table>
           <table id="follow-table">
+            <caption id="follow-table-caption">Following</caption>
             <thead><tr>
               <th class="text">Name ★</th>
               <th class="text">Link</th>
               <th class="symbol">&nbsp;</th>
             </tr></thead>
-            <tbody id="follow-table-body">
-              <caption id="follow-table-caption">Following</caption>
-            </tbody>
+            <tbody id="follow-table-body"></tbody>
           </table>
           <div id="navigation">
-            <a href="javascript:void(0)" id="left-nav" class="inactive"><</a>
-            <span href="javascript:void(0)" id="page-tracker">1/1</span>
-            <a href="javascript:void(0)" id="right-nav">></a>
+            <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
+            <span id="page-tracker">1/1</span>
+            <a href="javascript:void(0)" id="right-nav">&gt;</a>
           </div>
           <div id="transfer">
             <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
@@ -111,7 +110,7 @@
             <tr>
               <th class="text">Show Name</th>
               <th class="text">Character Name</th>
-            <tr>
+            </tr>
           </thead>
           <tbody id="roles-table-body"></tbody>
         </table>
