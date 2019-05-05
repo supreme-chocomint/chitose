@@ -62,6 +62,10 @@ body {
 /* General page spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+html {
+  overflow-y: scroll;
+}
+
 #settings {
   margin-top: 1rem;
   text-align: right;
@@ -85,6 +89,16 @@ body {
 
 #header h2 {
   margin-right: 2rem;
+}
+
+.collapsable {
+  cursor: pointer;
+  padding-bottom: 2.5rem;
+}
+
+#update-log-title::after {
+  content: " (click to expand)";
+  font-size: 13px;
 }
 
 caption {
@@ -160,6 +174,22 @@ input#dark-mode-switch {
   background-color: transparent;
 }
 
+#update-icon {
+  display: inline;
+  margin: 0.5rem;
+  position: relative;
+  top: 0.5rem;
+  color: var(--color);
+  cursor: pointer;
+  /* Prevent highlighting: https://stackoverflow.com/a/4407335 */
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
 
 /* Table and table tool spacing/arrangement
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

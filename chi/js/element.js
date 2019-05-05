@@ -1,21 +1,18 @@
 // Functions directly involved with manipulating HTML elements.
 // Includes dynamically building/clearing/hiding tables, inputs, and buttons.
 
-function setDescription() {
+function setLongFormText() {
+
   let descriptionBox = document.getElementById("description-text");
-  let aniListLink = "<a href='https://anilist.co/' target = '_blank'>AniList</a>"
-  descriptionBox.innerHTML = "Find out what your favorite voice actors are " +
-    "up to this season (or any season) !<br> Browse a season by number " +
-    "of roles, or search by name, and click on the one you want to see from the " +
-    "left-hand / top table.<br> The right-hand / bottom table will generate " +
-    "all TV shows, TV shorts, and ONAs they're involved in.<br>" +
-    "Follow a voice actor by clicking the star icon, and view all follows " +
-    "by clicking the 'toggle following' button.<br><br>" +
-    "Things not loading? Double-check that " + aniListLink +
-    " (the data provider) is online."
+  descriptionBox.innerHTML = getDescriptionString();
+
+  let updatesParagraph = document.getElementById("updates").children[0];
+  updatesParagraph.innerHTML = getUpdateString();
+
 }
 
 function hideElements() {
+  document.getElementById("updates").style.display = "none";
   document.getElementById("follow-table").style.display = "none";
   document.getElementById("transfer").style.display = "none";
 }
@@ -93,14 +90,33 @@ function switchToPage(pageIndex) {
 }
 
 function appendEmptyRow(body) {
+
   let emptyRow = document.createElement("tr");
-  let emptyCellA = document.createElement("td");
-  let emptyCellB = document.createElement("td");
-  emptyCellA.innerHTML = "N/A";
-  emptyCellB.innerHTML = "N/A";
-  emptyRow.appendChild(emptyCellA);
-  emptyRow.appendChild(emptyCellB);
+  let numCol = 0;
+
+  switch (body.id) {
+
+    case "va-table-body":
+      numCol = document.getElementById("va-table-head").getElementsByTagName("th").length;
+      appendNACells(emptyRow, numCol - 1);
+      let emptyCell = document.createElement("td");
+      emptyCell.innerHTML = "&nbsp;";
+      emptyRow.append(emptyCell);
+      break;
+
+    case "roles-table-body":
+      numCol = document.getElementById("roles-table-head").getElementsByTagName("th").length;
+      appendNACells(emptyRow, numCol - 1);
+      break;
+
+    default:
+      numCol = 2;
+      appendNACells(emptyRow, numCol - 1);
+
+  }
+
   body.appendChild(emptyRow);
+
 }
 
 // populate with VAs and paginate
@@ -116,6 +132,7 @@ function fillVATableAndPage(voiceActorArray) {
     let metadata = {
       id: va[0],
       name: va[1],
+      numRoles: va[2],
       url: va[3]
     };
     addVATableEntry(metadata);
@@ -182,16 +199,29 @@ function addRolesTableEntry(metadata) {
 function addNoResultsIndicator(tableId) {
 
   let row = document.createElement("tr");
-  let showNameCol = document.createElement("td");
-  let charaNameCol = document.createElement("td");
+  let numCol = 0;
 
-  showNameCol.innerHTML = "N/A";
-  charaNameCol.innerHTML = "N/A";
+  switch (tableId) {
+    case "va-table-body":
+      numCol = 3;
+      document.getElementById("va-table-header-follow").style.display = "none";
+      break;
+    case "roles-table-body":
+    default:
+      numCol = 2;
+  }
 
-  row.appendChild(showNameCol);
-  row.appendChild(charaNameCol);
+  appendNACells(row, numCol);
   document.getElementById(tableId).appendChild(row);
 
+}
+
+function appendNACells(row, numCol) {
+  for (let i = 0; i < numCol; i++) {
+    let col = document.createElement("td");
+    col.innerHTML = "N/A";
+    row.appendChild(col);
+  }
 }
 
 function addVATableEntry(metadata) {
@@ -201,6 +231,8 @@ function addVATableEntry(metadata) {
   let name = document.createElement("a");
   let urlCol = document.createElement("td");
   let url = document.createElement("a");
+  let numRolesCol = document.createElement("td");
+  let numRoles = document.createElement("span");
   let followCol = document.createElement("td");
   let followState = document.createElement("a");
 
@@ -208,10 +240,23 @@ function addVATableEntry(metadata) {
   name.href = "javascript:void(0)";
   name.classList.add("internal_link");
   name.onclick = function() {VAOnClick(metadata.id)};
+  nameCol.appendChild(name);
+  row.appendChild(nameCol);
 
   url.innerHTML = "See on AniList";
   url.href = metadata.url;
   url.target = "_blank";  // open in new tab
+  urlCol.appendChild(url);
+  row.appendChild(urlCol);
+
+  if (metadata.numRoles) {
+    document.getElementById("va-table-header-roles").style.display = "";
+    numRoles.innerHTML = metadata.numRoles;
+    numRolesCol.appendChild(numRoles);
+    row.appendChild(numRolesCol);
+  } else {
+    document.getElementById("va-table-header-roles").style.display = "none";
+  }
 
   if (isFollowed(metadata.id)) { followState.innerHTML = "★"; }
   else { followState.innerHTML = "☆"; }
@@ -226,13 +271,10 @@ function addVATableEntry(metadata) {
   if (window.clicked == metadata.id) {
     name.classList.add("clicked");
   }
-
-  nameCol.appendChild(name);
-  urlCol.appendChild(url);
+  document.getElementById("va-table-header-follow").style.display = "";
   followCol.appendChild(followState);
-  row.appendChild(nameCol);
-  row.appendChild(urlCol);
   row.appendChild(followCol);
+
   document.getElementById("va-table-body").appendChild(row);
 
 }

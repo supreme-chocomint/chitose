@@ -107,6 +107,16 @@ function darkModeSwitchOnClick() {
   }
 }
 
+function updateIconOnClick() {
+  let updateDiv = document.getElementById("updates");
+  if (updateDiv.style.display == "none") {
+    updateDiv.style.display = ""
+  }
+  else {
+    updateDiv.style.display = "none";
+  }
+}
+
 function leftTableSwitchOnClick() {
 
   let vaTable = document.getElementById("va-table");

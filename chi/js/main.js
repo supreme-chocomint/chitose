@@ -3,7 +3,7 @@ window.onload = function() {
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
 
-  hasStorageAccess = setStorageState();  // handle browser disabling cookies
+  let hasStorageAccess = setStorageState();  // handle browser disabling cookies
   if (hasStorageAccess) {
     let set = setThemeFromStorage();
     if (!set) {
@@ -16,7 +16,7 @@ window.onload = function() {
 
   setOnClicks();
   setOnKeyPresses();
-  setDescription();
+  setLongFormText();
   hideElements();
   buildSeasonPickers();
   clearInputBoxes();
@@ -37,6 +37,7 @@ function setOnClicks() {
   let refreshButton = document.getElementById("refresh-button");
   let darkModeSwitch = document.getElementById("dark-mode-switch");
   let leftTableSwitch = document.getElementById("left-table-switch");
+  let showUpdatesButton = document.getElementById("update-icon");
   let importButton = document.getElementById("import-button");
   let exportButton = document.getElementById("export-button");
 
@@ -44,6 +45,7 @@ function setOnClicks() {
   refreshButton.onclick = function() { refreshButtonOnClick(); }
   darkModeSwitch.onclick = function() { darkModeSwitchOnClick(); }
   leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
+  showUpdatesButton.onclick = function() { updateIconOnClick(); }
   importButton.onclick = function() { importButtonOnClick(); }
   exportButton.onclick = function() { exportButtonOnClick(); }
   setNavigationOnClicks();

@@ -17,6 +17,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100&amp;subset=japanese" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -33,6 +34,7 @@
   <script src="js/parse.js"></script>
   <script src="js/event.js"></script>
   <script src="js/follow.js"></script>
+  <script src="js/string.js"></script>
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -46,6 +48,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div id="settings">
     <p id="lock-icon"></p>
+
     <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
   </div>
 
@@ -70,6 +73,11 @@
       <input type="submit" class="button" id="refresh-button" value="Refresh">
       <select id="year-picker"></select>
       <select id="quarter-picker"></select>
+      <span id="update-icon" title="Show updates"><i class="material-icons">new_releases</i></span>
+    </div>
+
+    <div class="row" id="updates">
+      <p></p>
     </div>
 
     <div class="row">
@@ -78,10 +86,11 @@
         <div id="left-table-wrapper">
           <table id="va-table">
             <caption id="va-table-caption">Viewing:</caption>
-            <thead><tr>
+            <thead id="va-table-head"><tr>
               <th class="text">Name</th>
               <th class="text">Link</th>
-              <th class="symbol">&nbsp;</th>
+              <th id="va-table-header-roles">Roles</th>
+              <th class="symbol" id="va-table-header-follow">&nbsp;</th>
             </tr></thead>
             <tbody id="va-table-body"></tbody>
           </table>
@@ -112,7 +121,7 @@
       <div class="one-half column" id="right-col">
         <table id="roles-table">
           <caption id="roles-table-caption">Viewing:</caption>
-          <thead>
+          <thead id="roles-table-head">
             <tr>
               <th class="text">Show Name</th>
               <th class="text">Character Name</th>
