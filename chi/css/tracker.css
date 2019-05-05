@@ -17,7 +17,7 @@
   --link-decoration: none;
   --input-color: black;
   --button-color: black;
-  --button-hover-color: #888;
+  --button-hover-color: #333;
   --dark-mode-button-color: white;
 }
 
@@ -28,7 +28,7 @@
   --link-decoration: none;
   --input-color: black;
   --button-color: white;
-  --button-hover-color: #666;
+  --button-hover-color: #999;
   --dark-mode-button-color: white;
 }
 
@@ -191,6 +191,10 @@ input#dark-mode-switch {
                                   supported by Chrome and Opera */
 }
 
+#update-icon:hover {
+  color: var(--button-hover-color);
+}
+
 /* Table and table tool spacing/arrangement
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -200,6 +204,10 @@ input#dark-mode-switch {
 
 #va-table-tools {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
+}
+
+#va-table {
+  min-width: 25ch;
 }
 
 #navigation a {

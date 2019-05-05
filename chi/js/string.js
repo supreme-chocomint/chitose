@@ -15,7 +15,8 @@ function getDescriptionString() {
 }
 
 function getUpdateString() {
-  string = "2019-05-05: Add number of roles to VA information table<br>" +
-    "2019-05-05: Add update log";
+  string = "2019-05-05: Changed rendering of VA info table<br>" +
+    "2019-05-05: Added number of roles to VA info table<br>" +
+    "2019-05-05: Added update log";
   return string;
 }
