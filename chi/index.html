@@ -6,7 +6,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   <title>c h i 歳 - seasonal seiyuu tracker</title>
-  <meta name="description" content="Track and lookup anime voice actors by season.">
+  <meta name="description" content="Track and lookup anime voice actors by season. See the voices behind every TV series, TV short, and ONA of any given season, and follow your favorites for easy access. Search for English and Japanese voice actors, and get direct links to AniList to find out more about particular shows, characters, or people.">
   <meta name="author" content="someone who actually liked Girlish Number">
 
   <!-- Mobile Specific Metas
@@ -40,6 +40,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div id="settings">
     <p id="lock-icon"></p>
+
     <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
   </div>
 
@@ -72,10 +73,11 @@
         <div id="left-table-wrapper">
           <table id="va-table">
             <caption id="va-table-caption">Viewing:</caption>
-            <thead><tr>
-              <th class="text">Name</th>
-              <th class="text">Link</th>
-              <th class="symbol">&nbsp;</th>
+            <thead id="va-table-head"><tr>
+              <th id="va-table-header-name" class="text">Name</th>
+              <th id="va-table-header-link" class="text">Link</th>
+              <th id="va-table-header-roles">Roles</th>
+              <th class="symbol" id="va-table-header-follow">&nbsp;</th>
             </tr></thead>
             <tbody id="va-table-body"></tbody>
           </table>
@@ -106,7 +108,7 @@
       <div class="one-half column" id="right-col">
         <table id="roles-table">
           <caption id="roles-table-caption">Viewing:</caption>
-          <thead>
+          <thead id="roles-table-head">
             <tr>
               <th class="text">Show Name</th>
               <th class="text">Character Name</th>

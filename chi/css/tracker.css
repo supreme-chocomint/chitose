@@ -17,7 +17,7 @@
   --link-decoration: none;
   --input-color: black;
   --button-color: black;
-  --button-hover-color: #888;
+  --button-hover-color: #333;
   --dark-mode-button-color: white;
 }
 
@@ -28,7 +28,7 @@
   --link-decoration: none;
   --input-color: black;
   --button-color: white;
-  --button-hover-color: #666;
+  --button-hover-color: #999;
   --dark-mode-button-color: white;
 }
 
@@ -61,6 +61,10 @@ body {
 
 /* General page spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+html {
+  overflow-y: scroll;
+}
 
 #settings {
   margin-top: 1rem;
@@ -160,7 +164,6 @@ input#dark-mode-switch {
   background-color: transparent;
 }
 
-
 /* Table and table tool spacing/arrangement
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -170,6 +173,10 @@ input#dark-mode-switch {
 
 #va-table-tools {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
+}
+
+#va-table {
+  min-width: 25ch;
 }
 
 #navigation a {
