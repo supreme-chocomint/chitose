@@ -37,7 +37,6 @@ function setOnClicks() {
   let refreshButton = document.getElementById("refresh-button");
   let darkModeSwitch = document.getElementById("dark-mode-switch");
   let leftTableSwitch = document.getElementById("left-table-switch");
-  let showUpdatesButton = document.getElementById("update-icon");
   let importButton = document.getElementById("import-button");
   let exportButton = document.getElementById("export-button");
 
@@ -45,7 +44,6 @@ function setOnClicks() {
   refreshButton.onclick = function() { refreshButtonOnClick(); }
   darkModeSwitch.onclick = function() { darkModeSwitchOnClick(); }
   leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
-  showUpdatesButton.onclick = function() { updateIconOnClick(); }
   importButton.onclick = function() { importButtonOnClick(); }
   exportButton.onclick = function() { exportButtonOnClick(); }
   setNavigationOnClicks();

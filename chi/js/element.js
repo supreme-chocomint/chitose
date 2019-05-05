@@ -2,17 +2,11 @@
 // Includes dynamically building/clearing/hiding tables, inputs, and buttons.
 
 function setLongFormText() {
-
   let descriptionBox = document.getElementById("description-text");
   descriptionBox.innerHTML = getDescriptionString();
-
-  let updatesParagraph = document.getElementById("updates").children[0];
-  updatesParagraph.innerHTML = getUpdateString();
-
 }
 
 function hideElements() {
-  document.getElementById("updates").style.display = "none";
   document.getElementById("follow-table").style.display = "none";
   document.getElementById("transfer").style.display = "none";
 }

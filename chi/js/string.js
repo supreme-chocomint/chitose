@@ -13,10 +13,3 @@ function getDescriptionString() {
     " (the data provider) is online."
   return string;
 }
-
-function getUpdateString() {
-  string = "2019-05-05: Changed rendering of VA info table<br>" +
-    "2019-05-05: Added number of roles to VA info table<br>" +
-    "2019-05-05: Added update log";
-  return string;
-}
