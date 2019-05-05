@@ -144,10 +144,32 @@ function fillVATableAndPage(voiceActorArray) {
     tableBody.children[j].style.display = "none";
   }
 
+  setVATableSize(voiceActorArray);
   setNavigationState(tableBody, pageSize);
 
-  if (entryCount == 0) {
+}
+
+function setVATableSize(testData) {
+
+  let NUM_ROLES_INDEX = 2;
+
+  // No data to show
+  if (testData.length == 0){
+    document.getElementById("va-table-header-roles").style.display = "none";
+    document.getElementById("va-table-header-follow").style.display = "none";
     addNoResultsIndicator("va-table-body");
+  }
+
+  // No roles (e.g. result of search)
+  else if (testData[0][NUM_ROLES_INDEX] == null) {
+    document.getElementById("va-table-header-roles").style.display = "none";
+    document.getElementById("va-table-header-follow").style.display = "";
+  }
+
+  // Has roles
+  else {
+    document.getElementById("va-table-header-roles").style.display = "";
+    document.getElementById("va-table-header-follow").style.display = "";
   }
 
 }
@@ -199,19 +221,7 @@ function addRolesTableEntry(metadata) {
 function addNoResultsIndicator(tableId) {
 
   let row = document.createElement("tr");
-  let numCol = 0;
-
-  switch (tableId) {
-    case "va-table-body":
-      numCol = 3;
-      document.getElementById("va-table-header-follow").style.display = "none";
-      break;
-    case "roles-table-body":
-    default:
-      numCol = 2;
-  }
-
-  appendNACells(row, numCol);
+  appendNACells(row, 2);
   document.getElementById(tableId).appendChild(row);
 
 }
@@ -250,12 +260,9 @@ function addVATableEntry(metadata) {
   row.appendChild(urlCol);
 
   if (metadata.numRoles) {
-    document.getElementById("va-table-header-roles").style.display = "";
     numRoles.innerHTML = metadata.numRoles;
     numRolesCol.appendChild(numRoles);
     row.appendChild(numRolesCol);
-  } else {
-    document.getElementById("va-table-header-roles").style.display = "none";
   }
 
   if (isFollowed(metadata.id)) { followState.innerHTML = "★"; }
@@ -271,7 +278,6 @@ function addVATableEntry(metadata) {
   if (window.clicked == metadata.id) {
     name.classList.add("clicked");
   }
-  document.getElementById("va-table-header-follow").style.display = "";
   followCol.appendChild(followState);
   row.appendChild(followCol);
 
