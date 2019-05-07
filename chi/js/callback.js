@@ -1,9 +1,12 @@
 // Asynchronous functions
 
-function collectSeasonalVAsCallback(data) {
+function collectSeasonalVAsCallback(year, quarter, data) {
 
   let vaTableBody = document.getElementById("va-table-body");
   let asyncCount = vaTableBody.getAttribute("data-async-count");
+
+  // cache raw data for use by roles table
+  cacheSeasonRawData(year, quarter, data);
 
   // build running collection of VAs, so all callbacks work with same data
   extractVAs(window.seasonalVoiceActors, window.vaNames, data);
@@ -41,11 +44,38 @@ function updateVANames(newVoiceActors) {
   }
 }
 
+function cacheSeasonRawData(year, quarter, data) {
+
+  // Build cache if required
+  let done = false;
+  while (!done) {
+    if (window.seasonRawData[year]) {
+      if (window.seasonRawData[year][quarter]) {
+        done = true;
+      }
+      else {
+        window.seasonRawData[year][quarter] = {};
+      }
+    }
+    else {
+      window.seasonRawData[year] = {};
+    }
+  }
+
+  window.seasonRawData[year][quarter][window.seasonRawDataIndex] = data;
+  window.seasonRawDataIndex++;
+  if (window.seasonRawDataIndex == window.mediaFormats.length) {
+    window.seasonRawDataIndex = 0;
+  }
+
+}
+
 // Allows for empty response reporting and unlocking
 // after all parallel requests are finished.
-function collectSeasonalRolesCallback(voiceActorId, data) {
+function collectSeasonalRolesCallback(voiceActorId, year, quarter, data) {
 
   collectSeasonalRoles(voiceActorId, data);
+  cacheSeasonRawData(year, quarter, data);
 
   let rolesTableBody = document.getElementById("roles-table-body");
   let asyncCount = rolesTableBody.getAttribute("data-async-count");

@@ -23,10 +23,15 @@ window.onload = function() {
 
   clearVATable();  // For those with itchy trigger fingers
   setSeason("", "");  // Set to current season
+
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
   window.vaNames = {};
-  populateVATableWithSeason();
+  window.seasonalVoiceActors = {};
+  window.sortedVoiceActors = [];
+  window.seasonRawData = {};
+  window.seasonRawDataIndex = 0;
 
+  populateVATableWithSeason();
   if (hasStorageAccess) { populateFollowTable(); }
 
 }
@@ -80,9 +85,29 @@ function populateVATableWithSeason() {
   lock();
   window.seasonalVoiceActors = {};
   vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
-  for (let format of window.mediaFormats) {
-    variables.format = format;
-    makeRequest(getQuery(""), variables, collectSeasonalVAsCallback);
+
+  // get from cache if it exists, otherwise do request
+  if (window.seasonRawData[year] && window.seasonRawData[year][quarter]) {
+    for (let i = 0; i < window.mediaFormats.length; i++) {
+      let data = window.seasonRawData[year][quarter][i];
+      extractVAs(window.seasonalVoiceActors, window.vaNames, data);
+    }
+    sortedVoiceActors = sortVAsByNumRoles(window.seasonalVoiceActors);
+    fillVATableAndPage(sortedVoiceActors);
+    unlock();
+  }
+  else {
+    for (let format of window.mediaFormats) {
+      variables.format = format;
+      makeRequest(
+        getQuery(""),
+        variables,
+        function(data) {
+          // Need season to cache raw data
+          collectSeasonalVAsCallback(year, quarter, data);
+        }
+      );
+    }
   }
 
 }

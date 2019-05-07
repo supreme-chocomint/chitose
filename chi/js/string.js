@@ -2,7 +2,7 @@
 
 function getDescriptionString() {
   let aniListLink = "<a href='https://anilist.co/' target = '_blank'>AniList</a>"
-  string = "Find out what your favorite voice actors are " +
+  let string = "Find out what your favorite voice actors are " +
     "up to this season (or any season) !<br> Browse a season by number " +
     "of roles, or search by name, and click on the one you want to see from the " +
     "left-hand / top table.<br> The right-hand / bottom table will generate " +
