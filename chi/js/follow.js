@@ -24,21 +24,6 @@ function getFollowing() {
   }
 }
 
-function setStorageState() {
-  try {
-    localStorage.getItem("following");
-    console.log("Katta na! GAHAHA");
-    return true;
-  }
-  catch (AccessDeniedError) {
-    warningString = "Cookies and site data permissions must be enabled " +
-    "for some site features to work. This includes the ability to follow voice actors."
-    setTimeout(function() { window.alert(warningString); }, 1);
-    disableFollowing();
-    return false;
-  }
-}
-
 function disableFollowing() {
 
   let vaTable = document.getElementById("va-table");

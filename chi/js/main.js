@@ -1,12 +1,20 @@
 window.onload = function() {
 
+  window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
+  window.vaNames = {};
+  window.seasonalVoiceActors = {};
+  window.sortedVoiceActors = [];
+  window.seasonRawData = {};
+  window.seasonRawDataIndex = 0;
+  window.annIds = {};
+
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
 
   let hasStorageAccess = setStorageState();  // handle browser disabling cookies
   if (hasStorageAccess) {
-    let set = setThemeFromStorage();
-    if (!set) {
+    let themeIsSet = setThemeFromStorage();
+    if (!themeIsSet) {
       body.classList.add(defaultTheme);
     }
   }
@@ -23,13 +31,6 @@ window.onload = function() {
 
   clearVATable();  // For those with itchy trigger fingers
   setSeason("", "");  // Set to current season
-
-  window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
-  window.vaNames = {};
-  window.seasonalVoiceActors = {};
-  window.sortedVoiceActors = [];
-  window.seasonRawData = {};
-  window.seasonRawDataIndex = 0;
 
   populateVATableWithSeason();
   if (hasStorageAccess) { populateFollowTable(); }
@@ -178,4 +179,19 @@ function setThemeFromStorage(defaultTheme) {
 
   return set;
 
+}
+
+function setStorageState() {
+  try {
+    localStorage.getItem("following");
+    console.log("Katta na! GAHAHA");
+    return true;
+  }
+  catch (AccessDeniedError) {
+    warningString = "Cookies and site data permissions must be enabled " +
+    "for some site features to work. This includes the ability to follow voice actors."
+    setTimeout(function() { window.alert(warningString); }, 1);
+    disableFollowing();
+    return false;
+  }
 }
