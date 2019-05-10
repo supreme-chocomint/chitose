@@ -9,7 +9,7 @@ function collectSeasonalVAsCallback(year, quarter, data) {
   cacheSeasonRawData(year, quarter, data);
 
   // build running collection of VAs, so all callbacks work with same data
-  extractVAs(window.seasonalVoiceActors, window.vaNames, data);
+  extractVAs(window.seasonalRolesCounter, window.voiceActors, window.vaNames, data);
 
   if (asyncCount) {
     asyncCount = parseInt(asyncCount);
@@ -17,11 +17,9 @@ function collectSeasonalVAsCallback(year, quarter, data) {
     vaTableBody.setAttribute("data-async-count", asyncCount);
     if (asyncCount == window.mediaFormats.length) {
 
-      voiceActors = Object.values(window.seasonalVoiceActors);
-      sortVAsByNumRoles(voiceActors);
-      fillVATableAndPage(voiceActors);
+      sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);
+      fillVATableAndPage(sortedSeasonalVoiceActorIds);
 
-      window.sortedSeasonalVoiceActors = voiceActors;
       vaTableBody.setAttribute("data-async-count", 0);
       unlock();
 

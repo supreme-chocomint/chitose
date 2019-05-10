@@ -21,7 +21,9 @@ function searchButtonOnClick() {
     if (searchTerm != "") {
 
       lock();
+      clearSeasonSpecificData();
       clearVATable();
+      setVATableState("search");
 
       let vaTableCaption = document.getElementById("va-table-caption");
       vaTableCaption.setAttribute("data-content", " search '" + searchTerm + "'");

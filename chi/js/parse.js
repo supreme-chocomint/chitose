@@ -62,7 +62,8 @@ function parseVASearchResults(data) {
       image: staffData.image.medium
     }
 
-    voiceActorArray.push(voiceActor);
+    window.voiceActors[staffData.id] = voiceActor;
+    voiceActorArray.push(staffData.id);
     vaNames[staffData.id] = name;
 
   }
@@ -96,7 +97,7 @@ function collectSeasonalRoles(voiceActorId, data) {
 
 }
 
-function extractVAs(voiceActors, vaNames, rawData) {
+function extractVAs(rolesCounter, voiceActors, vaNames, rawData) {
 
   let showDataArray = rawData.data.Page.media;
 
@@ -104,13 +105,13 @@ function extractVAs(voiceActors, vaNames, rawData) {
   for (let charaData of getAllShowCharacterDatas(showDataArray)) {
     for (let voiceActor of getVoiceActors(charaData)) {
 
-      if (voiceActor.id in voiceActors) {
-        voiceActors[voiceActor.id].numRoles += 1;
+      if (voiceActor.id in rolesCounter) {
+        rolesCounter[voiceActor.id] += 1;
       }
       else {
+        rolesCounter[voiceActor.id] = 1;
         voiceActors[voiceActor.id] = {
           id: voiceActor.id,
-          numRoles: 1,
           name: voiceActor.name,
           url: voiceActor.url,
           image: voiceActor.image
@@ -126,11 +127,26 @@ function extractVAs(voiceActors, vaNames, rawData) {
 
 }
 
-function sortVAsByNumRoles(voiceActors) {
-  // voiceActors is an Array of Objects
-  voiceActors.sort(function(a, b) {
+function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
+  // rolesCounter and voiceActors are maps
+
+  let temp = [];
+  let result = [];
+
+  for (let id of Object.keys(rolesCounter)) {
+    temp.push({id: id, numRoles: rolesCounter[id]});
+  }
+
+  temp.sort(function(a, b) {
     return b.numRoles - a.numRoles; // sort in descending order
   })
+
+  for (let k of temp) {
+    result.push(k.id);
+  }
+
+  return result;
+
 }
 
 // Thank you Stack Overflow: https://stackoverflow.com/a/33369954

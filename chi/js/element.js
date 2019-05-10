@@ -114,7 +114,7 @@ function appendEmptyRow(body) {
 }
 
 // populate with VAs and paginate
-function fillVATableAndPage(voiceActorArray) {
+function fillVATableAndPage(voiceActorIds) {
 
   let tableBody = document.getElementById("va-table-body");
   let pageSize = 5;
@@ -122,15 +122,9 @@ function fillVATableAndPage(voiceActorArray) {
   tableBody.style.visibility = "none";  // to hide build process
   let entryCount = 0;
 
-  for (let va of voiceActorArray) {
+  for (let id of voiceActorIds) {
 
-    let metadata = {
-      id: va[0],
-      name: va[1],
-      numRoles: va[2],
-      url: va[3],
-      image: va[4]
-    };
+    let va = window.voiceActors[id];
     addVATableEntry(va);  // hides image by default for performance
     let row = tableBody.lastChild;
     row.id = entryCount;
@@ -146,35 +140,34 @@ function fillVATableAndPage(voiceActorArray) {
 
   }
 
-  setVATableSize(voiceActorArray);
+  setVATableSize(voiceActorIds.length);
   setNavigationState(tableBody, pageSize);
 
 }
 
-function setVATableSize(testData) {
+function setVATableSize(numElements) {
 
-  let NUM_ROLES_INDEX = 2;
+  let vaTable = document.getElementById("va-table");
+  let vaTableHeaderRoles = document.getElementById("va-table-header-roles");
+  let vaTableHeaderFollow = document.getElementById("va-table-header-follow");
+  let vaTableState = vaTable.getAttribute("data-state");
+  console.log(vaTableState);
 
-  // No data to show
-  if (testData.length == 0){
-    document.getElementById("va-table-header-roles").style.display = "none";
-    document.getElementById("va-table-header-follow").style.display = "none";
+  if (numElements == 0){
+    vaTableHeaderRoles.style.display = "none";
+    vaTableHeaderFollow.style.display = "none";
     addNoResultsIndicator("va-table-body");
   }
 
-  // No roles (e.g. result of search)
-  else if (testData[0].numRoles == null) {
-    document.getElementById("va-table-header-roles").style.display = "none";
-    document.getElementById("va-table-header-follow").style.display = "";
+  else if (vaTableState == "search") {
+    vaTableHeaderRoles.style.display = "none";
+    vaTableHeaderFollow.style.display = "";
   }
 
-  // Has roles
   else {
-    document.getElementById("va-table-header-roles").style.display = "";
-    document.getElementById("va-table-header-follow").style.display = "";
+    vaTableHeaderRoles.style.display = "";
+    vaTableHeaderFollow.style.display = "";
   }
-
-  console.log(testData);
 
 }
 
@@ -196,6 +189,10 @@ function setNavigationState(tableBody, pageSize) {
 
   document.getElementById("page-tracker").innerHTML = "1/" + pageCount.toString();
 
+}
+
+function setVATableState(stateString) {
+  document.getElementById("va-table").setAttribute("data-state", stateString);
 }
 
 function addRolesTableEntry(metadata) {
@@ -271,8 +268,9 @@ function addVATableEntry(metadata) {
   urlCol.appendChild(url);
   row.appendChild(urlCol);
 
-  if (metadata.numRoles) {
-    numRoles.innerHTML = metadata.numRoles;
+  numRolesInt = window.seasonalRolesCounter[metadata.id];
+  if (numRolesInt) {
+    numRoles.innerHTML = numRolesInt;
     numRolesCol.appendChild(numRoles);
     row.appendChild(numRolesCol);
   }
