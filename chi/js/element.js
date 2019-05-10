@@ -151,7 +151,6 @@ function setVATableSize(numElements) {
   let vaTableHeaderRoles = document.getElementById("va-table-header-roles");
   let vaTableHeaderFollow = document.getElementById("va-table-header-follow");
   let vaTableState = vaTable.getAttribute("data-state");
-  console.log(vaTableState);
 
   if (numElements == 0){
     vaTableHeaderRoles.style.display = "none";

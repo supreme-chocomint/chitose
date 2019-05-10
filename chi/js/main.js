@@ -1,7 +1,6 @@
 window.onload = function() {
 
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
-  window.vaNames = {};
   window.voiceActors = {};
   window.seasonalRolesCounter = {};  // must be preserved across requests
   window.seasonRawData = {};
@@ -93,7 +92,7 @@ function populateVATableWithSeason() {
   if (window.seasonRawData[year] && window.seasonRawData[year][quarter]) {
     for (let i = 0; i < window.mediaFormats.length; i++) {
       let data = window.seasonRawData[year][quarter][i];
-      extractVAs(window.seasonalRolesCounter, window.voiceActors, window.vaNames, data);
+      extractVAs(window.seasonalRolesCounter, window.voiceActors, data);
       console.log(window.seasonalRolesCounter);
     }
     sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);

@@ -238,7 +238,7 @@ function unclick() {
 
 function click(vaId) {
 
-  let name = window.vaNames[vaId];
+  let name = window.voiceActors[vaId].name;
   let rolesTableCaption = document.getElementById("roles-table-caption");
   let quarter = document.getElementById("quarter-picker").value;
   let year = document.getElementById("year-picker").value;

@@ -9,7 +9,7 @@ function collectSeasonalVAsCallback(year, quarter, data) {
   cacheSeasonRawData(year, quarter, data);
 
   // build running collection of VAs, so all callbacks work with same data
-  extractVAs(window.seasonalRolesCounter, window.voiceActors, window.vaNames, data);
+  extractVAs(window.seasonalRolesCounter, window.voiceActors, data);
 
   if (asyncCount) {
     asyncCount = parseInt(asyncCount);
@@ -31,20 +31,9 @@ function collectSeasonalVAsCallback(year, quarter, data) {
 }
 
 function collectVASearchResultsCallback(data) {
-  let results = parseVASearchResults(data);
-  let voiceActorArray = results[0];
-  let vaNames = results[1];
+  let voiceActorArray = parseVASearchResults(data);
   fillVATableAndPage(voiceActorArray);
-  updateVANames(vaNames);
   unlock();
-}
-
-function updateVANames(newVoiceActors) {
-  for (let id of Object.keys(newVoiceActors)) {
-    if (!(id in window.vaNames)) {
-      window.vaNames[id] = newVoiceActors[id];
-    }
-  }
 }
 
 function cacheSeasonRawData(year, quarter, data) {

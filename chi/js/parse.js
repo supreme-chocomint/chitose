@@ -52,7 +52,6 @@ function parseVASearchResults(data) {
 
   let staffDataArray = data.data.Page.staff;
   let voiceActorArray = [];
-  let vaNames = {};
 
   for (let staffData of staffDataArray) {
     let voiceActor = {
@@ -64,11 +63,10 @@ function parseVASearchResults(data) {
 
     window.voiceActors[staffData.id] = voiceActor;
     voiceActorArray.push(staffData.id);
-    vaNames[staffData.id] = name;
 
   }
 
-  return [voiceActorArray, vaNames];
+  return voiceActorArray;
 
 }
 
@@ -97,7 +95,7 @@ function collectSeasonalRoles(voiceActorId, data) {
 
 }
 
-function extractVAs(rolesCounter, voiceActors, vaNames, rawData) {
+function extractVAs(rolesCounter, voiceActors, rawData) {
 
   let showDataArray = rawData.data.Page.media;
 
@@ -111,15 +109,11 @@ function extractVAs(rolesCounter, voiceActors, vaNames, rawData) {
       else {
         rolesCounter[voiceActor.id] = 1;
         voiceActors[voiceActor.id] = {
-          id: voiceActor.id,
+          id: voiceActor.id,  // redundant, for convenience in click-related actions
           name: voiceActor.name,
           url: voiceActor.url,
           image: voiceActor.image
         };
-      }
-
-      if (!(voiceActor.id in vaNames)) {
-        vaNames[voiceActor.id] = voiceActor.name;
       }
 
     }
