@@ -16,10 +16,15 @@ function collectSeasonalVAsCallback(year, quarter, data) {
     asyncCount++;
     vaTableBody.setAttribute("data-async-count", asyncCount);
     if (asyncCount == window.mediaFormats.length) {
-      sortedVoiceActors = sortVAsByNumRoles(window.seasonalVoiceActors);
-      fillVATableAndPage(sortedVoiceActors);
+
+      voiceActors = Object.values(window.seasonalVoiceActors);
+      sortVAsByNumRoles(voiceActors);
+      fillVATableAndPage(voiceActors);
+
+      window.sortedSeasonalVoiceActors = voiceActors;
       vaTableBody.setAttribute("data-async-count", 0);
       unlock();
+
     }
   } else {
     vaTableBody.setAttribute("data-async-count", 1);

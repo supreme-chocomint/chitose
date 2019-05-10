@@ -22,6 +22,9 @@ function getQuery(type) {
           last
         }
         siteUrl
+        image {
+          medium
+        }
       }
     }
 

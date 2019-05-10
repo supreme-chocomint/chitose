@@ -123,19 +123,27 @@ function fillVATableAndPage(voiceActorArray) {
   let entryCount = 0;
 
   for (let va of voiceActorArray) {
+
     let metadata = {
       id: va[0],
       name: va[1],
       numRoles: va[2],
-      url: va[3]
+      url: va[3],
+      image: va[4]
     };
-    addVATableEntry(metadata);
+    addVATableEntry(va);  // hides image by default for performance
     let row = tableBody.lastChild;
-    row.id = entryCount++;
-  }
+    row.id = entryCount;
 
-  for (let j = pageSize; j < entryCount; j++) {
-    tableBody.children[j].style.display = "none";
+    if (entryCount < pageSize) {
+      /*showImages(row); FIXME*/
+    }
+    else if (entryCount >= pageSize) {
+      tableBody.children[entryCount].style.display = "none";
+    }
+
+    entryCount++;
+
   }
 
   setVATableSize(voiceActorArray);
@@ -155,7 +163,7 @@ function setVATableSize(testData) {
   }
 
   // No roles (e.g. result of search)
-  else if (testData[0][NUM_ROLES_INDEX] == null) {
+  else if (testData[0].numRoles == null) {
     document.getElementById("va-table-header-roles").style.display = "none";
     document.getElementById("va-table-header-follow").style.display = "";
   }
@@ -165,6 +173,8 @@ function setVATableSize(testData) {
     document.getElementById("va-table-header-roles").style.display = "";
     document.getElementById("va-table-header-follow").style.display = "";
   }
+
+  console.log(testData);
 
 }
 
@@ -233,6 +243,8 @@ function addVATableEntry(metadata) {
   let row = document.createElement("tr");
   let nameCol = document.createElement("td");
   let name = document.createElement("a");
+  let imageCol = document.createElement("td");
+  let image = document.createElement("img");
   let urlCol = document.createElement("td");
   let url = document.createElement("a");
   let numRolesCol = document.createElement("td");
@@ -246,6 +258,12 @@ function addVATableEntry(metadata) {
   name.onclick = function() {VAOnClick(metadata.id)};
   nameCol.appendChild(name);
   row.appendChild(nameCol);
+
+  image.src = metadata.image;
+  image.alt = metadata.name;
+  image.style.display = "none";
+  imageCol.appendChild(image);
+  /*row.append(imageCol); FIXME*/
 
   url.innerHTML = "See on AniList";
   url.href = metadata.url;
@@ -293,4 +311,16 @@ function clearRolesTable() {
   let table = document.getElementById("roles-table-body");
   table.innerHTML = "";
   table.setAttribute("data-async-count", 0);
+}
+
+function showImages(element) {
+  for (let img of element.getElementsByTagName("img")) {
+    img.style.display = "";
+  }
+}
+
+function hideImages(element) {
+  for (let img of element.getElementsByTagName("img")) {
+    img.style.display = "none";
+  }
 }

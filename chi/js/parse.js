@@ -32,7 +32,8 @@ function getVoiceActors(charaData) {
     actors.add({
       name: parsedName(voiceActor.name),
       id: voiceActor.id,
-      url: voiceActor.siteUrl
+      url: voiceActor.siteUrl,
+      image: voiceActor.image.medium
     });
   }
   return actors;
@@ -54,14 +55,15 @@ function parseVASearchResults(data) {
   let vaNames = {};
 
   for (let staffData of staffDataArray) {
-
-    let id = staffData.id;
-    let name = parsedName(staffData.name);
-    let url = staffData.siteUrl;
-    let voiceActor = [id, name, null, url];
+    let voiceActor = {
+      id: staffData.id,
+      name: parsedName(staffData.name),
+      url: staffData.siteUrl,
+      image: staffData.image.medium
+    }
 
     voiceActorArray.push(voiceActor);
-    vaNames[id] = name;
+    vaNames[staffData.id] = name;
 
   }
 
@@ -107,9 +109,11 @@ function extractVAs(voiceActors, vaNames, rawData) {
       }
       else {
         voiceActors[voiceActor.id] = {
+          id: voiceActor.id,
           numRoles: 1,
           name: voiceActor.name,
-          url: voiceActor.url
+          url: voiceActor.url,
+          image: voiceActor.image
         };
       }
 
@@ -123,25 +127,10 @@ function extractVAs(voiceActors, vaNames, rawData) {
 }
 
 function sortVAsByNumRoles(voiceActors) {
-
-  let sortedVoiceActors = [];
-
-  // transform objects into arrays for ease's sake
-  for (let voiceActor in voiceActors) {
-    sortedVoiceActors.push([
-      voiceActor,
-      voiceActors[voiceActor].name,
-      voiceActors[voiceActor].numRoles,
-      voiceActors[voiceActor].url
-    ]);
-  }
-
-  sortedVoiceActors.sort(function(a, b) {
-    return b[2] - a[2]; // sort in descending order
-  });
-
-  return sortedVoiceActors;
-
+  // voiceActors is an Array of Objects
+  voiceActors.sort(function(a, b) {
+    return b.numRoles - a.numRoles; // sort in descending order
+  })
 }
 
 // Thank you Stack Overflow: https://stackoverflow.com/a/33369954

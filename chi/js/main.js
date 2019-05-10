@@ -2,8 +2,8 @@ window.onload = function() {
 
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
   window.vaNames = {};
-  window.seasonalVoiceActors = {};
-  window.sortedVoiceActors = [];
+  window.seasonalVoiceActors = {};  // need map to quickly find membership
+  window.sortedSeasonalVoiceActors = [];
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
   window.annIds = {};
@@ -89,12 +89,7 @@ function populateVATableWithSeason() {
 
   // get from cache if it exists, otherwise do request
   if (window.seasonRawData[year] && window.seasonRawData[year][quarter]) {
-    for (let i = 0; i < window.mediaFormats.length; i++) {
-      let data = window.seasonRawData[year][quarter][i];
-      extractVAs(window.seasonalVoiceActors, window.vaNames, data);
-    }
-    sortedVoiceActors = sortVAsByNumRoles(window.seasonalVoiceActors);
-    fillVATableAndPage(sortedVoiceActors);
+    fillVATableAndPage(window.sortedSeasonalVoiceActors);
     unlock();
   }
   else {
