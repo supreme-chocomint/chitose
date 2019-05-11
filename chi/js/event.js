@@ -101,6 +101,8 @@ function VADetailsOnClick(voiceActorId) {
   let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
 
+  clearVaInfo();
+
   mainContainer.style.display = "none";
   vaInfoContainer.style.display = "";
   vaLeftContainer.style.display = "";

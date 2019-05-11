@@ -328,18 +328,16 @@ function fillVaBasicInfo(vaDetails) {
   let name = document.createElement("h5");
 
   name.innerHTML = vaDetails.name;
-  vaHeader.innerHTML = "";
   vaHeader.appendChild(name);
-
-  vaText.innerHTML = "";
 
   vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
   vaPortrait.classList.add("thumbnail");
 
   // ----- Character Data ----- //
 
+  sortRolesByFavourites(vaDetails.roles);
+
   let n = 0;
-  document.getElementById("va-popular-characters").innerHTML = "";
   for (let role of vaDetails.roles) {
     // addCharacterTableEntry("va-popular-characters-table", role);
     addCharacterEntry("va-popular-characters", role);
@@ -481,4 +479,11 @@ function addCharacterTableEntry(tableBodyId, vaDetails) {
 
   body.appendChild(row);
 
+}
+
+function clearVaInfo() {
+  document.getElementById("va-info-name").innerHTML = "";
+  document.getElementById("va-info-bio-portrait").style.backgroundImage = "";
+  document.getElementById("va-info-bio-text").innerHTML = "";
+  document.getElementById("va-popular-characters").innerHTML = "";
 }

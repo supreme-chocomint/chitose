@@ -21,7 +21,6 @@ function getQuery(type) {
       last
       native
     }
-    description(asHtml: true)
     language
     siteUrl
     image {

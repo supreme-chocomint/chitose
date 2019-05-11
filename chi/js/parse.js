@@ -184,7 +184,7 @@ function collectVADetails(data) {
   let staff = data.data.Staff;
 
   let details = {
-    roles: [], // roles will be sorted by favourites due to query
+    roles: [],
     id: staff.id,
     name: parsedName(staff.name),
     language: staff.language,
@@ -196,63 +196,13 @@ function collectVADetails(data) {
 
   window.voiceActors[details.id] = details;
 
-  extractVARoles(data, true); // get first page's data to start with, no requests
-
-  fillVaBasicInfo(details);
-  let sentRequest = decideVARequest(data);
-
-  if (sentRequest) {
-    window.voiceActors[details.id].roles = [];  // remove duplicate data
-  }
+  extractVARoles(data);
 
 }
 
-function decideVARequest(data) {
+function extractVARoles(vaDataPage) {
 
-  let staff = data.data.Staff;
-
-  if (staff.characters.pageInfo.hasNextPage) {
-    let nextPage = parseInt(staff.characters.pageInfo.currentPage) + 1;
-    let variables = {
-      id: staff.id,
-      pageNum: nextPage
-    }
-    makeRequest(
-      getQuery("VA ID"),
-      variables,
-      function(newData) {
-        combineVAPages(data, newData)
-      }
-    );
-    console.log("Requested page " + nextPage);
-  }
-
-  else {
-    extractVARoles(data, false); // extract with corruption correction requests
-  }
-
-}
-
-function combineVAPages(existingData, newData) {
-
-  existingEdges = existingData.data.Staff.characters.edges;
-  existingNodes = existingData.data.Staff.characters.nodes;
-
-  newEdges = newData.data.Staff.characters.edges;
-  newNodes = newData.data.Staff.characters.nodes;
-  newPageInfo = newData.data.Staff.characters.pageInfo;
-
-  // Concat to existing to keep queried ordering of characters
-  existingData.data.Staff.characters.edges = existingEdges.concat(newEdges);
-  existingData.data.Staff.characters.nodes = existingNodes.concat(newNodes);
-  existingData.data.Staff.characters.pageInfo = newPageInfo;
-  decideVARequest(existingData);
-
-}
-
-function extractVARoles(data, noRequest) {
-
-  let staff = data.data.Staff;
+  let staff = vaDataPage.data.Staff;
   let charaEdges = staff.characters.edges;
   let charaNodes = staff.characters.nodes;
 
@@ -285,31 +235,29 @@ function extractVARoles(data, noRequest) {
     }
 
     // detect AniList character data inconsistency
-    if (!doneCharacter && !noRequest) {
+    if (!doneCharacter) {
       let variables = {
         id: charaNode.id
       };
       makeRequest(
         getQuery("CHARACTER ID"),
         variables,
-        function(data) {
-          addAniListCorruptRoles(staff.id, data);
+        function(characterData) {
+          addAniListCorruptRoles(vaDataPage, characterData);
         }
       );
       corruptRolesCount++;
-    }
-    else if (!doneCharacter && noRequest) {
-      console.log("Corrupt role ignored as requested: " +
-                  parsedName(charaNode.name) + "/" + charaNode.id)
     }
     doneCharacter = false;
 
   }
 
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
-  if (corruptRolesCount == 0 && !noRequest) {
-    fillVaAdvancedInfo(window.voiceActors[staff.id]);
+
+  if (corruptRolesCount == 0) {
+    decideNextStep(vaDataPage);
   } else {
+    // callbacks will decide next step
     console.log("Attempted to fix corrupt roles: " + corruptRolesCount);
   }
 
@@ -340,7 +288,7 @@ function getMediaEdgeIds(charaNode) {
   return ids;
 }
 
-function addAniListCorruptRoles(vaId, data) {
+function addAniListCorruptRoles(vaDataPage, data) {
 
   let vaInfoContainer = document.getElementById("va-info-container");
   let toFixCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
@@ -360,18 +308,64 @@ function addAniListCorruptRoles(vaId, data) {
 
     show = charaNode.media.nodes[0];
     role = {show: show, character: character};
-    window.voiceActors[vaId].roles.push(role);
+    window.voiceActors[vaDataPage.data.Staff.id].roles.push(role);
 
   } catch (IsolatedEdgeException) {
     console.log("Character data for " + charaNode.id +
                 "/" + parsedName(charaNode.name) + " unrecoverable.");
-    window.voiceActors[vaId].numCorruptRoles += 1;
+    window.voiceActors[vaDataPage.data.Staff.id].numCorruptRoles += 1;
   }
 
   toFixCount--;
   vaInfoContainer.setAttribute("data-va-corrupt-roles", toFixCount);
+
   if (toFixCount == 0) {
-    fillVaAdvancedInfo(window.voiceActors[vaId]);
+    decideNextStep(vaDataPage);
+  }
+
+}
+
+function requestNextVaPage(data) {
+
+  let staff = data.data.Staff;
+  let nextPage = parseInt(staff.characters.pageInfo.currentPage) + 1;
+  let variables = {
+    id: staff.id,
+    pageNum: nextPage
+  }
+
+  makeRequest(
+    getQuery("VA ID"),
+    variables,
+    function(newData) {
+      addOldEdges(data, newData)
+    }
+  );
+
+  console.log("Requested page " + nextPage);
+
+}
+
+function addOldEdges(existingData, newData) {
+
+  existingEdges = existingData.data.Staff.characters.edges;
+  newEdges = newData.data.Staff.characters.edges;
+  newData.data.Staff.characters.edges = existingEdges.concat(newEdges);
+
+  extractVARoles(newData);
+
+}
+
+function decideNextStep(vaDataPage) {
+
+  if (vaDataPage.data.Staff.characters.pageInfo.currentPage == 1) {
+    fillVaBasicInfo(window.voiceActors[vaDataPage.data.Staff.id]);
+  }
+
+  if (vaDataPage.data.Staff.characters.pageInfo.hasNextPage) {
+    requestNextVaPage(vaDataPage);
+  } else {
+    fillVaAdvancedInfo(window.voiceActors[vaDataPage.data.Staff.id]);
   }
 
 }
@@ -405,4 +399,10 @@ function getAvgCharacterPopularity(roles) {
 
 function getCharacterSignificanceSpread(roles) {
   return {MAIN: 0, SUPPORTING: 0, BACKGROUND: 0};
+}
+
+function sortRolesByFavourites(roles) {
+  roles.sort(function(a, b) {
+    return b.character.favourites - a.character.favourites; // sort in descending order
+  })
 }
