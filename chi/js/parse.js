@@ -196,8 +196,7 @@ function collectVADetails(data) {
 
   window.voiceActors[details.id] = details;
 
-  extractVARoles(data); // get the first page's data to start with
-  calculateStatistics(details.id);
+  extractVARoles(data, true); // get first page's data to start with, no requests
 
   fillVaBasicInfo(details);
   let sentRequest = decideVARequest(data);
@@ -229,7 +228,7 @@ function decideVARequest(data) {
   }
 
   else {
-    extractVARoles(data);
+    extractVARoles(data, false); // extract with corruption correction requests
   }
 
 }
@@ -251,7 +250,7 @@ function combineVAPages(existingData, newData) {
 
 }
 
-function extractVARoles(data) {
+function extractVARoles(data, noRequest) {
 
   let staff = data.data.Staff;
   let charaEdges = staff.characters.edges;
@@ -286,7 +285,7 @@ function extractVARoles(data) {
     }
 
     // detect AniList character data inconsistency
-    if (!doneCharacter) {
+    if (!doneCharacter && !noRequest) {
       let variables = {
         id: charaNode.id
       };
@@ -299,12 +298,16 @@ function extractVARoles(data) {
       );
       corruptRolesCount++;
     }
+    else if (!doneCharacter && noRequest) {
+      console.log("Corrupt role ignored as requested: " +
+                  parsedName(charaNode.name) + "/" + charaNode.id)
+    }
     doneCharacter = false;
 
   }
 
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
-  if (corruptRolesCount == 0) {
+  if (corruptRolesCount == 0 && !noRequest) {
     fillVaAdvancedInfo(window.voiceActors[staff.id]);
   } else {
     console.log("Attempted to fix corrupt roles: " + corruptRolesCount);

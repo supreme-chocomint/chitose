@@ -324,25 +324,14 @@ function fillVaBasicInfo(vaDetails) {
 
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
-  let vaText = document.getElementById("va-info-bio-text");
-
   let name = document.createElement("h5");
-  let aniListLink = document.createElement("a");
 
   name.innerHTML = vaDetails.name;
   vaHeader.innerHTML = "";
   vaHeader.appendChild(name);
 
-  vaPortrait.src = vaDetails.image;
-  vaPortrait.alt = vaDetails.name;
-
-  vaText.innerHTML = formatStats(vaDetails);
-
-  aniListLink.href = vaDetails.url;
-  aniListLink.target = "_blank"; // open in new tab
-  aniListLink.innerHTML = "View on AniList";
-  vaText.appendChild(aniListLink);
-
+  vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
+  vaPortrait.classList.add("thumbnail");
 
   // ----- Character Data ----- //
 
@@ -392,6 +381,17 @@ function formatStats(va) {
 
 function fillVaAdvancedInfo(vaDetails) {
 
+  let vaText = document.getElementById("va-info-bio-text");
+  let aniListLink = document.createElement("a");
+
+  calculateStatistics(vaDetails.id);
+  vaText.innerHTML = formatStats(vaDetails);
+
+  aniListLink.href = vaDetails.url;
+  aniListLink.target = "_blank"; // open in new tab
+  aniListLink.innerHTML = "View on AniList";
+  vaText.appendChild(aniListLink);
+
 }
 
 function addCharacterEntry(containerId, vaDetails) {
@@ -401,14 +401,14 @@ function addCharacterEntry(containerId, vaDetails) {
 
   let container = document.getElementById(containerId);
   let div = document.createElement("div");
-  let image = document.createElement("img");
+  let thumbnail = document.createElement("div");
   let text = document.createElement("p");
   let characterLink = document.createElement("a");
   let showLink = document.createElement("a");
 
-  image.src = character.image;
-  image.alt = character.name;
-  div.appendChild(image);
+  thumbnail.style.backgroundImage = `url(${character.image})`;
+  thumbnail.classList.add("thumbnail");
+  div.appendChild(thumbnail); console.log(thumbnail.clientWidth);
 
   characterLink.href = character.url;
   characterLink.target = "_blank";

@@ -84,10 +84,6 @@ html {
   margin-top: 1rem;
 }
 
-#va-info-bio {
-  margin-bottom: 2rem;
-}
-
 /* Text
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -210,8 +206,29 @@ img {
   left: 0;
   bottom: 0;
   right: 0;
-  max-width: 100%;
-  max-height: 100%;
+}
+
+.thumbnail {
+  height: 20rem;
+  width: 15rem;
+  display: inline-block;
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+/* Detail pages
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#va-info-bio {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#va-info-bio-portrait {
+  margin-right: 2rem;
+  margin-bottom: 2rem;
 }
 
 #va-popular-characters div {

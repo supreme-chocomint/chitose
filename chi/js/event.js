@@ -113,7 +113,7 @@ function VADetailsOnClick(voiceActorId) {
 
   // use cache if it exists, otherwise request data
   if (window.voiceActors[voiceActorId].roles) {
-    fillVaInfo(window.voiceActors[voiceActorId]);
+    fillVaBasicInfo(window.voiceActors[voiceActorId]);
   }
   else {
     makeRequest(getQuery("VA ID"), variables, collectVADetails);
