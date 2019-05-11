@@ -80,6 +80,14 @@ html {
   margin-bottom: 10%;
 }
 
+#va-info-name {
+  margin-top: 1rem;
+}
+
+#va-info-bio {
+  margin-bottom: 2rem;
+}
+
 /* Text
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -190,4 +198,18 @@ input#dark-mode-switch {
 
 #search-bar {
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
+}
+
+/* Images
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Makes image fill div (if larger than div) */
+#va-info-bio-portrait {
+  position: relative;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
 }

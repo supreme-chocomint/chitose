@@ -25,7 +25,7 @@ function getQuery(type) {
     language
     siteUrl
     image {
-      medium
+      large
     }
     characters (sort: FAVOURITES_DESC, page: $pageNum) {
       pageInfo {

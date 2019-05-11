@@ -317,3 +317,28 @@ function hideImages(element) {
     img.style.display = "none";
   }
 }
+
+function fillVaInfo(vaDetails) {
+
+  let vaHeader = document.getElementById("va-info-name");
+  let vaPortrait = document.getElementById("va-info-bio-portrait");
+  let vaBio = document.getElementById("va-info-bio-text")
+  let vaPopularTable = document.getElementById("va-popular-characters-table");
+  let vaUwTable = document.getElementById("va-underwatched-characters-table");
+
+  let name = document.createElement("h5");
+  let aniListLink = document.createElement("a");
+
+  name.innerHTML = vaDetails.name;
+  vaHeader.appendChild(name);
+
+  vaPortrait.src = vaDetails.image;
+  vaPortrait.alt = vaDetails.name;
+
+  vaBio.innerHTML = vaDetails.descriptionHTML;
+  aniListLink.href = vaDetails.url;
+  aniListLink.target = "_blank"; // open in new tab
+  aniListLink.innerHTML = "View on AniList";
+  vaBio.appendChild(aniListLink);
+
+}

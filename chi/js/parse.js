@@ -19,6 +19,20 @@ function parsedSeason(quarter, year) {
   return quarter.charAt(0).toUpperCase() + quarter.slice(1).toLowerCase() + " " + year;
 }
 
+// Naming sense is out the window
+// Makes undefined into empty string, and adds back </p>
+function fixHtmlArray(array, N) {
+  for (let i = 0; i < N; i++) {
+    if (array[i] == undefined) {
+      array[i] = "";
+    }
+    else if (array[i] != ""){
+      array[i] += "</p>";
+    }
+  }
+  return array;
+}
+
 // Thank you Stack Overflow: https://stackoverflow.com/a/33369954
 // Numbers, strings, and booleans return false
 function isJson(item) {
@@ -209,17 +223,20 @@ function combinedVAPages(existingData, newData) {
 
 function extractVADetails(data) {
 
-  console.log(data);
+  let staff = data.data.Staff;
+  let charaEdges = staff.characters.edges;
+  let charaNodes = staff.characters.nodes;
 
-  let charaEdges = data.data.Staff.characters.edges;
-  let charaNodes = data.data.Staff.characters.nodes;
+  let blurb = fixHtmlArray(staff.description.split("</p>").slice(0, 2), 2);
+
   let details = {
     roles: [], // roles will be sorted by favourites due to query
-    name: parsedName(data.data.Staff.name),
-    descriptionHTML: data.data.Staff.description,
-    language: data.data.Staff.language,
-    url: data.data.Staff.siteUrl,
-    image: data.data.Staff.image.medium
+    id: staff.id,
+    name: parsedName(staff.name),
+    descriptionHTML: blurb[0] + blurb[1],
+    language: staff.language,
+    url: staff.siteUrl,
+    image: staff.image.large
   };
 
   let doneCharacter = false;
@@ -265,7 +282,9 @@ function extractVADetails(data) {
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
 
   if (corruptRolesCount == 0) {
-    console.log(window.vaDetails);
+    fillVaInfo(window.vaDetails);
+  } else {
+    console.log("Corrupt roles: " + corruptRolesCount);
   }
 
 }
@@ -316,7 +335,7 @@ function addAniListCorruptRoles(data) {
   corruptRolesCount--;
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
   if (corruptRolesCount == 0) {
-    console.log(window.vaDetails);
+    fillVaInfo(window.vaDetails);
   }
 
 }
