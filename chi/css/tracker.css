@@ -204,7 +204,7 @@ input#dark-mode-switch {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 /* Makes image fill div (if larger than div) */
-#va-info-bio-portrait {
+img {
   position: relative;
   top: 0;
   left: 0;

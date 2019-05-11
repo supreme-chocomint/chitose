@@ -195,6 +195,8 @@ function collectVADetails(data) {
   };
 
   window.voiceActors[details.id] = details;
+  extractVARoles(data); // get the first page's data to start with
+
   fillVaBasicInfo(details);
   decideVARequest(data);
 
@@ -296,7 +298,7 @@ function extractVARoles(data) {
 
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
   if (corruptRolesCount == 0) {
-    fillVaAdvancedInfo(details);
+    fillVaAdvancedInfo(window.voiceActors[staff.id]);
   } else {
     console.log("Corrupt roles: " + corruptRolesCount);
   }

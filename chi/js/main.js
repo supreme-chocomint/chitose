@@ -6,7 +6,6 @@ window.onload = function() {
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
 
-
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
 

@@ -320,10 +320,11 @@ function hideImages(element) {
 
 function fillVaBasicInfo(vaDetails) {
 
+  // ----- Staff Data ----- //
+
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
   let vaBio = document.getElementById("va-info-bio-text")
-  let vaPopularTable = document.getElementById("va-popular-characters-table");
 
   let name = document.createElement("h5");
   let aniListLink = document.createElement("a");
@@ -340,8 +341,52 @@ function fillVaBasicInfo(vaDetails) {
   aniListLink.innerHTML = "View on AniList";
   vaBio.appendChild(aniListLink);
 
+  // ----- Character Data ----- //
+
+  let n = 0;
+  for (let role of vaDetails.roles) {
+    addCharacterTableEntry("va-popular-characters-table", role);
+    n++;
+    if (n == 5) {
+      break;
+    }
+  }
+
 }
 
 function fillVaAdvancedInfo(vaDetails) {
-  
+
+}
+
+function addCharacterTableEntry(tableBodyId, metadata) {
+
+  let character = metadata.character;
+  let show = metadata.show;
+
+  let body = document.getElementById(tableBodyId);
+  let row = document.createElement("tr");
+  let imageCol = document.createElement("td");
+  let image = document.createElement("img");
+  let textCol = document.createElement("td");
+  let characterLink = document.createElement("a");
+  let showLink = document.createElement("a");
+
+  image.src = character.image;
+  image.alt = character.name;
+  imageCol.appendChild(image);
+  row.appendChild(imageCol);
+
+  characterLink.href = character.url;
+  characterLink.target = "_blank";
+  characterLink.innerHTML = character.name;
+  showLink.href = show.siteUrl;
+  showLink.target = "_blank";
+  showLink.innerHTML = show.title.romaji;
+  textCol.appendChild(characterLink);
+  textCol.innerHTML += "<br>";
+  textCol.appendChild(showLink);
+  row.appendChild(textCol);
+
+  body.appendChild(row);
+
 }
