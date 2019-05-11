@@ -6,11 +6,6 @@ function setLongFormText() {
   descriptionBox.innerHTML = getDescriptionString();
 }
 
-function hideElements() {
-  document.getElementById("follow-table").style.display = "none";
-  document.getElementById("transfer").style.display = "none";
-}
-
 function buildSeasonPickers() {
   buildYearPicker();
   buildQuarterPicker();
@@ -241,8 +236,8 @@ function addVATableEntry(metadata) {
   let name = document.createElement("a");
   let imageCol = document.createElement("td");
   let image = document.createElement("img");
-  let urlCol = document.createElement("td");
-  let url = document.createElement("a");
+  let linkCol = document.createElement("td");
+  let link = document.createElement("a");
   let numRolesCol = document.createElement("td");
   let numRoles = document.createElement("span");
   let followCol = document.createElement("td");
@@ -261,11 +256,12 @@ function addVATableEntry(metadata) {
   imageCol.appendChild(image);
   /*row.append(imageCol); FIXME*/
 
-  url.innerHTML = "See on AniList";
-  url.href = metadata.url;
-  url.target = "_blank";  // open in new tab
-  urlCol.appendChild(url);
-  row.appendChild(urlCol);
+  link.innerHTML = "Details";
+  link.href = "javascript:void(0)";
+  link.classList.add("internal_link");
+  link.onclick = function() {VADetailsOnClick(metadata.id)};
+  linkCol.appendChild(link);
+  row.appendChild(linkCol);
 
   numRolesInt = window.seasonalRolesCounter[metadata.id];
   if (numRolesInt) {

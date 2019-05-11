@@ -54,22 +54,23 @@
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
+    <div class="row" id="header">
+      <h2>c h i <span class="jp">歳</span></h2>
+      <h5>seasonal voice actor tracker</h5>
+    </div>
+  </div>
+
+  <div class="container" id="main-container">
 
     <div class="row">
-      <div class="u-full-width" id="description">
-        <div id="header">
-          <h2>c h i <span class="jp">歳</span></h2>
-          <h5>seasonal voice actor tracker</h5>
-        </div>
-        <p id="description-text"></p>
-      </div>
+      <p id="description-text"></p>
     </div>
 
     <div class="row" id="va-table-tools">
       <input type="search" id="search-bar" placeholder="Search voice actors">
       <input type="submit" class="button-primary" id="search-button" value="Search">
-      <input type="submit" class="button" id="left-table-switch" value="Toggle Following">
-      <input type="submit" class="button" id="refresh-button" value="Refresh">
+      <input type="button" class="button" id="left-table-switch" value="Toggle Following">
+      <input type="button" class="button" id="refresh-button" value="Refresh">
       <select id="year-picker"></select>
       <select id="quarter-picker"></select>
     </div>
@@ -88,7 +89,12 @@
             </tr></thead>
             <tbody id="va-table-body"></tbody>
           </table>
-          <table id="follow-table">
+          <div id="navigation">
+            <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
+            <span id="page-tracker">1/1</span>
+            <a href="javascript:void(0)" id="right-nav">&gt;</a>
+          </div>
+          <table id="follow-table" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
             <thead><tr>
               <th class="text">Name ★</th>
@@ -97,12 +103,7 @@
             </tr></thead>
             <tbody id="follow-table-body"></tbody>
           </table>
-          <div id="navigation">
-            <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
-            <span id="page-tracker">1/1</span>
-            <a href="javascript:void(0)" id="right-nav">&gt;</a>
-          </div>
-          <div id="transfer">
+          <div id="transfer" style="display:none;">
             <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
             <div>
               <input type="submit" class="button-primary" id="import-button" value="Import">
@@ -126,6 +127,40 @@
       </div>
 
     </div>
+
+  </div>
+
+  <div class="container" id="va-info-container" style="display:none;">
+
+    <div class="row">
+      <input type="button" class="button" id="return-button" value="Return to Main View">
+    </div>
+
+    <div class="row" id="va-info-bio">
+        <img id="va-info-bio-portrait">
+        <div id="va-info-bio-text">
+          <p id="va-info-bio-text-name"></p>
+        </div>
+    </div>
+
+    <div class="row" id="va-info-characters">
+      <div class="one-half column">
+        <table id="va-popular-characters-table">
+          <caption id="va-table-caption">Popular Characters</caption>
+          <tbody id="va-popular-characters-table-body"></tbody>
+        </table>
+      </div>
+      <div class="one-half column">
+        <table id="va-underwatched-characters-table">
+          <caption id="va-table-caption">Underwatched Characters</caption>
+          <tbody id="va-underwatched-characters-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container" id="role-info-container">
 
   </div>
 

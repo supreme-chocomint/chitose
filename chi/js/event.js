@@ -94,6 +94,35 @@ function VAOnClick(voiceActorId) {
   }
 }
 
+function VADetailsOnClick(voiceActorId) {
+
+  let mainContainer = document.getElementById("main-container");
+  let vaInfoContainer = document.getElementById("va-info-container");
+  mainContainer.style.display = "none";
+  vaInfoContainer.style.display = "";
+
+  let variables = {
+    id: voiceActorId,
+    pageNum: 1
+  }
+
+  // use cache if it exists, otherwise request data
+  if (window.voiceActors[voiceActorId].characters) {
+    makeRequest(getQuery("VA ID"), variables, collectVADetails);
+  }
+  else {
+    makeRequest(getQuery("VA ID"), variables, collectVADetails);
+  }
+
+}
+
+function returnButtonOnClick() {
+  let mainContainer = document.getElementById("main-container");
+  let vaInfoContainer = document.getElementById("va-info-container");
+  mainContainer.style.display = "";
+  vaInfoContainer.style.display = "none";
+}
+
 function refreshButtonOnClick() {
   if (!isLocked()) {
     lock();

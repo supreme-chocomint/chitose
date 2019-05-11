@@ -5,7 +5,7 @@ window.onload = function() {
   window.seasonalRolesCounter = {};  // must be preserved across requests
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
-  window.annIds = {};
+
 
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
@@ -24,7 +24,6 @@ window.onload = function() {
   setOnClicks();
   setOnKeyPresses();
   setLongFormText();
-  hideElements();
   buildSeasonPickers();
   clearInputBoxes();
 
@@ -44,6 +43,7 @@ function setOnClicks() {
   let leftTableSwitch = document.getElementById("left-table-switch");
   let importButton = document.getElementById("import-button");
   let exportButton = document.getElementById("export-button");
+  let returnButton = document.getElementById("return-button");
 
   searchButton.onclick = function() { searchButtonOnClick(); }
   refreshButton.onclick = function() { refreshButtonOnClick(); }
@@ -51,6 +51,7 @@ function setOnClicks() {
   leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
   importButton.onclick = function() { importButtonOnClick(); }
   exportButton.onclick = function() { exportButtonOnClick(); }
+  returnButton.onclick = function() { returnButtonOnClick(); }
   setNavigationOnClicks();
 
 }
@@ -93,7 +94,6 @@ function populateVATableWithSeason() {
     for (let i = 0; i < window.mediaFormats.length; i++) {
       let data = window.seasonRawData[year][quarter][i];
       extractVAs(window.seasonalRolesCounter, window.voiceActors, data);
-      console.log(window.seasonalRolesCounter);
     }
     sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);
     fillVATableAndPage(sortedSeasonalVoiceActorIds);

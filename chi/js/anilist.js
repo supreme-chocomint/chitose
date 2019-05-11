@@ -2,6 +2,74 @@
 
 function getQuery(type) {
 
+  let voiceActorBasicFragment = `
+    id
+    name {
+      first
+      last
+    }
+    siteUrl
+    image {
+      medium
+    }
+  `;
+
+  let voiceActorCompleteFragment = `
+    id
+    name {
+      first
+      last
+      native
+    }
+    description(asHtml: true)
+    language
+    siteUrl
+    image {
+      medium
+    }
+    characters (sort: FAVOURITES_DESC, page: $pageNum) {
+      pageInfo {
+        hasNextPage
+        currentPage
+      }
+      edges {
+        role
+        id
+        media {
+          id
+          title {
+            romaji
+            english
+            native
+            userPreferred
+          }
+          popularity
+          meanScore
+          siteUrl
+        }
+      }
+      nodes {
+        id
+        name {
+          first
+          last
+          native
+        }
+        favourites
+        image {
+          medium
+        }
+        siteUrl
+        media {
+          edges {
+            id
+          }
+        }
+      }
+    }
+
+  `;
+
   let staffSearchQuery = `
   query ($page: Int, $perPage: Int, $search:String) {
 
@@ -15,17 +83,8 @@ function getQuery(type) {
         perPage
       }
 
-      staff (search: $search) {
-        id
-        name {
-          first
-          last
-        }
-        siteUrl
-        image {
-          medium
-        }
-      }
+      staff (search: $search) {` + voiceActorBasicFragment +
+      `}
     }
 
   }
@@ -82,19 +141,8 @@ function getQuery(type) {
           edges {
             id
             role
-            voiceActors {
-              id
-              name {
-                first
-                last
-                native
-              }
-              language
-              siteUrl
-              image {
-                medium
-              }
-            }
+            voiceActors { ` + voiceActorBasicFragment +
+            `}
             node {
               id
               name {
@@ -114,27 +162,50 @@ function getQuery(type) {
   }
   `;
   let staffIdQuery = `
+  query ($id: Int, $pageNum: Int) {
+    Staff (id: $id) {` + voiceActorCompleteFragment +
+    `}
+  }
+  `;
+
+  let characterIdQuery = `
   query ($id: Int) {
-    Staff (id: $id) {
+    Character (id: $id) {
       id
       name {
         first
         last
         native
       }
-      language
-      siteUrl
       image {
         medium
       }
+      favourites
+      siteUrl
+      media (sort: POPULARITY_DESC, perPage: 1) {
+        nodes {
+          id
+          title {
+            romaji
+            english
+            native
+            userPreferred
+          }
+          popularity
+          meanScore
+          siteUrl
+        }
+      }
     }
   }
-  `
+  `;
 
-  if (type === "VA SEARCH") {
+  if (type == "VA SEARCH") {
     return staffSearchQuery;
-  } else if (type === "VA ID") {
+  } else if (type == "VA ID") {
     return staffIdQuery;
+  } else if (type == "CHARACTER ID") {
+    return characterIdQuery;
   } else {
     return fullSeasonDataQuery;
   };

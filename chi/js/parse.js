@@ -1,5 +1,7 @@
 // Misc parsing and sorting functions
 
+// ------------ STRING HELPERS ------------ //
+
 function parsedName(rawName) {
   let firstName = rawName.first;
   let lastName = rawName.last;
@@ -17,36 +19,24 @@ function parsedSeason(quarter, year) {
   return quarter.charAt(0).toUpperCase() + quarter.slice(1).toLowerCase() + " " + year;
 }
 
-function hasVoiceActor(charaData, voiceActorId) {
-  for (let referenceVA of getVoiceActors(charaData)) {
-    if (referenceVA.id == voiceActorId) {
+// Thank you Stack Overflow: https://stackoverflow.com/a/33369954
+// Numbers, strings, and booleans return false
+function isJson(item) {
+  item = typeof item !== "string"
+    ? JSON.stringify(item)
+    : item;
+  try {
+      item = JSON.parse(item);
+  } catch (e) {
+      return false;
+  }
+  if (typeof item === "object" && item !== null) {
       return true;
-    };
-  };
+  }
   return false;
 }
 
-function getVoiceActors(charaData) {
-  let actors = new Set();
-  for (let voiceActor of charaData.voiceActors) {
-    actors.add({
-      name: parsedName(voiceActor.name),
-      id: voiceActor.id,
-      url: voiceActor.siteUrl,
-      image: voiceActor.image.medium
-    });
-  }
-  return actors;
-}
-
-function getAllShowCharacterDatas(showDataArray) {
-  let combinedCharaDataArray = [];
-  for (let showData of showDataArray) {
-    let charaDataArray = showData.characters.edges;
-    combinedCharaDataArray = combinedCharaDataArray.concat(charaDataArray);
-  }
-  return combinedCharaDataArray;
-}
+// ------------ SEARCH ------------ //
 
 function parseVASearchResults(data) {
 
@@ -69,6 +59,8 @@ function parseVASearchResults(data) {
   return voiceActorArray;
 
 }
+
+// ------------ SEASONAL ROLES ------------ //
 
 function collectSeasonalRoles(voiceActorId, data) {
 
@@ -95,6 +87,17 @@ function collectSeasonalRoles(voiceActorId, data) {
 
 }
 
+function hasVoiceActor(charaData, voiceActorId) {
+  for (let referenceVA of getVoiceActors(charaData)) {
+    if (referenceVA.id == voiceActorId) {
+      return true;
+    };
+  };
+  return false;
+}
+
+// ------------ SEASONAL VOICE ACTORS ------------ //
+
 function extractVAs(rolesCounter, voiceActors, rawData) {
 
   let showDataArray = rawData.data.Page.media;
@@ -108,17 +111,34 @@ function extractVAs(rolesCounter, voiceActors, rawData) {
       }
       else {
         rolesCounter[voiceActor.id] = 1;
-        voiceActors[voiceActor.id] = {
-          id: voiceActor.id,  // redundant, for convenience in click-related actions
-          name: voiceActor.name,
-          url: voiceActor.url,
-          image: voiceActor.image
-        };
+        voiceActors[voiceActor.id] = voiceActor;
       }
 
     }
   }
 
+}
+
+function getVoiceActors(charaData) {
+  let actors = new Set();
+  for (let voiceActor of charaData.voiceActors) {
+    actors.add({
+      name: parsedName(voiceActor.name),
+      id: voiceActor.id,
+      url: voiceActor.siteUrl,
+      image: voiceActor.image.medium
+    });
+  }
+  return actors;
+}
+
+function getAllShowCharacterDatas(showDataArray) {
+  let combinedCharaDataArray = [];
+  for (let showData of showDataArray) {
+    let charaDataArray = showData.characters.edges;
+    combinedCharaDataArray = combinedCharaDataArray.concat(charaDataArray);
+  }
+  return combinedCharaDataArray;
 }
 
 function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
@@ -143,24 +163,160 @@ function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
 
 }
 
-// Thank you Stack Overflow: https://stackoverflow.com/a/33369954
-// Numbers, strings, and booleans return false
-function isJson(item) {
+// ------------ VOICE ACTOR DETAILS ------------ //
 
-  item = typeof item !== "string"
-    ? JSON.stringify(item)
-    : item;
+function collectVADetails(data) {
 
-  try {
-      item = JSON.parse(item);
-  } catch (e) {
-      return false;
+  // weeeeeeee
+  if (data.data.Staff.characters.pageInfo.hasNextPage) {
+    let nextPage = parseInt(data.data.Staff.characters.pageInfo.currentPage) + 1;
+    let variables = {
+      id: data.data.Staff.id,
+      pageNum: nextPage
+    }
+    makeRequest(
+      getQuery("VA ID"),
+      variables,
+      function(newData) {
+        combinedVAPages(data, newData)
+      }
+    );
+    console.log("Requested page " + nextPage);
   }
 
-  if (typeof item === "object" && item !== null) {
-      return true;
+  else {
+    extractVADetails(data);
   }
 
-  return false;
+}
+
+function combinedVAPages(existingData, newData) {
+
+  existingEdges = existingData.data.Staff.characters.edges;
+  existingNodes = existingData.data.Staff.characters.nodes;
+
+  newEdges = newData.data.Staff.characters.edges;
+  newNodes = newData.data.Staff.characters.nodes;
+  newPageInfo = newData.data.Staff.characters.pageInfo;
+
+  // Concat to existing to keep queried ordering of characters
+  existingData.data.Staff.characters.edges = existingEdges.concat(newEdges);
+  existingData.data.Staff.characters.nodes = existingNodes.concat(newNodes);
+  existingData.data.Staff.characters.pageInfo = newPageInfo;
+  collectVADetails(existingData);
+
+}
+
+function extractVADetails(data) {
+
+  console.log(data);
+
+  let charaEdges = data.data.Staff.characters.edges;
+  let charaNodes = data.data.Staff.characters.nodes;
+  let details = {
+    roles: [], // roles will be sorted by favourites due to query
+    name: parsedName(data.data.Staff.name),
+    descriptionHTML: data.data.Staff.description,
+    language: data.data.Staff.language,
+    url: data.data.Staff.siteUrl,
+    image: data.data.Staff.image.medium
+  };
+
+  let doneCharacter = false;
+  let corruptRolesCount = 0;
+  let vaInfoContainer = document.getElementById("va-info-container");
+
+  for (let charaNode of charaNodes) {
+
+    for (let id of getMediaEdgeIds(charaNode)) {
+      for (let charaEdge of charaEdges) {
+        if (charaEdge.id == id) {
+          let show = getMainShowofCharacter(charaEdge);
+          let character = {
+            id: charaNode.id,
+            favourites: charaNode.favourites,
+            name: parsedName(charaNode.name),
+            url: charaNode.siteUrl,
+            image: charaNode.image.medium
+          }
+          details.roles.push({show: show, character: character});
+          doneCharacter = true;
+          break;  // optimization
+        }
+      }
+      if (doneCharacter) {
+        break; // optimization
+      }
+    }
+
+    // detect AniList character data inconsistency
+    if (!doneCharacter) {
+      let variables = {
+        id: charaNode.id
+      }
+      makeRequest(getQuery("CHARACTER ID"), variables, addAniListCorruptRoles);
+      corruptRolesCount++;
+    }
+    doneCharacter = false;
+
+  }
+
+  window.vaDetails = details;
+  vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
+
+  if (corruptRolesCount == 0) {
+    console.log(window.vaDetails);
+  }
+
+}
+
+// Assumes most popular entry = main entry
+function getMainShowofCharacter(charaEdge) {
+
+  let maxPopularity = 0;
+  let mainShow = charaEdge.media[0];
+
+  for (let show of charaEdge.media) {
+    if (show.popularity > maxPopularity) {
+      maxPopularity = show.popularity;
+      mainShow = show;
+    }
+  }
+
+  return mainShow;
+
+}
+
+function getMediaEdgeIds(charaNode) {
+  let ids = [];
+  for (let obj of charaNode.media.edges) {
+    ids.push(obj.id);
+  }
+  return ids;
+}
+
+function addAniListCorruptRoles(data) {
+
+  let vaInfoContainer = document.getElementById("va-info-container");
+  let corruptRolesCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
+  let charaNode = data.data.Character;
+
+  let character = {
+    id: charaNode.id,
+    favourites: charaNode.favourites,
+    name: parsedName(charaNode.name),
+    url: charaNode.siteUrl,
+    image: charaNode.image.medium
+  }
+  let show = charaNode.media.nodes[0];
+  let role = {show: show, character: character};
+
+  window.vaDetails.roles.push(role);
+
+  corruptRolesCount--;
+  vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
+  if (corruptRolesCount == 0) {
+    console.log(window.vaDetails);
+  }
 
 }
