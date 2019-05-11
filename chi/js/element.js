@@ -448,19 +448,6 @@ function styleCharacterEntries() {
     caption.style.width = style.width;
   }
 
-  // --- Make all divs same height as highest div --- //
-
-  let divs = document.getElementsByClassName("thumbnail-wrapper");
-  let maxHeight = 0;
-  for (let div of divs) {
-    if (div.clientHeight > maxHeight) {
-      maxHeight = div.clientHeight;
-    }
-  }
-  for (let div of divs) {
-    div.style.height = maxHeight + "px";
-  }
-
 }
 
 function addCharacterTableEntry(tableBodyId, vaDetails) {
