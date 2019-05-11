@@ -80,10 +80,6 @@ html {
   margin-bottom: 10%;
 }
 
-#va-info-name {
-  margin-top: 1rem;
-}
-
 /* Text
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -199,22 +195,17 @@ input#dark-mode-switch {
 /* Images
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-/* Makes image fill div (if larger than div) */
-img {
-  position: relative;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-}
-
 .thumbnail {
-  height: 20rem;
-  width: 15rem;
+  height: 17rem;
+  width: 12rem;
   display: inline-block;
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
+}
+
+.thumbnail-caption {
+  text-align: center;
 }
 
 /* Detail pages
@@ -231,6 +222,25 @@ img {
   margin-bottom: 2rem;
 }
 
+#va-info-name {
+  margin-top: 1rem;
+}
+
+#va-left-container {
+  width: 40%;
+  padding-top: 2rem;
+  border-radius: 4px;
+  border-color: var(--color);
+  border-width: 1px;
+  border-style: solid;
+  margin-bottom: 2rem;
+}
+
+#va-popular-characters {
+  text-align: center;
+}
+
 #va-popular-characters div {
   display: inline-block;
+  vertical-align: top; /* Make top of divs line up, instead of bottom */
 }

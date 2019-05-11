@@ -362,9 +362,9 @@ function addAniListCorruptRoles(vaId, data) {
     role = {show: show, character: character};
     window.voiceActors[vaId].roles.push(role);
 
-  } catch {
+  } catch (IsolatedEdgeException) {
     console.log("Character data for " + charaNode.id +
-                "/" + parsedName(charaNode.name) + " corrupt.");
+                "/" + parsedName(charaNode.name) + " unrecoverable.");
     window.voiceActors[vaId].numCorruptRoles += 1;
   }
 

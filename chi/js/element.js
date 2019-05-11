@@ -324,11 +324,14 @@ function fillVaBasicInfo(vaDetails) {
 
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
+  let vaText = document.getElementById("va-info-bio-text");
   let name = document.createElement("h5");
 
   name.innerHTML = vaDetails.name;
   vaHeader.innerHTML = "";
   vaHeader.appendChild(name);
+
+  vaText.innerHTML = "";
 
   vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
   vaPortrait.classList.add("thumbnail");
@@ -341,10 +344,12 @@ function fillVaBasicInfo(vaDetails) {
     // addCharacterTableEntry("va-popular-characters-table", role);
     addCharacterEntry("va-popular-characters", role);
     n++;
-    if (n == 5) {
+    if (n == 6) {
       break;
     }
   }
+
+  styleCharacterEntries();
 
 }
 
@@ -408,20 +413,53 @@ function addCharacterEntry(containerId, vaDetails) {
 
   thumbnail.style.backgroundImage = `url(${character.image})`;
   thumbnail.classList.add("thumbnail");
-  div.appendChild(thumbnail); console.log(thumbnail.clientWidth);
+  div.appendChild(thumbnail);
 
   characterLink.href = character.url;
   characterLink.target = "_blank";
   characterLink.innerHTML = character.name;
+  characterLink.style.fontWeight = 'bold';
+  text.appendChild(characterLink);
+
+  text.innerHTML += "<br>";
+
   showLink.href = show.siteUrl;
   showLink.target = "_blank";
   showLink.innerHTML = show.title.romaji;
-  text.appendChild(characterLink);
-  text.innerHTML += "<br>";
   text.appendChild(showLink);
+
+  text.classList.add("thumbnail-caption");
   div.appendChild(text);
 
+  div.classList.add("thumbnail-wrapper");
   container.appendChild(div);
+
+}
+
+function styleCharacterEntries() {
+
+  // --- Make captions same width as thumbnails --- //
+
+  let thumbnail = document.querySelector(".thumbnail");
+  let style = window.getComputedStyle(thumbnail);
+
+  let captions = document.getElementsByClassName("thumbnail-caption");
+  for (let caption of captions) {
+    caption.style.width = style.width;
+  }
+
+  // --- Make all divs same height as highest div --- //
+
+  let divs = document.getElementsByClassName("thumbnail-wrapper");
+  let maxHeight = 0;
+  for (let div of divs) {
+    if (div.clientHeight > maxHeight) {
+      maxHeight = div.clientHeight;
+    }
+  }
+  for (let div of divs) {
+    div.style.height = maxHeight + "px";
+  }
 
 }
 
@@ -455,9 +493,5 @@ function addCharacterTableEntry(tableBodyId, vaDetails) {
   row.appendChild(textCol);
 
   body.appendChild(row);
-
-}
-
-function clearVAPage() {
 
 }
