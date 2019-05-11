@@ -318,13 +318,12 @@ function hideImages(element) {
   }
 }
 
-function fillVaInfo(vaDetails) {
+function fillVaBasicInfo(vaDetails) {
 
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
   let vaBio = document.getElementById("va-info-bio-text")
   let vaPopularTable = document.getElementById("va-popular-characters-table");
-  let vaUwTable = document.getElementById("va-underwatched-characters-table");
 
   let name = document.createElement("h5");
   let aniListLink = document.createElement("a");
@@ -341,4 +340,8 @@ function fillVaInfo(vaDetails) {
   aniListLink.innerHTML = "View on AniList";
   vaBio.appendChild(aniListLink);
 
+}
+
+function fillVaAdvancedInfo(vaDetails) {
+  
 }

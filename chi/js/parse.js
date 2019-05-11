@@ -181,30 +181,52 @@ function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
 
 function collectVADetails(data) {
 
-  // weeeeeeee
-  if (data.data.Staff.characters.pageInfo.hasNextPage) {
-    let nextPage = parseInt(data.data.Staff.characters.pageInfo.currentPage) + 1;
+  let staff = data.data.Staff;
+
+  let blurb = fixHtmlArray(staff.description.split("</p>").slice(0, 2), 2);
+  let details = {
+    roles: [], // roles will be sorted by favourites due to query
+    id: staff.id,
+    name: parsedName(staff.name),
+    descriptionHTML: blurb[0] + blurb[1],
+    language: staff.language,
+    url: staff.siteUrl,
+    image: staff.image.large
+  };
+
+  window.voiceActors[details.id] = details;
+  fillVaBasicInfo(details);
+  decideVARequest(data);
+
+}
+
+function decideVARequest(data) {
+
+  let staff = data.data.Staff;
+
+  if (staff.characters.pageInfo.hasNextPage) {
+    let nextPage = parseInt(staff.characters.pageInfo.currentPage) + 1;
     let variables = {
-      id: data.data.Staff.id,
+      id: staff.id,
       pageNum: nextPage
     }
     makeRequest(
       getQuery("VA ID"),
       variables,
       function(newData) {
-        combinedVAPages(data, newData)
+        combineVAPages(data, newData)
       }
     );
     console.log("Requested page " + nextPage);
   }
 
   else {
-    extractVADetails(data);
+    extractVARoles(data);
   }
 
 }
 
-function combinedVAPages(existingData, newData) {
+function combineVAPages(existingData, newData) {
 
   existingEdges = existingData.data.Staff.characters.edges;
   existingNodes = existingData.data.Staff.characters.nodes;
@@ -217,31 +239,19 @@ function combinedVAPages(existingData, newData) {
   existingData.data.Staff.characters.edges = existingEdges.concat(newEdges);
   existingData.data.Staff.characters.nodes = existingNodes.concat(newNodes);
   existingData.data.Staff.characters.pageInfo = newPageInfo;
-  collectVADetails(existingData);
+  decideVARequest(existingData);
 
 }
 
-function extractVADetails(data) {
+function extractVARoles(data) {
 
   let staff = data.data.Staff;
   let charaEdges = staff.characters.edges;
   let charaNodes = staff.characters.nodes;
 
-  let blurb = fixHtmlArray(staff.description.split("</p>").slice(0, 2), 2);
-
-  let details = {
-    roles: [], // roles will be sorted by favourites due to query
-    id: staff.id,
-    name: parsedName(staff.name),
-    descriptionHTML: blurb[0] + blurb[1],
-    language: staff.language,
-    url: staff.siteUrl,
-    image: staff.image.large
-  };
-
+  let vaInfoContainer = document.getElementById("va-info-container");
   let doneCharacter = false;
   let corruptRolesCount = 0;
-  let vaInfoContainer = document.getElementById("va-info-container");
 
   for (let charaNode of charaNodes) {
 
@@ -256,7 +266,7 @@ function extractVADetails(data) {
             url: charaNode.siteUrl,
             image: charaNode.image.medium
           }
-          details.roles.push({show: show, character: character});
+          window.voiceActors[staff.id].roles.push({show: show, character: character});
           doneCharacter = true;
           break;  // optimization
         }
@@ -270,19 +280,23 @@ function extractVADetails(data) {
     if (!doneCharacter) {
       let variables = {
         id: charaNode.id
-      }
-      makeRequest(getQuery("CHARACTER ID"), variables, addAniListCorruptRoles);
+      };
+      makeRequest(
+        getQuery("CHARACTER ID"),
+        variables,
+        function(data) {
+          addAniListCorruptRoles(staff.id, data);
+        }
+      );
       corruptRolesCount++;
     }
     doneCharacter = false;
 
   }
 
-  window.vaDetails = details;
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
-
   if (corruptRolesCount == 0) {
-    fillVaInfo(window.vaDetails);
+    fillVaAdvancedInfo(details);
   } else {
     console.log("Corrupt roles: " + corruptRolesCount);
   }
@@ -314,7 +328,7 @@ function getMediaEdgeIds(charaNode) {
   return ids;
 }
 
-function addAniListCorruptRoles(data) {
+function addAniListCorruptRoles(vaId, data) {
 
   let vaInfoContainer = document.getElementById("va-info-container");
   let corruptRolesCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
@@ -330,12 +344,12 @@ function addAniListCorruptRoles(data) {
   let show = charaNode.media.nodes[0];
   let role = {show: show, character: character};
 
-  window.vaDetails.roles.push(role);
+  window.voiceActors[vaId].roles.push(role);
 
   corruptRolesCount--;
   vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
   if (corruptRolesCount == 0) {
-    fillVaInfo(window.vaDetails);
+    fillVaAdvancedInfo(window.voiceActors[vaId]);
   }
 
 }
