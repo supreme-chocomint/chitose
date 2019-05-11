@@ -98,8 +98,13 @@ function VADetailsOnClick(voiceActorId) {
 
   let mainContainer = document.getElementById("main-container");
   let vaInfoContainer = document.getElementById("va-info-container");
+  let vaLeftContainer = document.getElementById("va-left-container");
+  let vaRightContainer = document.getElementById("va-right-container");
+
   mainContainer.style.display = "none";
   vaInfoContainer.style.display = "";
+  vaLeftContainer.style.display = "";
+  vaRightContainer.style.display = "";
 
   let variables = {
     id: voiceActorId,
@@ -117,10 +122,17 @@ function VADetailsOnClick(voiceActorId) {
 }
 
 function returnButtonOnClick() {
+
   let mainContainer = document.getElementById("main-container");
   let vaInfoContainer = document.getElementById("va-info-container");
+  let vaLeftContainer = document.getElementById("va-left-container");
+  let vaRightContainer = document.getElementById("va-right-container");
+
   mainContainer.style.display = "";
   vaInfoContainer.style.display = "none";
+  vaLeftContainer.style.display = "none";
+  vaRightContainer.style.display = "none";
+
 }
 
 function refreshButtonOnClick() {

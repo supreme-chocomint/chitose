@@ -324,28 +324,33 @@ function fillVaBasicInfo(vaDetails) {
 
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
-  let vaBio = document.getElementById("va-info-bio-text")
+  let vaText = document.getElementById("va-info-bio-text");
 
   let name = document.createElement("h5");
   let aniListLink = document.createElement("a");
 
   name.innerHTML = vaDetails.name;
+  vaHeader.innerHTML = "";
   vaHeader.appendChild(name);
 
   vaPortrait.src = vaDetails.image;
   vaPortrait.alt = vaDetails.name;
 
-  vaBio.innerHTML = vaDetails.descriptionHTML;
+  vaText.innerHTML = formatStats(vaDetails);
+
   aniListLink.href = vaDetails.url;
   aniListLink.target = "_blank"; // open in new tab
   aniListLink.innerHTML = "View on AniList";
-  vaBio.appendChild(aniListLink);
+  vaText.appendChild(aniListLink);
+
 
   // ----- Character Data ----- //
 
   let n = 0;
+  document.getElementById("va-popular-characters").innerHTML = "";
   for (let role of vaDetails.roles) {
-    addCharacterTableEntry("va-popular-characters-table", role);
+    // addCharacterTableEntry("va-popular-characters-table", role);
+    addCharacterEntry("va-popular-characters", role);
     n++;
     if (n == 5) {
       break;
@@ -354,14 +359,76 @@ function fillVaBasicInfo(vaDetails) {
 
 }
 
+function formatStats(va) {
+
+  let popular = va.roleMostPopularShow;
+  let acclaimed = va.roleHighestRatedShow;
+
+  let string = `
+  Popularity: ${va.popularity} favorites<br>
+  Number of characters voiced: ${va.rolesCount}<br>
+
+  Most popular show: <a href="${popular.show.url}" target="_blank">
+  ${popular.show.title.romaji}</a>
+    (voiced <a href="${popular.character.url}" target="_blank">
+    ${popular.character.name}</a>)<br>
+
+  Highest rated show: <a href="${acclaimed.show.url}" target="_blank">
+  ${acclaimed.show.title.romaji}</a>
+      (voiced <a href="${acclaimed.character.url}" target="_blank">
+      ${acclaimed.character.name}</a>)<br>
+
+  Average character popularity: ${va.avgCharacterPopularity}<br>
+  Character significance spread:
+    ${va.characterSpread.MAIN} main,
+    ${va.characterSpread.SUPPORTING} supporting,
+    ${va.characterSpread.BACKGROUND} background
+    <br>
+  `;
+
+  return string;
+
+}
+
 function fillVaAdvancedInfo(vaDetails) {
 
 }
 
-function addCharacterTableEntry(tableBodyId, metadata) {
+function addCharacterEntry(containerId, vaDetails) {
 
-  let character = metadata.character;
-  let show = metadata.show;
+  let character = vaDetails.character;
+  let show = vaDetails.show;
+
+  let container = document.getElementById(containerId);
+  let div = document.createElement("div");
+  let image = document.createElement("img");
+  let text = document.createElement("p");
+  let characterLink = document.createElement("a");
+  let showLink = document.createElement("a");
+
+  image.src = character.image;
+  image.alt = character.name;
+  div.appendChild(image);
+
+  characterLink.href = character.url;
+  characterLink.target = "_blank";
+  characterLink.innerHTML = character.name;
+  showLink.href = show.siteUrl;
+  showLink.target = "_blank";
+  showLink.innerHTML = show.title.romaji;
+  text.appendChild(characterLink);
+  text.innerHTML += "<br>";
+  text.appendChild(showLink);
+  div.appendChild(text);
+
+  container.appendChild(div);
+
+}
+
+function addCharacterTableEntry(tableBodyId, vaDetails) {
+
+  let character = vaDetails.character;
+  let show = vaDetails.show;
 
   let body = document.getElementById(tableBodyId);
   let row = document.createElement("tr");
@@ -388,5 +455,9 @@ function addCharacterTableEntry(tableBodyId, metadata) {
   row.appendChild(textCol);
 
   body.appendChild(row);
+
+}
+
+function clearVAPage() {
 
 }

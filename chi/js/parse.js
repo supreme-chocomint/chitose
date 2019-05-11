@@ -183,22 +183,28 @@ function collectVADetails(data) {
 
   let staff = data.data.Staff;
 
-  let blurb = fixHtmlArray(staff.description.split("</p>").slice(0, 2), 2);
   let details = {
     roles: [], // roles will be sorted by favourites due to query
     id: staff.id,
     name: parsedName(staff.name),
-    descriptionHTML: blurb[0] + blurb[1],
     language: staff.language,
     url: staff.siteUrl,
-    image: staff.image.large
+    image: staff.image.large,
+    popularity: staff.favourites,
+    numCorruptRoles: 0
   };
 
   window.voiceActors[details.id] = details;
+
   extractVARoles(data); // get the first page's data to start with
+  calculateStatistics(details.id);
 
   fillVaBasicInfo(details);
-  decideVARequest(data);
+  let sentRequest = decideVARequest(data);
+
+  if (sentRequest) {
+    window.voiceActors[details.id].roles = [];  // remove duplicate data
+  }
 
 }
 
@@ -266,7 +272,8 @@ function extractVARoles(data) {
             favourites: charaNode.favourites,
             name: parsedName(charaNode.name),
             url: charaNode.siteUrl,
-            image: charaNode.image.medium
+            image: charaNode.image.large,
+            characterRole: charaEdge.role
           }
           window.voiceActors[staff.id].roles.push({show: show, character: character});
           doneCharacter = true;
@@ -300,7 +307,7 @@ function extractVARoles(data) {
   if (corruptRolesCount == 0) {
     fillVaAdvancedInfo(window.voiceActors[staff.id]);
   } else {
-    console.log("Corrupt roles: " + corruptRolesCount);
+    console.log("Attempted to fix corrupt roles: " + corruptRolesCount);
   }
 
 }
@@ -333,25 +340,66 @@ function getMediaEdgeIds(charaNode) {
 function addAniListCorruptRoles(vaId, data) {
 
   let vaInfoContainer = document.getElementById("va-info-container");
-  let corruptRolesCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
+  let toFixCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
   let charaNode = data.data.Character;
+  let character, show, role;
 
-  let character = {
-    id: charaNode.id,
-    favourites: charaNode.favourites,
-    name: parsedName(charaNode.name),
-    url: charaNode.siteUrl,
-    image: charaNode.image.medium
+  try {
+
+    character = {
+      characterRole: charaNode.media.edges[0].characterRole, // the problem data
+      id: charaNode.id,
+      favourites: charaNode.favourites,
+      name: parsedName(charaNode.name),
+      url: charaNode.siteUrl,
+      image: charaNode.image.large
+    }
+
+    show = charaNode.media.nodes[0];
+    role = {show: show, character: character};
+    window.voiceActors[vaId].roles.push(role);
+
+  } catch {
+    console.log("Character data for " + charaNode.id +
+                "/" + parsedName(charaNode.name) + " corrupt.");
+    window.voiceActors[vaId].numCorruptRoles += 1;
   }
-  let show = charaNode.media.nodes[0];
-  let role = {show: show, character: character};
 
-  window.voiceActors[vaId].roles.push(role);
-
-  corruptRolesCount--;
-  vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
-  if (corruptRolesCount == 0) {
+  toFixCount--;
+  vaInfoContainer.setAttribute("data-va-corrupt-roles", toFixCount);
+  if (toFixCount == 0) {
     fillVaAdvancedInfo(window.voiceActors[vaId]);
   }
 
+}
+
+function calculateStatistics(id) {
+
+  let va = window.voiceActors[id];
+  va.rolesCount = va.roles.length;
+  va.roleMostPopularShow = getRoleByHighestShowMetric("popularity", va.roles);
+  va.roleHighestRatedShow = getRoleByHighestShowMetric("meanScore", va.roles);
+  va.avgCharacterPopularity = getAvgCharacterPopularity(va.roles);
+  va.characterSpread = getCharacterSignificanceSpread(va.roles);
+
+}
+
+function getRoleByHighestShowMetric(metric, roles) {
+  let max = 0;
+  let highest = roles[0];
+  for (let role of roles) {
+    if (role.show[metric] > max) {
+      max = role.show[metric];
+      highest = role;
+    }
+  }
+  return highest;
+}
+
+function getAvgCharacterPopularity(roles) {
+  return 0;
+}
+
+function getCharacterSignificanceSpread(roles) {
+  return {MAIN: 0, SUPPORTING: 0, BACKGROUND: 0};
 }

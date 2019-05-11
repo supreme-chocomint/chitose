@@ -27,6 +27,7 @@ function getQuery(type) {
     image {
       large
     }
+    favourites
     characters (sort: FAVOURITES_DESC, page: $pageNum) {
       pageInfo {
         hasNextPage
@@ -57,7 +58,7 @@ function getQuery(type) {
         }
         favourites
         image {
-          medium
+          large
         }
         siteUrl
         media {
@@ -178,11 +179,14 @@ function getQuery(type) {
         native
       }
       image {
-        medium
+        large
       }
       favourites
       siteUrl
       media (sort: POPULARITY_DESC, perPage: 1) {
+        edges {
+          characterRole
+        }
         nodes {
           id
           title {
