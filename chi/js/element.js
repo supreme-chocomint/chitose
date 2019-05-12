@@ -95,6 +95,11 @@ function switchToPage(pageIndex, language) {
   }
 
   else {
+
+    for (let child of body.children) {
+      child.style.display = "none";
+    }
+
     for (let i = pageSize * pageIndex; i < pageSize * (pageIndex + 1); i++) {
       try {
         body.children[i].style.display = "";
@@ -103,6 +108,7 @@ function switchToPage(pageIndex, language) {
         console.log("Pg." + pageIndex + ", e." + i + " doesn't exist. Probably expected behaviour.");
       }
     }
+
   }
 
   body.style.display = "";
