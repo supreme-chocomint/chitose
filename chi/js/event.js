@@ -105,8 +105,6 @@ function VADetailsOnClick(voiceActorId) {
 
   mainContainer.style.display = "none";
   vaInfoContainer.style.display = "";
-  vaLeftContainer.style.display = "";
-  vaRightContainer.style.display = "";
 
   let variables = {
     id: voiceActorId,
@@ -116,8 +114,10 @@ function VADetailsOnClick(voiceActorId) {
   // use cache if it exists, otherwise request data
   if (window.voiceActors[voiceActorId].roles) {
     fillVaBasicInfo(window.voiceActors[voiceActorId]);
+    fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
   }
   else {
+    document.getElementById("va-info-bio-text").innerHTML = "Getting initial data...";
     makeRequest(getQuery("VA ID"), variables, collectVADetails);
   }
 

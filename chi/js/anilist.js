@@ -31,6 +31,7 @@ function getQuery(type) {
       pageInfo {
         hasNextPage
         currentPage
+        lastPage
       }
       edges {
         role

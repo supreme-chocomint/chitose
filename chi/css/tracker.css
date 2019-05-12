@@ -226,8 +226,8 @@ input#dark-mode-switch {
   margin-top: 1rem;
 }
 
-#va-left-container {
-  width: 40%;
+#va-left-container, #va-right-container {
+  width: 50%;
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);
@@ -236,11 +236,15 @@ input#dark-mode-switch {
   margin-bottom: 2rem;
 }
 
-#va-popular-characters {
+#va-popular-header, #va-uw-header {
   text-align: center;
 }
 
-#va-popular-characters div {
+#va-popular-characters, #va-uw-characters {
+  text-align: center;
+}
+
+#va-popular-characters div, #va-uw-characters div {
   display: inline-block;
   vertical-align: top; /* Make top of divs line up, instead of bottom */
 }

@@ -325,7 +325,8 @@ function fillVaBasicInfo(vaDetails) {
   let vaHeader = document.getElementById("va-info-name");
   let vaPortrait = document.getElementById("va-info-bio-portrait");
   let vaText = document.getElementById("va-info-bio-text");
-  let name = document.createElement("h5");
+  let name = document.createElement("h4");
+  let vaLeftContainer = document.getElementById("va-left-container");
 
   name.innerHTML = vaDetails.name;
   vaHeader.appendChild(name);
@@ -348,6 +349,30 @@ function fillVaBasicInfo(vaDetails) {
   }
 
   styleCharacterEntries();
+  vaLeftContainer.style.display = "";
+
+}
+
+function displayPageProgress(page, lastPage) {
+  document.getElementById("va-info-bio-text").innerHTML =
+    `Getting data: page ${page} of ${lastPage}`;
+}
+
+function fillVaAdvancedInfo(vaDetails) {
+
+  let vaText = document.getElementById("va-info-bio-text");
+  let aniListLink = document.createElement("a");
+  let vaRightContainer = document.getElementById("va-right-container");
+
+  calculateStatistics(vaDetails.id);
+  vaText.innerHTML = formatStats(vaDetails);
+
+  aniListLink.href = vaDetails.url;
+  aniListLink.target = "_blank"; // open in new tab
+  aniListLink.innerHTML = "View on AniList";
+  vaText.appendChild(aniListLink);
+
+  vaRightContainer.style.display = "";
 
 }
 
@@ -370,30 +395,16 @@ function formatStats(va) {
       (voiced <a href="${acclaimed.character.url}" target="_blank">
       ${acclaimed.character.name}</a>)<br>
 
-  Average character popularity: ${va.avgCharacterPopularity}<br>
+  Mean character popularity:
+    ${va.avgCharacterPopularity.main} favorites for main characters,
+    ${va.avgCharacterPopularity.total} favorites for all characters<br>
   Character significance spread:
     ${va.characterSpread.MAIN} main,
-    ${va.characterSpread.SUPPORTING} supporting,
-    ${va.characterSpread.BACKGROUND} background
+    ${va.characterSpread.SUPPORTING} supporting
     <br>
   `;
 
   return string;
-
-}
-
-function fillVaAdvancedInfo(vaDetails) {
-
-  let vaText = document.getElementById("va-info-bio-text");
-  let aniListLink = document.createElement("a");
-
-  calculateStatistics(vaDetails.id);
-  vaText.innerHTML = formatStats(vaDetails);
-
-  aniListLink.href = vaDetails.url;
-  aniListLink.target = "_blank"; // open in new tab
-  aniListLink.innerHTML = "View on AniList";
-  vaText.appendChild(aniListLink);
 
 }
 
@@ -486,4 +497,6 @@ function clearVaInfo() {
   document.getElementById("va-info-bio-portrait").style.backgroundImage = "";
   document.getElementById("va-info-bio-text").innerHTML = "";
   document.getElementById("va-popular-characters").innerHTML = "";
+  document.getElementById("va-left-container").style.display = "none";
+  document.getElementById("va-right-container").style.display = "none";
 }

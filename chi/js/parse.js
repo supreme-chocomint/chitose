@@ -328,7 +328,8 @@ function addAniListCorruptRoles(vaDataPage, data) {
 function requestNextVaPage(data) {
 
   let staff = data.data.Staff;
-  let nextPage = parseInt(staff.characters.pageInfo.currentPage) + 1;
+  let nextPage = staff.characters.pageInfo.currentPage + 1;
+  let lastPage = staff.characters.pageInfo.lastPage;
   let variables = {
     id: staff.id,
     pageNum: nextPage
@@ -342,7 +343,7 @@ function requestNextVaPage(data) {
     }
   );
 
-  console.log("Requested page " + nextPage);
+  displayPageProgress(nextPage, lastPage);
 
 }
 
@@ -376,7 +377,7 @@ function calculateStatistics(id) {
   va.rolesCount = va.roles.length;
   va.roleMostPopularShow = getRoleByHighestShowMetric("popularity", va.roles);
   va.roleHighestRatedShow = getRoleByHighestShowMetric("meanScore", va.roles);
-  va.avgCharacterPopularity = getAvgCharacterPopularity(va.roles);
+  va.avgCharacterPopularity = getAvgCharacterPopularity(va);
   va.characterSpread = getCharacterSignificanceSpread(va.roles);
 
 }
@@ -393,12 +394,46 @@ function getRoleByHighestShowMetric(metric, roles) {
   return highest;
 }
 
-function getAvgCharacterPopularity(roles) {
-  return 0;
+function getAvgCharacterPopularity(va) {
+
+  if (va.characterSpread == null) {
+    va.characterSpread = getCharacterSignificanceSpread(va.roles);
+  }
+
+  // if zero, not a voice actor
+  if (va.characterSpread.MAIN == va.characterSpread.MAIN == 0) {
+    return {main: 0, total: 0};
+  }
+
+  let total = 0;
+  let main = 0;
+
+  for (let role of va.roles) {
+    if (role.character.characterRole == "MAIN") {
+      main += role.character.favourites;
+    }
+    total += role.character.favourites;
+  }
+
+  return {
+    main: Math.round(main / va.characterSpread.MAIN),
+    total: Math.round(total / va.rolesCount)
+  };
+
 }
 
 function getCharacterSignificanceSpread(roles) {
-  return {MAIN: 0, SUPPORTING: 0, BACKGROUND: 0};
+
+  let main = 0;
+  let supporting = 0;
+
+  for (let role of roles) {
+    if (role.character.characterRole == "MAIN") { main += 1; }
+    else { supporting += 1; }
+  }
+
+  return {MAIN: main, SUPPORTING: supporting};
+
 }
 
 function sortRolesByFavourites(roles) {
