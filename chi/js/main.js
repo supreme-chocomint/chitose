@@ -143,14 +143,16 @@ function isLocked() {
   return document.getElementsByTagName("body")[0].classList.contains("locked");
 }
 
-function lock() {
+function lock(voiceActorId) {
   document.getElementsByTagName("body")[0].classList.add("locked");
   document.getElementById("lock-icon").innerHTML = "🔒";
+  document.getElementById("va-info-container").setAttribute("data-working", voiceActorId);
 }
 
 function unlock() {
   document.getElementsByTagName("body")[0].classList.remove("locked");
   document.getElementById("lock-icon").innerHTML = "";
+  document.getElementById("va-info-container").setAttribute("data-working", 0);
 }
 
 function fetchTheme() {
