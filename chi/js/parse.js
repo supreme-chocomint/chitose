@@ -182,8 +182,6 @@ function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
 
 function collectVADetails(data) {
 
-  console.log(data);
-
   let staff = data.data.Staff;
 
   let details = {
@@ -453,30 +451,35 @@ function addUwCharacters(va, numRoles) {
   let roles = va.roles.slice(); // copy
   sortRolesByShowPopularity(roles);
   roles.reverse();  // low to high popularity
-  roles = roles.filter(role => role.character.favourites >= 10);  // gauge prominance
-  roles = roles.filter(role => role.show.popularity < 30000);
+
+  roles = roles.filter(function(role) {
+    if (role.character.favourites <= 10) {
+      return false; // gauge prominance
+    }
+    if (role.show.popularity >= 30000) {
+      return false;
+    }
+    if ( va.roles.slice(0, numRoles).includes(role) ) {
+      return false;
+    }
+    return true;
+  });
 
   let candidates;
-  let thresholdScores = [75, 72, 70];
+  let thresholdScores = [80, 77, 75, 72, 70];
   let index = 0;
 
   // get roles by ascending show popularity that meet score threshold
   while (index != thresholdScores.length){
-    candidates = [];
-    for (let role of roles) {
-      // if score high enough and role not in popular list
-      if ( role.show.meanScore >= thresholdScores[index] && !(va.roles.slice(0, numRoles).includes(role)) ) {
-        candidates.push(role);
-      }
-    }
-    if (candidates.length >= numRoles + 4) {
+    candidates = roles.filter(role => role.show.meanScore >= thresholdScores[index]);
+    if (candidates.length >= numRoles) {
       break;
     }
     index++;
   }
 
-  sortRolesByShowRating(candidates);
   va.uwRoles = candidates.slice(0, numRoles);
+  sortRolesByShowRating(va.uwRoles);
 
 }
 
