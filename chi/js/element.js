@@ -362,6 +362,7 @@ function fillVaAdvancedInfo(vaDetails) {
 
   let vaText = document.getElementById("va-info-bio-text");
   let aniListLink = document.createElement("a");
+  let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
 
   calculateStatistics(vaDetails.id);
@@ -372,7 +373,23 @@ function fillVaAdvancedInfo(vaDetails) {
   aniListLink.innerHTML = "View on AniList";
   vaText.appendChild(aniListLink);
 
-  vaRightContainer.style.display = "";
+  let numCharacters = 6;
+  addUwCharacters(vaDetails, numCharacters);
+
+  if (vaDetails.uwRoles.length == 0) {
+    vaRightContainer.style.display = "none";
+    vaLeftContainer.classList.add("full-container");
+  }
+  else {
+
+    for (let uwRole of vaDetails.uwRoles) {
+      addCharacterEntry("va-uw-characters", uwRole);
+    }
+
+    styleCharacterEntries();
+    vaRightContainer.style.display = "";
+
+  }
 
 }
 
@@ -408,10 +425,10 @@ function formatStats(va) {
 
 }
 
-function addCharacterEntry(containerId, vaDetails) {
+function addCharacterEntry(containerId, role) {
 
-  let character = vaDetails.character;
-  let show = vaDetails.show;
+  let character = role.character;
+  let show = role.show;
 
   let container = document.getElementById(containerId);
   let div = document.createElement("div");
@@ -495,8 +512,11 @@ function addCharacterTableEntry(tableBodyId, vaDetails) {
 function clearVaInfo() {
   document.getElementById("va-info-name").innerHTML = "";
   document.getElementById("va-info-bio-portrait").style.backgroundImage = "";
+  document.getElementById("va-info-bio-portrait").classList.remove("thumbnail");
   document.getElementById("va-info-bio-text").innerHTML = "";
   document.getElementById("va-popular-characters").innerHTML = "";
+  document.getElementById("va-uw-characters").innerHTML = "";
   document.getElementById("va-left-container").style.display = "none";
+  document.getElementById("va-left-container").classList.remove("full-container");
   document.getElementById("va-right-container").style.display = "none";
 }

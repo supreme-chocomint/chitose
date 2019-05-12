@@ -226,14 +226,22 @@ input#dark-mode-switch {
   margin-top: 1rem;
 }
 
+#va-character-containers {
+  display: flex; /* Make child divs have same height as this */
+}
+
 #va-left-container, #va-right-container {
-  width: 50%;
+  width: 48%;
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);
   border-width: 1px;
   border-style: solid;
   margin-bottom: 2rem;
+}
+
+.full-container {
+  width: 100% !important;
 }
 
 #va-popular-header, #va-uw-header {

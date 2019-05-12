@@ -436,8 +436,52 @@ function getCharacterSignificanceSpread(roles) {
 
 }
 
+function addUwCharacters(va, numRoles) {
+
+  let roles = va.roles.slice(); // copy
+  sortRolesByShowPopularity(roles);
+  roles.reverse();  // low to high popularity
+  roles = roles.filter(role => role.character.favourites >= 10);  // gauge prominance
+  roles = roles.filter(role => role.show.popularity < 30000);
+
+  let candidates;
+  let thresholdScores = [75, 72, 70];
+  let index = 0;
+
+  // get roles by ascending show popularity that meet score threshold
+  while (index != thresholdScores.length){
+    candidates = [];
+    for (let role of roles) {
+      // if score high enough and role not in popular list
+      if ( role.show.meanScore >= thresholdScores[index] && !(va.roles.slice(0, numRoles).includes(role)) ) {
+        candidates.push(role);
+      }
+    }
+    if (candidates.length >= numRoles + 4) {
+      break;
+    }
+    index++;
+  }
+
+  sortRolesByShowRating(candidates);
+  va.uwRoles = candidates.slice(0, numRoles);
+
+}
+
 function sortRolesByFavourites(roles) {
   roles.sort(function(a, b) {
     return b.character.favourites - a.character.favourites; // sort in descending order
+  })
+}
+
+function sortRolesByShowPopularity(roles) {
+  roles.sort(function(a, b) {
+    return b.show.popularity - a.show.popularity; // sort in descending order
+  })
+}
+
+function sortRolesByShowRating(roles) {
+  roles.sort(function(a, b) {
+    return b.show.meanScore - a.show.meanScore; // sort in descending order
   })
 }
