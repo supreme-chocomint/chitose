@@ -40,10 +40,18 @@ function searchButtonOnClick() {
 }
 
 function onSeasonChange() {
-
   if (window.clicked){
     VAOnClick(window.clicked);
   }
+}
+
+function onLanguageChange() {
+
+  let vaTableBody = document.getElementById("va-table-body");
+  let filter = document.getElementById("language-filter");
+  let language = filter.options[filter.selectedIndex].value;
+  resetVaTablePages(language);
+  setNavigationState(vaTableBody, vaTableBody.getAttribute("data-pageSize"), language);
 
 }
 
@@ -218,10 +226,12 @@ function leftNavOnClick() {
   let left = document.getElementById("left-nav");
   let right = document.getElementById("right-nav");
   let pageIndex = document.getElementById("va-table-body").getAttribute("data-pageIndex");
+  let filter = document.getElementById("language-filter");
+  let language = filter.options[filter.selectedIndex].value;
   pageIndex = parseInt(pageIndex);
 
   pageIndex--;
-  switchToPage(pageIndex);
+  switchToPage(pageIndex, language);
   document.getElementById("va-table-body").setAttribute("data-pageIndex", pageIndex);
 
   if (pageIndex == 0){ left.classList.add("inactive"); }
@@ -233,7 +243,9 @@ function rightNavOnClick() {
 
   let right = document.getElementById("right-nav");
   let left = document.getElementById("left-nav");
-  let tableBody = document.getElementById("va-table-body")
+  let tableBody = document.getElementById("va-table-body");
+  let filter = document.getElementById("language-filter");
+  let language = filter.options[filter.selectedIndex].value;
 
   let pageIndex = tableBody.getAttribute("data-pageIndex");
   let lastPageIndex = tableBody.getAttribute("data-pageCount");
@@ -241,7 +253,7 @@ function rightNavOnClick() {
   lastPageIndex = parseInt(lastPageIndex) - 1; // because count != index
 
   pageIndex++;
-  switchToPage(pageIndex);
+  switchToPage(pageIndex, language);
   document.getElementById("va-table-body").setAttribute("data-pageIndex", pageIndex);
 
   if (pageIndex == lastPageIndex){ right.classList.add("inactive"); }

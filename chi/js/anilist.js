@@ -9,6 +9,7 @@ function getQuery(type) {
       last
     }
     siteUrl
+    language
     image {
       medium
     }

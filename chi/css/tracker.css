@@ -184,12 +184,21 @@ input#dark-mode-switch {
   text-align: center;
 }
 
+#language-filter {
+  float: right;
+}
+
 #search-bar {
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
 }
 
 /* Images
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.thumbnail-wrapper {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
 
 .thumbnail {
   height: 17rem;
@@ -202,6 +211,7 @@ input#dark-mode-switch {
 
 .thumbnail-caption {
   text-align: center;
+  overflow-wrap: break-word;
 }
 
 /* Detail pages

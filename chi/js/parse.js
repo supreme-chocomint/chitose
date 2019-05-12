@@ -140,7 +140,8 @@ function getVoiceActors(charaData) {
       name: parsedName(voiceActor.name),
       id: voiceActor.id,
       url: voiceActor.siteUrl,
-      image: voiceActor.image.medium
+      image: voiceActor.image.medium,
+      language: voiceActor.language
     });
   }
   return actors;

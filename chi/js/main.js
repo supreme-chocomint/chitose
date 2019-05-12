@@ -26,6 +26,7 @@ window.onload = function() {
   setOnKeyPresses();
   setLongFormText();
   buildSeasonPickers();
+  buildLanguageFilter();
   clearInputBoxes();
 
   clearVATable();  // For those with itchy trigger fingers

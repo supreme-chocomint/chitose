@@ -50,8 +50,14 @@ function setSeason(year, quarter) {
   document.getElementById("quarter-picker").value = quarter;
 }
 
+function buildLanguageFilter() {
+  updateLanguageFilter("ALL");
+  document.getElementById("language-filter").onchange =
+    function() { onLanguageChange(); };
+}
+
 // Assumes page exists: will make empty page if it doesn't
-function switchToPage(pageIndex) {
+function switchToPage(pageIndex, language) {
 
   let body = document.getElementById("va-table-body");
   let pageTracker = document.getElementById("page-tracker");
@@ -59,17 +65,43 @@ function switchToPage(pageIndex) {
   let pageCount = body.getAttribute("data-pageCount");
   body.style.display = "none";  // hide build process
 
-  for (let child of body.children) {
-    child.style.display = "none";
+  if (language != "ALL") {
+
+    let ofLanguageIndex = 0;
+    let entryIndex = 0;
+    for (let child of body.children) {
+      if (child.classList.contains(language)) {
+        if ( (pageSize * pageIndex <= ofLanguageIndex) &&
+             (ofLanguageIndex < pageSize * (pageIndex + 1)) ) {
+           try {
+             body.children[entryIndex].style.display = "";
+           }
+           catch (IndexError) { // this page is not full
+             console.log("Pg." + pageIndex + ", e." + entryIndex +
+                        " doesn't exist. Probably expected behaviour.");
+           }
+        }
+        else {
+          child.style.display = "none";
+        }
+        ofLanguageIndex++;
+      }
+      else {
+        child.style.display = "none";
+      }
+      entryIndex++;
+    }
+
   }
 
-  for (let i = pageSize * pageIndex; i < pageSize * (pageIndex + 1); i++) {
-    try {
-      body.children[i].style.display = "";
-    }
-    catch (IndexError) { // this page is not full
-      appendEmptyRow(body); // to keep table same size
-      console.log("Pg." + pageIndex + ", e." + i + " doesn't exist. Probably expected behaviour.");
+  else {
+    for (let i = pageSize * pageIndex; i < pageSize * (pageIndex + 1); i++) {
+      try {
+        body.children[i].style.display = "";
+      }
+      catch (IndexError) { // this page is not full
+        console.log("Pg." + pageIndex + ", e." + i + " doesn't exist. Probably expected behaviour.");
+      }
     }
   }
 
@@ -120,14 +152,12 @@ function fillVATableAndPage(voiceActorIds) {
   for (let id of voiceActorIds) {
 
     let va = window.voiceActors[id];
-    addVATableEntry(va);  // hides image by default for performance
+    addVATableEntry(va);
+    updateLanguageFilter(va.language);
     let row = tableBody.lastChild;
     row.id = entryCount;
 
-    if (entryCount < pageSize) {
-      /*showImages(row); FIXME*/
-    }
-    else if (entryCount >= pageSize) {
+    if (entryCount >= pageSize) {
       tableBody.children[entryCount].style.display = "none";
     }
 
@@ -136,8 +166,21 @@ function fillVATableAndPage(voiceActorIds) {
   }
 
   setVATableSize(voiceActorIds.length);
-  setNavigationState(tableBody, pageSize);
+  setNavigationState(tableBody, pageSize, "ALL");
 
+}
+
+function updateLanguageFilter(language) {
+  let filter = document.getElementById("language-filter");
+  for (let option of filter.children) {
+    if (option.value == language) {
+      return;
+    }
+  }
+  let option = document.createElement("option");
+  option.value = language;
+  option.innerHTML = language;
+  filter.appendChild(option);
 }
 
 function setVATableSize(numElements) {
@@ -165,9 +208,16 @@ function setVATableSize(numElements) {
 
 }
 
-function setNavigationState(tableBody, pageSize) {
+function setNavigationState(tableBody, pageSize, filter) {
 
-  let pageCount = Math.ceil(tableBody.childElementCount / pageSize);
+  let pageCount;
+
+  if (filter == "ALL") {
+    pageCount = Math.ceil(tableBody.childElementCount / pageSize);
+  } else {
+    pageCount = Math.ceil(tableBody.querySelectorAll("." + filter).length / pageSize);
+  }
+
   if (pageCount == 0){ pageCount++; }
 
   tableBody.style.display = "";
@@ -286,6 +336,7 @@ function addVATableEntry(metadata) {
   followCol.appendChild(followState);
   row.appendChild(followCol);
 
+  row.classList.add(metadata.language);
   document.getElementById("va-table-body").appendChild(row);
 
 }
@@ -298,6 +349,13 @@ function clearVATable() {
   document.getElementById("left-nav").classList.add("inactive");
   document.getElementById("right-nav").classList.add("inactive");
   document.getElementById("va-table-caption").setAttribute("data-content", "");
+}
+
+function resetVaTablePages(language) {
+  document.getElementById("va-table-body").setAttribute("data-pageIndex", 0);
+  document.getElementById("left-nav").classList.add("inactive");
+  document.getElementById("right-nav").classList.remove("inactive");
+  switchToPage(0, language);
 }
 
 function clearRolesTable() {
