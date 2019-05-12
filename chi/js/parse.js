@@ -181,6 +181,8 @@ function sortVaIdsByNumRoles(rolesCounter, voiceActors) {
 
 function collectVADetails(data) {
 
+  console.log(data);
+
   let staff = data.data.Staff;
 
   let details = {
@@ -359,14 +361,23 @@ function addOldEdges(existingData, newData) {
 
 function decideNextStep(vaDataPage) {
 
+  // weeeeeeeeeee
   if (vaDataPage.data.Staff.characters.pageInfo.currentPage == 1) {
-    fillVaBasicInfo(window.voiceActors[vaDataPage.data.Staff.id]);
+    if (vaDataPage.data.Staff.characters.nodes.length != 0) {
+      fillVaBasicInfo(window.voiceActors[vaDataPage.data.Staff.id]);
+    }
+    else { // Not a voice actor
+      unlock();
+      addNotVaIndicator();
+      return;
+    }
   }
 
   if (vaDataPage.data.Staff.characters.pageInfo.hasNextPage) {
     requestNextVaPage(vaDataPage);
   } else {
     fillVaAdvancedInfo(window.voiceActors[vaDataPage.data.Staff.id]);
+    unlock();
   }
 
 }

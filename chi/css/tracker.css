@@ -73,7 +73,7 @@ html {
 }
 
 #header {
-  margin-top: 10%;
+  margin-top: 5%;
 }
 
 #right-col {
@@ -173,10 +173,6 @@ input#dark-mode-switch {
 
 #va-table-tools {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
-}
-
-#va-table {
-  min-width: 25ch;
 }
 
 #navigation a {

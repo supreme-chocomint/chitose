@@ -86,9 +86,10 @@ function addFollowTableEntry(metadata) {
   name.classList.add("internal_link");
   name.onclick = function() {VAOnClick(metadata.id)};
 
-  url.innerHTML = "See on AniList";
-  url.href = metadata.url;
-  url.target = "_blank";  // open in new tab
+  url.innerHTML = "Details";
+  url.href = "javascript:void(0)";
+  url.classList.add("internal_link");
+  url.onclick = function() {VADetailsOnClick(metadata.id)};
 
   deleteLink.innerHTML = "&times;";
   deleteLink.href = "javascript:void(0)";

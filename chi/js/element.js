@@ -340,7 +340,6 @@ function fillVaBasicInfo(vaDetails) {
 
   let n = 0;
   for (let role of vaDetails.roles) {
-    // addCharacterTableEntry("va-popular-characters-table", role);
     addCharacterEntry("va-popular-characters", role);
     n++;
     if (n == 6) {
@@ -356,6 +355,11 @@ function fillVaBasicInfo(vaDetails) {
 function displayPageProgress(page, lastPage) {
   document.getElementById("va-info-bio-text").innerHTML =
     `Getting data: page ${page} of ${lastPage}`;
+}
+
+function addNotVaIndicator() {
+  document.getElementById("va-info-bio-text").innerHTML =
+    "Selected person has no known voice acting roles.";
 }
 
 function fillVaAdvancedInfo(vaDetails) {
@@ -402,12 +406,12 @@ function formatStats(va) {
   Popularity: ${va.popularity} favorites<br>
   Number of characters voiced: ${va.rolesCount}<br>
 
-  Most popular show: <a href="${popular.show.url}" target="_blank">
+  Most popular show: <a href="${popular.show.siteUrl}" target="_blank">
   ${popular.show.title.romaji}</a>
     (voiced <a href="${popular.character.url}" target="_blank">
     ${popular.character.name}</a>)<br>
 
-  Highest rated show: <a href="${acclaimed.show.url}" target="_blank">
+  Highest rated show: <a href="${acclaimed.show.siteUrl}" target="_blank">
   ${acclaimed.show.title.romaji}</a>
       (voiced <a href="${acclaimed.character.url}" target="_blank">
       ${acclaimed.character.name}</a>)<br>

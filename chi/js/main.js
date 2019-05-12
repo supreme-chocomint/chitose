@@ -6,6 +6,8 @@ window.onload = function() {
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
 
+  lock();
+
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
 
@@ -30,7 +32,7 @@ window.onload = function() {
   setSeason("", "");  // Set to current season
 
   populateVATableWithSeason();
-  if (hasStorageAccess) { populateFollowTable(); }
+  if (hasStorageAccess) { lock(); populateFollowTable(); }
 
 }
 
@@ -83,7 +85,6 @@ function populateVATableWithSeason() {
       seasonYear: year,
   };
 
-  lock();
   clearSeasonSpecificData();
   vaTable.setAttribute("data-state", "season");
   vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
@@ -119,7 +120,6 @@ function populateFollowTable() {
   let following = getFollowing();
   let idArray = Object.keys(following);
 
-  lock();
   for (let id of idArray) {
     let variables = { id: id };
     makeRequest(

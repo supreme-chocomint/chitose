@@ -112,11 +112,13 @@ function VADetailsOnClick(voiceActorId) {
   }
 
   // use cache if it exists, otherwise request data
-  if (window.voiceActors[voiceActorId].roles) {
+  let roles = window.voiceActors[voiceActorId].roles;
+  if (roles && roles.length != 0) {
     fillVaBasicInfo(window.voiceActors[voiceActorId]);
     fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
   }
-  else {
+  else if (!isLocked()) {
+    lock();
     document.getElementById("va-info-bio-text").innerHTML = "Getting initial data...";
     makeRequest(getQuery("VA ID"), variables, collectVADetails);
   }
