@@ -54,6 +54,10 @@ body {
   opacity: 0.5 !important;
 }
 
+.action-not-ready {
+  pointer-events: none !important;
+}
+
 #lock-icon {
   display: inline;
   margin: 1rem;
@@ -201,6 +205,7 @@ input#dark-mode-switch {
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .thumbnail-caption {

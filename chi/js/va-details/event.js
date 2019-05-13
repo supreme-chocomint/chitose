@@ -78,3 +78,12 @@ function allCharactersSwitchOnClick() {
   }
 
 }
+
+function portraitThumbnailOnClick(element) {
+  let text = element.parentNode.children[1].children[0];
+  text.lastChild.click();
+}
+
+function characterThumbnailOnClick(element) {
+  element.nextSibling.firstChild.click();
+}

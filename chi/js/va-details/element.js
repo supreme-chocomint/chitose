@@ -13,6 +13,7 @@ function fillVaBasicInfo(vaDetails) {
 
   vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
   vaPortrait.classList.add("thumbnail");
+  vaPortrait.classList.add("action-not-ready");
 
   // ----- Popular characters ----- //
 
@@ -41,6 +42,7 @@ function addNotVaIndicator() {
 
 function fillVaAdvancedInfo(vaDetails) {
 
+  let vaPortrait = document.getElementById("va-info-bio-portrait");
   let vaText = document.getElementById("va-info-bio-text");
   let aniListLink = document.createElement("a");
   let vaLeftContainer = document.getElementById("va-left-container");
@@ -50,6 +52,7 @@ function fillVaAdvancedInfo(vaDetails) {
 
   // ----- Staff stats ----- //
 
+  sortRolesByFavourites(vaDetails.roles);
   calculateStatistics(vaDetails.id);
   vaText.innerHTML = formatStats(vaDetails);
 
@@ -57,6 +60,9 @@ function fillVaAdvancedInfo(vaDetails) {
   aniListLink.target = "_blank"; // open in new tab
   aniListLink.innerHTML = "View on AniList";
   vaText.appendChild(aniListLink);
+
+  vaPortrait.onclick = function() { portraitThumbnailOnClick(this); };
+  vaPortrait.classList.remove("action-not-ready");
 
   // ----- Underwatched characters ----- //
 
@@ -72,7 +78,6 @@ function fillVaAdvancedInfo(vaDetails) {
 
   // ----- All characters ----- //
 
-  sortRolesByFavourites(vaDetails.roles);
   for (role of vaDetails.roles) {
     if (role.character.characterRole == "MAIN") {
       addCharacterEntry("va-main-characters", role);
@@ -189,6 +194,7 @@ function addCharacterEntry(containerId, role) {
 
   thumbnail.style.backgroundImage = `url(${character.image})`;
   thumbnail.classList.add("thumbnail");
+  thumbnail.onclick = function() { characterThumbnailOnClick(this); };
   div.appendChild(thumbnail);
 
   characterLink.href = character.url;
