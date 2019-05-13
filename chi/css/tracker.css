@@ -174,23 +174,16 @@ input#dark-mode-switch {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
 }
 
-#navigation {
-  margin-bottom: 2rem;
-}
-
 #navigation #page-tracker {  /* Center vertically and horizontally */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 6ch;
+  margin-bottom: 1rem;
 }
 
 #search-bar {
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
-}
-
-#right-nav {
-  margin-right: 2rem;
 }
 
 /* Images

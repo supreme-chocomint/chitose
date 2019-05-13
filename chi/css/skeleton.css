@@ -408,7 +408,9 @@ there.
 
 /* Larger than mobile */
 @media (min-width: 400px) {
-
+  #language-filter {
+    float: right;
+  }
 }
 
 /* Larger than phablet (also point when grid becomes active) */
