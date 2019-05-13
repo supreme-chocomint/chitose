@@ -95,6 +95,7 @@ function setOnClicks() {
   let importButton = document.getElementById("import-button");
   let exportButton = document.getElementById("export-button");
   let returnButton = document.getElementById("return-button");
+  let allCharactersSwitch = document.getElementById("all-characters-switch");
 
   searchButton.onclick = function() { searchButtonOnClick(); }
   refreshButton.onclick = function() { refreshButtonOnClick(); }
@@ -103,6 +104,7 @@ function setOnClicks() {
   importButton.onclick = function() { importButtonOnClick(); }
   exportButton.onclick = function() { exportButtonOnClick(); }
   returnButton.onclick = function() { returnButtonOnClick(); }
+  allCharactersSwitch.onclick = function() { allCharactersSwitchOnClick(); }
   setNavigationOnClicks();
 
 }

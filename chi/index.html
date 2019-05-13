@@ -162,6 +162,7 @@
 
     <div class="row">
       <input type="button" class="button" id="return-button" value="Return to Main View">
+      <input class="button" type="button" id="all-characters-switch" value="Toggle All Characters">
     </div>
 
     <div class="row" id="va-info-name"></div>
@@ -173,16 +174,29 @@
         </div>
     </div>
 
-    <div class="row" id="va-character-containers">
-      <div class="one half column" id="va-left-container">
-        <div><h5 id="va-popular-header">Popular Characters</h5></div>
-        <div id="va-popular-characters"></div>
+    <div id="va-character-containers">
+
+      <div class="row" id="va-side-containers">
+
+        <div class="one-half column" id="va-left-container">
+          <div><h5 class="va-character-header" id="va-popular-header">Popular Characters</h5></div>
+          <div class="va-character-wrapper" id="va-popular-characters"></div>
+        </div>
+
+        <div class="one-half column" id="va-right-container">
+          <div><h5 class="va-character-header" id="va-uw-header">Underwatched Characters</h5></div>
+          <div class="va-character-wrapper" id="va-uw-characters"></div>
+        </div>
+
       </div>
 
-      <div class="one half column" id="va-right-container">
-        <div><h5 id="va-uw-header">Underwatched Characters</h5></div>
-        <div id="va-uw-characters"></div>
+      <div class="row" id="va-bottom-container">
+        <div><h5 class="va-character-header" id="va-cmain-header">Main Characters</h5></div>
+        <div class="va-character-wrapper" id="va-main-characters"></div>
+        <div><h5 class="va-character-header" id="va-csupport-header">Supporting Characters</h5></div>
+        <div class="va-character-wrapper" id="va-support-characters"></div>
       </div>
+
     </div>
 
   </div>

@@ -228,11 +228,6 @@ function getAvgCharacterPopularity(va) {
     va.characterSpread = getCharacterSignificanceSpread(va.roles);
   }
 
-  // if zero, not a voice actor
-  if (va.characterSpread.MAIN == va.characterSpread.MAIN == 0) {
-    return {main: 0, total: 0};
-  }
-
   let total = 0;
   let main = 0;
 
@@ -243,9 +238,12 @@ function getAvgCharacterPopularity(va) {
     total += role.character.favourites;
   }
 
+  main = (main == 0) ? 0 : Math.round(main / va.characterSpread.MAIN);
+  total = (total == 0) ? 0 : Math.round(total / va.rolesCount);
+
   return {
-    main: Math.round(main / va.characterSpread.MAIN),
-    total: Math.round(total / va.rolesCount)
+    main: main,
+    total: total
   };
 
 }
@@ -264,6 +262,25 @@ function getCharacterSignificanceSpread(roles) {
 
 }
 
+function addPopularCharacters(va, numRoles) {
+
+  let roles = va.roles.slice(); // copy
+  sortRolesByFavourites(roles);
+  va.popularRoles = [];
+
+  let n = 0;
+  for (role of roles) {
+    if (role.character.favourites >= 30) {
+      va.popularRoles.push(role);
+      n++;
+    }
+    if (n == numRoles) {
+      break;
+    }
+  }
+
+}
+
 function addUwCharacters(va, numRoles) {
 
   let roles = va.roles.slice(); // copy
@@ -271,13 +288,16 @@ function addUwCharacters(va, numRoles) {
   roles.reverse();  // low to high popularity
 
   roles = roles.filter(function(role) {
-    if (role.character.favourites <= 10) {
-      return false; // gauge prominance
+    if ( va.popularRoles.includes(role) ) {
+      return false;
     }
     if (role.show.popularity >= 30000) {
       return false;
     }
-    if ( va.roles.slice(0, numRoles).includes(role) ) {
+    if (role.character.characterRole == "MAIN") {
+      return true;
+    }
+    if (role.character.favourites <= 10) {
       return false;
     }
     return true;

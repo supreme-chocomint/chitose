@@ -4,7 +4,9 @@ function VADetailsOnClick(voiceActorId) {
   let vaInfoContainer = document.getElementById("va-info-container");
   let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
+  let toggleCharactersButton = document.getElementById("all-characters-switch");
   let workingId = vaInfoContainer.getAttribute("data-working");
+  let roles = window.voiceActors[voiceActorId].roles;
 
   let variables = {
     id: voiceActorId,
@@ -31,8 +33,8 @@ function VADetailsOnClick(voiceActorId) {
     lock(voiceActorId);
     mainContainer.style.display = "none";
     vaInfoContainer.style.display = "";
+    toggleCharactersButton.classList.add("disabled");
     clearVaInfo();
-    let roles = window.voiceActors[voiceActorId].roles;
 
     // use cache if it exists, otherwise request data
     if (roles && roles.length != 0) {
@@ -58,5 +60,30 @@ function returnButtonOnClick() {
 
   mainContainer.style.display = "";
   vaInfoContainer.style.display = "none";
+
+}
+
+function allCharactersSwitchOnClick() {
+
+  let vaLeftContainer = document.getElementById("va-left-container");
+  let vaRightContainer = document.getElementById("va-right-container");
+  let vaBottomContainer = document.getElementById("va-bottom-container");
+  let fullContainer = document.getElementsByClassName("full-container")[0];
+
+  if (vaBottomContainer.style.display == "none") {
+    vaBottomContainer.style.display = "";
+    vaLeftContainer.style.display = "none";
+    vaRightContainer.style.display = "none";
+  }
+  else {
+    if (fullContainer) {
+      fullContainer.style.display = "";
+    }
+    else {
+      vaLeftContainer.style.display = "";
+      vaRightContainer.style.display = "";
+    }
+    vaBottomContainer.style.display = "none";
+  }
 
 }

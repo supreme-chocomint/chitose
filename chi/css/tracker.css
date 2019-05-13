@@ -232,12 +232,11 @@ input#dark-mode-switch {
   margin-top: 1rem;
 }
 
-#va-character-containers {
+#va-side-containers {
   display: flex; /* Make child divs have same height as this */
 }
 
-#va-left-container, #va-right-container {
-  width: 48%;
+#va-side-containers > div, #va-bottom-container {
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);
@@ -246,19 +245,23 @@ input#dark-mode-switch {
   margin-bottom: 2rem;
 }
 
+#va-side-container > div {
+  width: 48%;
+}
+
 .full-container {
   width: 100% !important;
 }
 
-#va-popular-header, #va-uw-header {
+.va-character-header {
   text-align: center;
 }
 
-#va-popular-characters, #va-uw-characters {
+.va-character-wrapper {
   text-align: center;
 }
 
-#va-popular-characters div, #va-uw-characters div {
+.va-character-wrapper div {
   display: inline-block;
   vertical-align: top; /* Make top of divs line up, instead of bottom */
 }
