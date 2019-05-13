@@ -24,16 +24,65 @@ window.onload = function() {
 
   setOnClicks();
   setOnKeyPresses();
-  setLongFormText();
+  setDescription();
   buildSeasonPickers();
   buildLanguageFilter();
-  clearInputBoxes();
+  clearSearchBar();
+  clearTransferBox();
 
   clearVATable();  // For those with itchy trigger fingers
   setSeason("", "");  // Set to current season
 
   populateVATableWithSeason();
   if (hasStorageAccess) { lock(); populateFollowTable(); }
+
+}
+
+function leftTableSwitchOnClick() {
+
+  let vaTable = document.getElementById("va-table");
+  let followTable = document.getElementById("follow-table");
+  let followTableBody = document.getElementById("follow-table-body");
+
+  let searchBar = document.getElementById("search-bar");
+  let searchButton = document.getElementById("search-button");
+  let refreshButton = document.getElementById("refresh-button");
+
+  let navDiv = document.getElementById("navigation");
+  let tranferDiv = document.getElementById("transfer");
+
+  // switch to VAs
+  if (vaTable.style.display == "none") {
+
+    // make sure follow states are up-to-date
+    // because refetching everything > writing a new function
+    changed = followTableBody.getAttribute("data-changed");
+    if (changed == "true") {
+      clearVATable();
+      populateVATableWithSeason();
+      followTableBody.setAttribute("data-changed", "false");
+    }
+
+    // there's probably a better way to turn these all off
+    vaTable.style.display = "";
+    followTable.style.display = "none";
+    searchBar.disabled = false;
+    searchButton.disabled = false;
+    refreshButton.classList.remove("disabled");
+    navDiv.style.display = "";
+    tranferDiv.style.display = "none";
+
+  }
+  // switch to follows
+  else {
+    vaTable.style.display = "none";
+    followTable.style.display = "";
+    searchBar.disabled = true;
+    searchButton.disabled = true;
+    refreshButton.classList.add("disabled");
+    navDiv.style.display = "none";
+    tranferDiv.style.display = "";
+  }
 
 }
 
@@ -71,74 +120,6 @@ function setOnKeyPresses() {
 
 }
 
-function populateVATableWithSeason() {
-
-  let quarterElement = document.getElementById("quarter-picker");
-  let vaTable = document.getElementById("va-table");
-  let vaTableCaption = document.getElementById("va-table-caption");
-
-  let quarter = quarterElement.options[quarterElement.selectedIndex].value.toUpperCase();
-  let year = document.getElementById("year-picker").value;
-  let variables = {
-      perPage: 50,
-      page: 1,
-      season: quarter,
-      seasonYear: year,
-  };
-
-  clearSeasonSpecificData();
-  vaTable.setAttribute("data-state", "season");
-  vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
-
-  // get from cache if it exists, otherwise do request
-  if (window.seasonRawData[year] && window.seasonRawData[year][quarter]) {
-    for (let i = 0; i < window.mediaFormats.length; i++) {
-      let data = window.seasonRawData[year][quarter][i];
-      extractVAs(window.seasonalRolesCounter, window.voiceActors, data);
-    }
-    sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);
-    fillVATableAndPage(sortedSeasonalVoiceActorIds);
-    unlock();
-  }
-  else {
-    for (let format of window.mediaFormats) {
-      variables.format = format;
-      makeRequest(
-        getQuery(""),
-        variables,
-        function(data) {
-          // Need season to cache raw data
-          collectSeasonalVAsCallback(year, quarter, data);
-        }
-      );
-    }
-  }
-
-}
-
-function populateFollowTable() {
-
-  let following = getFollowing();
-  let idArray = Object.keys(following);
-
-  for (let id of idArray) {
-    let variables = { id: id };
-    makeRequest(
-      getQuery("VA ID"),
-      variables,
-      function(data) {
-        // Need length to unlock when done
-        collectFollowingCallback(idArray.length, data);
-      }
-    );
-  }
-
-}
-
-function clearSeasonSpecificData() {
-  window.seasonalRolesCounter = {};
-}
-
 function isLocked() {
   return document.getElementsByTagName("body")[0].classList.contains("locked");
 }
@@ -153,40 +134,6 @@ function unlock() {
   document.getElementsByTagName("body")[0].classList.remove("locked");
   document.getElementById("lock-icon").innerHTML = "";
   document.getElementById("va-info-container").setAttribute("data-working", 0);
-}
-
-function fetchTheme() {
-  let themeString = localStorage.getItem("theme");
-  return themeString;
-}
-
-function saveTheme(themeString) {
-  localStorage.setItem("theme", themeString);
-}
-
-function setThemeFromStorage(defaultTheme) {
-
-  let body = document.getElementsByTagName("body")[0];
-  let theme = fetchTheme();
-  let set = false;
-
-  if (theme) {
-    body.classList.add(theme);
-    set = true;
-  }
-
-  switch (theme) {
-    case "light":
-      document.getElementById("dark-mode-switch").value = "Turn Dark Mode On";
-      break;
-    case "dark":
-      document.getElementById("dark-mode-switch").value = "Turn Dark Mode Off";
-      break;
-    default:
-  }
-
-  return set;
-
 }
 
 function setStorageState() {

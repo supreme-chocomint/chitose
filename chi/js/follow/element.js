@@ -1,27 +1,5 @@
-// Functions that directly handle followed voice actors
-
-function isFollowed(voiceActorId) {
-  try {
-    let following = getFollowing();
-    if (following) {
-      return Boolean(following[voiceActorId]);
-    } else if (following == {}) {
-      return false;
-    }
-  }
-  catch (AccessDeniedError) {
-    return false;
-  }
-}
-
-function getFollowing() {
-  let following = JSON.parse(localStorage.getItem("following"));
-  if (following) {
-    return following;
-  }
-  else {
-    return {};
-  }
+function clearTransferBox() {
+  document.getElementById("transfer-box").value = "";
 }
 
 function disableFollowing() {
