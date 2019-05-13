@@ -165,7 +165,7 @@ function formatStats(va) {
   Mean character popularity:
     ${va.avgCharacterPopularity.main} favorites for main characters,
     ${va.avgCharacterPopularity.total} favorites for all characters<br>
-  Character significance spread:
+  Character spread:
     ${va.characterSpread.MAIN} main,
     ${va.characterSpread.SUPPORTING} supporting
     <br>

@@ -44,8 +44,7 @@ function addVATableEntry(metadata) {
 
   name.innerHTML = metadata.name;
   name.href = "javascript:void(0)";
-  name.classList.add("internal_link");
-  name.onclick = function() {VAOnClick(metadata.id)};
+  name.onclick = function() {VADetailsOnClick(metadata.id)};
   nameCol.appendChild(name);
   row.appendChild(nameCol);
 
@@ -54,10 +53,10 @@ function addVATableEntry(metadata) {
   image.style.display = "none";
   imageCol.appendChild(image);
 
-  link.innerHTML = "Details";
+  link.innerHTML = "Show All";
   link.href = "javascript:void(0)";
   link.classList.add("internal_link");
-  link.onclick = function() {VADetailsOnClick(metadata.id)};
+  link.onclick = function() {VAOnClick(metadata.id)};
   linkCol.appendChild(link);
   row.appendChild(linkCol);
 

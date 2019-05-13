@@ -61,13 +61,12 @@ function addFollowTableEntry(metadata) {
 
   name.innerHTML = metadata.name;
   name.href = "javascript:void(0)";
-  name.classList.add("internal_link");
-  name.onclick = function() {VAOnClick(metadata.id)};
+  name.onclick = function() {VADetailsOnClick(metadata.id)};
 
-  url.innerHTML = "Details";
+  url.innerHTML = "Show All";
   url.href = "javascript:void(0)";
   url.classList.add("internal_link");
-  url.onclick = function() {VADetailsOnClick(metadata.id)};
+  url.onclick = function() {VAOnClick(metadata.id)};
 
   deleteLink.innerHTML = "&times;";
   deleteLink.href = "javascript:void(0)";
