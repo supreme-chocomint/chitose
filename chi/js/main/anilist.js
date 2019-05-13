@@ -85,8 +85,23 @@ function getQuery(type) {
         perPage
       }
 
-      staff (search: $search) {` + voiceActorBasicFragment +
-      `}
+      staff (search: $search) {
+        id
+        name {
+          first
+          last
+        }
+        siteUrl
+        language
+        image {
+          medium
+        }
+        characters (perPage: 1) {
+          nodes {
+            id
+          }
+        }
+      }
     }
 
   }

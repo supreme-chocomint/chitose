@@ -6,7 +6,7 @@ function searchButtonOnClick() {
 
   let searchTerm = document.getElementById("search-bar").value;
   let variables = {
-      perPage: 30,
+      perPage: 50,
       page: 1,
       search: searchTerm
   };
@@ -46,17 +46,17 @@ function parseVASearchResults(data) {
   let voiceActorArray = [];
 
   for (let staffData of staffDataArray) {
-    let voiceActor = {
-      id: staffData.id,
-      name: parsedName(staffData.name),
-      url: staffData.siteUrl,
-      image: staffData.image.medium,
-      language: staffData.language
+    if (staffData.characters.nodes.length != 0) {
+      let voiceActor = {
+        id: staffData.id,
+        name: parsedName(staffData.name),
+        url: staffData.siteUrl,
+        image: staffData.image.medium,
+        language: staffData.language
+      }
+      window.voiceActors[staffData.id] = voiceActor;
+      voiceActorArray.push(staffData.id);
     }
-
-    window.voiceActors[staffData.id] = voiceActor;
-    voiceActorArray.push(staffData.id);
-
   }
 
   return voiceActorArray;
