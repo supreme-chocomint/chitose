@@ -50,7 +50,8 @@ function parseVASearchResults(data) {
       id: staffData.id,
       name: parsedName(staffData.name),
       url: staffData.siteUrl,
-      image: staffData.image.medium
+      image: staffData.image.medium,
+      language: staffData.language
     }
 
     window.voiceActors[staffData.id] = voiceActor;

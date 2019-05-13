@@ -122,20 +122,7 @@ a.symbol {
   color: var(--internal-link-color);
 }
 
-#navigation a, #navigation #page-tracker {
-  color: white;
-  background-color: #33C3F0;
-  float: left;
-  padding: 0.1rem 1rem;
-  text-decoration: var(--link-decoration);
-  border: 1px solid var(--bg-color);
-  border-radius: 4px;
-  font-size: 2rem;
-  opacity: var(--obj-opacity);
-  pointer-events: var(--mouse-response);
-}
-
-/* Inputs, selects, textareas
+/* Inputs, selects, textareas, button-like objects
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 input, select, textarea {
@@ -164,6 +151,18 @@ input#dark-mode-switch {
   background-color: transparent;
 }
 
+#navigation a, #navigation #page-tracker {
+  color: white;
+  background-color: #33C3F0;
+  display: inline-block;
+  padding: 0.1rem 1rem;
+  text-decoration: var(--link-decoration);
+  border-radius: 4px;
+  font-size: 2rem;
+  opacity: var(--obj-opacity);
+  pointer-events: var(--mouse-response);
+}
+
 /* Table and table tool spacing/arrangement
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -175,21 +174,23 @@ input#dark-mode-switch {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
 }
 
-#navigation a {
-  margin-bottom: 2rem;  /* Prevents transfer box from touching */
+#navigation {
+  margin-bottom: 2rem;
 }
 
-#navigation #page-tracker {
+#navigation #page-tracker {  /* Center vertically and horizontally */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   width: 6ch;
-  text-align: center;
-}
-
-#language-filter {
-  float: right;
 }
 
 #search-bar {
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
+}
+
+#right-nav {
+  margin-right: 2rem;
 }
 
 /* Images

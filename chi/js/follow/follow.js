@@ -51,7 +51,9 @@ function collectFollowingCallback(numFollowing, data) {
   }
 
   addFollowTableEntry(metadata);
-  window.voiceActors[staff.id] = metadata;
+  if (window.voiceActors[staff.id] == undefined) {
+    window.voiceActors[staff.id] = metadata;
+  }
 
   let numEntries = document.getElementById("follow-table-body").children.length;
   if (numEntries == numFollowing) {

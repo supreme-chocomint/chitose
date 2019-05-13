@@ -206,13 +206,18 @@ function setVATableState(stateString) {
 }
 
 function clearVATable() {
+
   let tableBody = document.getElementById("va-table-body");
   tableBody.innerHTML = "";
   tableBody.setAttribute("data-pageIndex", 0);
   tableBody.setAttribute("data-pageCount", 1);
+
   document.getElementById("left-nav").classList.add("inactive");
   document.getElementById("right-nav").classList.add("inactive");
   document.getElementById("va-table-caption").setAttribute("data-content", "");
+  document.getElementById("language-filter").innerHTML = "";
+  updateLanguageFilter("ALL");
+
 }
 
 function resetVaTablePages(language) {
