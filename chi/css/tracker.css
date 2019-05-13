@@ -218,7 +218,7 @@ input#dark-mode-switch {
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
 #va-info-bio {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   display: flex;
   flex-wrap: wrap;
 }
@@ -243,14 +243,7 @@ input#dark-mode-switch {
   border-width: 1px;
   border-style: solid;
   margin-bottom: 2rem;
-}
-
-#va-side-container > div {
-  width: 48%;
-}
-
-.full-container {
-  width: 100% !important;
+  width: 100%;
 }
 
 .va-character-header {

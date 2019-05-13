@@ -65,24 +65,15 @@ function returnButtonOnClick() {
 
 function allCharactersSwitchOnClick() {
 
-  let vaLeftContainer = document.getElementById("va-left-container");
-  let vaRightContainer = document.getElementById("va-right-container");
+  let vaSideContainers = document.getElementById("va-side-containers");
   let vaBottomContainer = document.getElementById("va-bottom-container");
-  let fullContainer = document.getElementsByClassName("full-container")[0];
 
   if (vaBottomContainer.style.display == "none") {
     vaBottomContainer.style.display = "";
-    vaLeftContainer.style.display = "none";
-    vaRightContainer.style.display = "none";
+    vaSideContainers.style.display = "none";
   }
   else {
-    if (fullContainer) {
-      fullContainer.style.display = "";
-    }
-    else {
-      vaLeftContainer.style.display = "";
-      vaRightContainer.style.display = "";
-    }
+    vaSideContainers.style.display = "";
     vaBottomContainer.style.display = "none";
   }
 

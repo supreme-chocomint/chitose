@@ -103,13 +103,13 @@ function resizeCharacterContainers(vaDetails) {
   else if (vaDetails.uwRoles.length == 0 && vaDetails.popularRoles.length != 0) {
     vaRightContainer.style.display = "none";
     // left container shown by default
-    changeContainerWidth(vaLeftContainer, "full");
+    changeSideContainerWidths("natural");
     button.classList.remove("disabled");
   }
   else if (vaDetails.popularRoles.length == 0 && vaDetails.uwRoles.length != 0) {
     vaLeftContainer.style.display = "none";
     vaRightContainer.style.display = "";
-    changeContainerWidth(vaRightContainer, "full");
+    changeSideContainerWidths("natural");
     button.classList.remove("disabled");
   }
   else {
@@ -119,21 +119,28 @@ function resizeCharacterContainers(vaDetails) {
 
 }
 
-function changeContainerWidth(container, widthString) {
+function changeSideContainerWidths(widthString) {
+
+  let vaLeftContainer = document.getElementById("va-left-container");
+  let vaRightContainer = document.getElementById("va-right-container");
+
   switch (widthString) {
-    case "full":
-    container.classList.add("full-container");
-    container.classList.remove("one-half");
-    container.classList.remove("column");
+    case "natural":
+      vaLeftContainer.classList.remove("one-half");
+      vaLeftContainer.classList.remove("column");
+      vaRightContainer.classList.remove("one-half");
+      vaRightContainer.classList.remove("column");
       break;
     case "half":
-    container.classList.add("one-half");
-    container.classList.add("column");
-    container.classList.remove("full-container");
+      vaLeftContainer.classList.add("one-half");
+      vaLeftContainer.classList.add("column");
+      vaRightContainer.classList.add("one-half");
+      vaRightContainer.classList.add("column");
       break;
     default:
       break;
   }
+
 }
 
 function formatStats(va) {
@@ -266,7 +273,7 @@ function clearVaInfo() {
   document.getElementById("va-support-characters").innerHTML = "";
   document.getElementById("va-bottom-container").style.display = "none";
 
-  changeContainerWidth(document.getElementById("va-left-container"), "half");
-  changeContainerWidth(document.getElementById("va-right-container"), "half");
+  changeSideContainerWidths("half");
+  changeSideContainerWidths("half");
 
 }
