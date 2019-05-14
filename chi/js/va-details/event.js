@@ -5,24 +5,23 @@ function VADetailsOnClick(voiceActorId) {
   let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
   let toggleCharactersButton = document.getElementById("all-characters-switch");
-  let workingId = vaInfoContainer.getAttribute("data-working");
   let roles = window.voiceActors[voiceActorId].roles;
 
   let variables = {
     id: voiceActorId,
     pageNum: 1
   }
+  console.log(isFetchingDetails());
+  if (isFetchingDetails()) {
 
-  if (isLocked()) {
-
-    if (workingId == voiceActorId) {
+    let fetchingId = getFetchingDetailsId();
+    if (fetchingId == voiceActorId) {
       mainContainer.style.display = "none";
       vaInfoContainer.style.display = "";
     }
-
-    else if (workingId != undefined && workingId != 0){  // purely defensive check
+    else if (fetchingId != 0){  // purely defensive check
       window.alert(
-        `Currently busy fetching data for ${window.voiceActors[workingId].name}.
+        `Currently busy fetching data for ${window.voiceActors[fetchingId].name}.
         View their details page to see progress.`
       );
     }
@@ -30,7 +29,7 @@ function VADetailsOnClick(voiceActorId) {
   }
   else {
 
-    lock(voiceActorId);
+    setFetchingDetails(voiceActorId);
     mainContainer.style.display = "none";
     vaInfoContainer.style.display = "";
     toggleCharactersButton.classList.add("disabled");
@@ -40,7 +39,7 @@ function VADetailsOnClick(voiceActorId) {
     if (roles && roles.length != 0) {
       fillVaBasicInfo(window.voiceActors[voiceActorId]);
       fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
-      unlock();
+      unsetFetchingDetails();
     }
     else {
       document.getElementById("va-info-bio-text").innerHTML = "Getting initial data...";

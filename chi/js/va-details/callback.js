@@ -184,7 +184,7 @@ function decideNextStep(vaDataPage) {
       fillVaBasicInfo(window.voiceActors[vaDataPage.data.Staff.id]);
     }
     else { // Not a voice actor
-      unlock();
+      unsetFetchingDetails();
       addNotVaIndicator();
       return;
     }
@@ -194,7 +194,7 @@ function decideNextStep(vaDataPage) {
     requestNextVaPage(vaDataPage);
   } else {
     fillVaAdvancedInfo(window.voiceActors[vaDataPage.data.Staff.id]);
-    unlock();
+    unsetFetchingDetails();
   }
 
 }

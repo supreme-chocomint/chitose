@@ -121,35 +121,3 @@ function setOnKeyPresses() {
   });
 
 }
-
-function isLocked() {
-  return document.getElementsByTagName("body")[0].classList.contains("locked");
-}
-
-function lock(voiceActorId) {
-  document.getElementsByTagName("body")[0].classList.add("locked");
-  document.getElementById("lock-icon").innerHTML = "🔒";
-  document.getElementById("va-info-container").setAttribute("data-working", voiceActorId);
-}
-
-function unlock() {
-  document.getElementsByTagName("body")[0].classList.remove("locked");
-  document.getElementById("lock-icon").innerHTML = "";
-  document.getElementById("va-info-container").setAttribute("data-working", 0);
-}
-
-function setStorageState() {
-  try {
-    localStorage.getItem("following");
-    console.log("Katta na! GAHAHA");
-    console.log("---");
-    return true;
-  }
-  catch (AccessDeniedError) {
-    warningString = "Cookies and site data permissions must be enabled " +
-    "for some site features to work. This includes the ability to follow voice actors."
-    setTimeout(function() { window.alert(warningString); }, 1);
-    disableFollowing();
-    return false;
-  }
-}

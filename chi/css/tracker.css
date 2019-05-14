@@ -58,7 +58,7 @@ body {
   pointer-events: none !important;
 }
 
-#lock-icon {
+#lock-icon, #fetch-icon {
   display: inline;
   margin: 1rem;
 }
