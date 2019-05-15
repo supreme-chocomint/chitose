@@ -11,7 +11,7 @@ function getQuery(type) {
     siteUrl
     language
     image {
-      medium
+      large
     }
   `;
 
@@ -168,7 +168,7 @@ function getQuery(type) {
                 native
               }
               image {
-                medium
+                large
               }
               siteUrl
             }

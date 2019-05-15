@@ -23,6 +23,7 @@ function fillVATableAndPage(voiceActorIds) {
 
   }
 
+  window.currentDisplay.styleCharacterEntries("left-col");
   setVATableSize(voiceActorIds.length);
   setNavigationState(tableBody, pageSize, "ALL");
 

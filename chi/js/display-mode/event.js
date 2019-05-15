@@ -24,10 +24,10 @@ function buildDisplayModes() {
 
   switch (window.currentDisplay.name) {
     case "grid":
-      _switch.value = "Switch to Minimalist Mode";
+      _switch.value = "Minimalist Mode";
       break;
     case "minimalist":
-      _switch.value = "Switch to Grid Mode";
+      _switch.value = "Grid Mode";
       break;
   }
 

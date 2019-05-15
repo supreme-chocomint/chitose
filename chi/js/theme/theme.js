@@ -3,12 +3,12 @@ function darkModeSwitchOnClick() {
   let _switch = document.getElementById("dark-mode-switch");
   if (body.classList.contains("dark")) {
     body.classList.remove("dark");
-    _switch.value = "Turn Dark Mode On";
+    _switch.value = "Dark Theme";
     saveTheme("light");
   }
   else {
     body.classList.add("dark");
-    _switch.value = "Turn Dark Mode Off";
+    _switch.value = "Light Theme";
     saveTheme("dark");
   }
 }
@@ -35,10 +35,10 @@ function setThemeFromStorage(defaultTheme) {
 
   switch (theme) {
     case "light":
-      document.getElementById("dark-mode-switch").value = "Turn Dark Mode On";
+      document.getElementById("dark-mode-switch").value = "Dark Theme";
       break;
     case "dark":
-      document.getElementById("dark-mode-switch").value = "Turn Dark Mode Off";
+      document.getElementById("dark-mode-switch").value = "Light Theme";
       break;
     default:
   }

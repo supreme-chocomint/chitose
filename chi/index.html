@@ -76,8 +76,8 @@
   <div id="settings">
     <p id="fetch-icon" class="jp" style="display:none"></p>
     <p id="lock-icon" style="display:none"></p>
-    <input type="button" id="display-mode-switch" value="Switch to Grid Mode">
-    <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
+    <input type="button" id="display-mode-switch" value="Grid Mode">
+    <input type="button" id="dark-mode-switch" value="Dark Theme">
   </div>
 
   <!-- Primary Page Layout
@@ -110,13 +110,15 @@
 
         <div id="left-col">
 
-          <div>
-            <h5 class="static-display-top grid va-character-header"
-                id="va-table-header" style="display:none;">
-              String here
-            </h5>
+          <div class="static-display-top grid va-table" style="display:none;">
+            <div>
+              <h5 class="grid va-character-header"
+                  id="va-table-header">
+                String here
+              </h5>
+            </div>
+            <div class="grid va-character-wrapper va-table-body"></div>
           </div>
-          <div class="grid va-character-wrapper va-table-body"></div>
 
           <table class="static-display-top minimalist va-table u-full-width" style="display:none;">
             <caption id="va-table-caption">Viewing:</caption>
@@ -129,8 +131,10 @@
             <tbody class="minimalist va-table-body"></tbody>
           </table>
 
-          <div><h5 class="grid va-character-header" id="follow-table-header" style="display:none;">Following</h5></div>
-          <div class="grid va-character-wrapper follow-table-body"></div>
+          <div class="grid follow-table" style="display:none;">
+            <div><h5 class="grid va-character-header" id="follow-table-header">Following</h5></div>
+            <div class="grid va-character-wrapper follow-table-body"></div>
+          </div>
 
           <table class="minimalist follow-table u-full-width" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
@@ -165,13 +169,15 @@
 
       <div class="one-half column" id="right-col">
 
-        <div>
-          <h5 class="static-display-top grid va-character-header"
-              id="roles-table-header" style="display:none;">
-            String Here
-          </h5>
+        <div class="static-display-top grid roles-table" style="display:none;">
+          <div>
+            <h5 class="grid va-character-header"
+                id="roles-table-header">
+              String Here
+            </h5>
+          </div>
+          <div class="grid va-character-wrapper roles-table-body"></div>
         </div>
-        <div class="grid va-character-wrapper roles-table-body"></div>
 
         <table class="static-display-top minimalist roles-table u-full-width" style="display:none;">
           <caption id="roles-table-caption">Viewing:</caption>
@@ -212,13 +218,15 @@
 
         <div class="one-half column" id="va-left-container">
 
-          <div>
-            <h5 class="static-display-top grid va-character-header"
-                id="va-popular-header" style="display:none;">
-              Popular Characters
-            </h5>
+          <div class="grid va-popular-characters">
+            <div>
+              <h5 class="static-display-top grid va-character-header"
+                  id="va-popular-header" style="display:none;">
+                Popular Characters
+              </h5>
+            </div>
+            <div class="grid va-character-wrapper va-popular-characters-body"></div>
           </div>
-          <div class="grid va-character-wrapper va-popular-characters-body"></div>
 
           <table class="static-display-top minimalist va-popular-characters u-full-width" style="display:none;">
             <caption>Popular Characters</caption>
@@ -235,13 +243,15 @@
 
         <div class="one-half column" id="va-right-container">
 
-          <div>
-            <h5 class="static-display-top grid va-character-header"
-                id="va-uw-header" style="display:none;">
-              Underwatched Characters
-            </h5>
+          <div class="grid va-uw-characters">
+            <div>
+              <h5 class="static-display-top grid va-character-header"
+                  id="va-uw-header" style="display:none;">
+                Underwatched Characters
+              </h5>
+            </div>
+            <div class="grid va-character-wrapper va-uw-characters-body"></div>
           </div>
-          <div class="grid va-character-wrapper va-uw-characters-body"></div>
 
           <table class="static-display-top minimalist va-uw-characters u-full-width" style="display:none;">
             <caption>Underwatched Characters</caption>

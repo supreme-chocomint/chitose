@@ -288,20 +288,19 @@ var Grid = {
 
   init() {
 
-    /*
     this.vaTable = document.querySelector(".grid.va-table");
     this.vaTableBody = document.querySelector(".grid.va-table-body");
     this.followTable = document.querySelector(".grid.follow-table");
     this.followTableBody = document.querySelector(".grid.follow-table-body");
     this.rolesTable = document.querySelector(".grid.roles-table");
     this.rolesTableBody = document.querySelector(".grid.roles-table-body");
-    */
+    /*
     this.vaTable = document.querySelector(".minimalist.va-table");
     this.vaTableBody = document.querySelector(".minimalist.va-table-body");
     this.followTable = document.querySelector(".minimalist.follow-table");
     this.followTableBody = document.querySelector(".minimalist.follow-table-body");
     this.rolesTable = document.querySelector(".minimalist.roles-table");
-    this.rolesTableBody = document.querySelector(".minimalist.roles-table-body");
+    this.rolesTableBody = document.querySelector(".minimalist.roles-table-body"); */
 
     this.vaPopularTableBody = document.querySelector(".grid.va-popular-characters-body");
     this.vaUWTableBody = document.querySelector(".grid.va-uw-characters-body");
@@ -329,44 +328,33 @@ var Grid = {
 
   addFollowTableEntry(metadata) {
 
-    let row = document.createElement("tr");
-    let nameCol = document.createElement("td");
-    let name = document.createElement("a");
-    let urlCol = document.createElement("td");
-    let url = document.createElement("a");
-    let deleteCol = document.createElement("td");
+    let div = document.createElement("div");
+    let thumbnail = document.createElement("div");
+    let text = document.createElement("p");
+    let seasonLink = document.createElement("a");
     let deleteLink = document.createElement("a");
 
-    row.id = metadata.id;
-    name.classList.add(metadata.id);  // for coordinating with VA table
-    if (window.clicked == metadata.id) {
-      name.classList.add("clicked");
-    }
+    thumbnail.style.backgroundImage = `url(${metadata.image})`;
+    thumbnail.classList.add("thumbnail");
+    thumbnail.onclick = function() { VADetailsOnClick(metadata.id) };
+    div.appendChild(thumbnail);
 
-    name.innerHTML = metadata.name;
-    name.href = "javascript:void(0)";
-    name.onclick = function() {VADetailsOnClick(metadata.id)};
+    text.innerHTML += metadata.name + "<br>";
 
-    url.innerHTML = "Show All";
-    url.href = "javascript:void(0)";
-    url.classList.add("internal_link");
-    url.onclick = function() {VAOnClick(metadata.id)};
+    seasonLink.href = "javascript:void(0)";
+    seasonLink.innerHTML += "Show Season Roles";
+    text.appendChild(seasonLink);
+    text.innerHTML += "<br>";
 
-    deleteLink.innerHTML = "&times;";
     deleteLink.href = "javascript:void(0)";
-    deleteCol.classList.add("symbol");
-    deleteLink.classList.add("symbol");
-    deleteLink.onclick = function() {
-      unfollow(metadata);
-    }
+    deleteLink.innerHTML = "Remove";
+    text.appendChild(deleteLink);
 
-    nameCol.appendChild(name);
-    urlCol.appendChild(url);
-    deleteCol.appendChild(deleteLink);
-    row.appendChild(nameCol);
-    row.appendChild(urlCol);
-    row.appendChild(deleteCol);
-    this.followTableBody.appendChild(row);
+    text.classList.add("thumbnail-caption");
+    div.appendChild(text);
+
+    div.classList.add("thumbnail-wrapper");
+    this.followTableBody.appendChild(div);
 
   },
 
@@ -390,61 +378,54 @@ var Grid = {
 
   addVATableEntry(metadata) {
 
-    let row = document.createElement("tr");
-    let nameCol = document.createElement("td");
-    let name = document.createElement("a");
-    let imageCol = document.createElement("td");
-    let image = document.createElement("img");
-    let linkCol = document.createElement("td");
-    let link = document.createElement("a");
-    let numRolesCol = document.createElement("td");
-    let numRoles = document.createElement("span");
-    let followCol = document.createElement("td");
+    let div = document.createElement("div");
+    let thumbnail = document.createElement("div");
+    let text = document.createElement("p");
+    let nameLink = document.createElement("a");
+    let seasonLink = document.createElement("a");
     let followState = document.createElement("a");
 
-    name.innerHTML = metadata.name;
-    name.href = "javascript:void(0)";
-    name.onclick = function() {VADetailsOnClick(metadata.id)};
-    nameCol.appendChild(name);
-    row.appendChild(nameCol);
+    thumbnail.style.backgroundImage = `url(${metadata.image})`;
+    thumbnail.classList.add("thumbnail");
+    thumbnail.onclick = function() { VADetailsOnClick(metadata.id) };
+    div.appendChild(thumbnail);
 
-    image.src = metadata.image;
-    image.alt = metadata.name;
-    image.style.display = "none";
-    imageCol.appendChild(image);
-
-    link.innerHTML = "Show All";
-    link.href = "javascript:void(0)";
-    link.classList.add("internal_link");
-    link.onclick = function() {VAOnClick(metadata.id)};
-    linkCol.appendChild(link);
-    row.appendChild(linkCol);
+    nameLink.innerHTML = metadata.name;
+    nameLink.href = "javascript:void(0)";
+    nameLink.onclick = function() {VADetailsOnClick(metadata.id)};
+    text.appendChild(nameLink);
+    text.innerHTML += "<br>";
 
     numRolesInt = window.seasonalRolesCounter[metadata.id];
     if (numRolesInt) {
-      numRoles.innerHTML = numRolesInt;
-      numRolesCol.appendChild(numRoles);
-      row.appendChild(numRolesCol);
+      seasonLink.innerHTML = `Show ${numRolesInt} Season Role(s)`;
+      seasonLink.href = "javascript:void(0)";
+      seasonLink.classList.add("internal_link");
+      seasonLink.onclick = function() {VAOnClick(metadata.id)};
+      text.appendChild(seasonLink);
+      text.innerHTML += "<br>";
     }
 
     if (isFollowed(metadata.id)) { followState.innerHTML = "★"; }
     else { followState.innerHTML = "☆"; }
     followState.href = "javascript:void(0)";
     followState.classList.add("symbol");  // makes character larger
-    followCol.classList.add("symbol");  // centers character
     followState.onclick = function() {
       followState.innerHTML = toggleFollow(metadata);
     }
 
-    name.classList.add(metadata.id);
+    nameLink.classList.add(metadata.id);
     if (window.clicked == metadata.id) {
-      name.classList.add("clicked");
+      nameLink.classList.add("clicked");
     }
-    followCol.appendChild(followState);
-    row.appendChild(followCol);
+    text.appendChild(followState);
 
-    row.classList.add(metadata.language);
-    this.vaTableBody.appendChild(row);
+    text.classList.add("thumbnail-caption");
+    div.classList.add("thumbnail-wrapper");
+    div.classList.add(metadata.language);
+
+    div.appendChild(text);
+    this.vaTableBody.appendChild(div);
 
   },
 

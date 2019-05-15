@@ -47,7 +47,8 @@ function collectFollowingCallback(numFollowing, data) {
   let metadata = {
     id: staff.id,
     name: parsedName(staff.name),
-    url: staff.siteUrl
+    url: staff.siteUrl,
+    image: staff.image.large
   }
 
   addFollowTableEntry(metadata);
@@ -57,6 +58,7 @@ function collectFollowingCallback(numFollowing, data) {
 
   let numEntries = window.currentDisplay.followTableBody.children.length;
   if (numEntries == numFollowing) {
+    window.currentDisplay.styleCharacterEntries("left-col");
     unlock();
   }
 
