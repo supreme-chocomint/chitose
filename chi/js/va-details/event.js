@@ -12,6 +12,8 @@ function VADetailsOnClick(voiceActorId) {
     pageNum: 1
   }
 
+  vaInfoContainer.setAttribute("data-va-id", voiceActorId);
+
   if (isFetchingDetails()) {
 
     let fetchingId = getFetchingDetailsId();

@@ -33,7 +33,6 @@ window.onload = function() {
     body.classList.add(defaultTheme);
     let keys = Object.keys(window.displayModes);
     window.currentDisplay = window.displayModes[keys[0]];
-    console.log(window);
   }
 
   setOnClicks();
@@ -104,6 +103,7 @@ function setOnClicks() {
 
   let searchButton = document.getElementById("search-button");
   let refreshButton = document.getElementById("refresh-button");
+  let displayModeSwitch = document.getElementById("display-mode-switch");
   let darkModeSwitch = document.getElementById("dark-mode-switch");
   let leftTableSwitch = document.getElementById("left-table-switch");
   let importButton = document.getElementById("import-button");
@@ -113,6 +113,7 @@ function setOnClicks() {
 
   searchButton.onclick = function() { searchButtonOnClick(); }
   refreshButton.onclick = function() { refreshButtonOnClick(); }
+  displayModeSwitch.onclick = function() { displayModeSwitchOnClick(); }
   darkModeSwitch.onclick = function() { darkModeSwitchOnClick(); }
   leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
   importButton.onclick = function() { importButtonOnClick(); }

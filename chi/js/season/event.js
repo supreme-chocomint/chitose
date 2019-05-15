@@ -36,8 +36,7 @@ function populateVATableWithSeason() {
       let data = window.seasonRawData[year][quarter][i];
       extractVAs(window.seasonalRolesCounter, window.voiceActors, data);
     }
-    sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);
-    fillVATableAndPage(sortedSeasonalVoiceActorIds);
+    populateVATableWithSeasonCache();
     unlock();
   }
   else {
@@ -54,6 +53,11 @@ function populateVATableWithSeason() {
     }
   }
 
+}
+
+function populateVATableWithSeasonCache() {
+  sortedSeasonalVoiceActorIds = sortVaIdsByNumRoles(window.seasonalRolesCounter, window.voiceActors);
+  fillVATableAndPage(sortedSeasonalVoiceActorIds);
 }
 
 function clearSeasonSpecificData() {

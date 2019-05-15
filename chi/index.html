@@ -27,6 +27,7 @@
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src='js/display-mode/display.js'></script>
+  <script src='js/display-mode/event.js'></script>
   <script src='js/display-mode/storage.js'></script>
 
   <script src='js/follow/element.js'></script>
@@ -109,6 +110,9 @@
 
         <div id="left-col">
 
+          <div><h5 class="va-character-header" id="va-table-header">String here</h5></div>
+          <div class="grid va-character-wrapper va-table-body"></div>
+
           <table class="minimalist va-table u-full-width">
             <caption id="va-table-caption">Viewing:</caption>
             <thead id="va-table-head"><tr>
@@ -119,6 +123,9 @@
             </tr></thead>
             <tbody class="minimalist va-table-body"></tbody>
           </table>
+
+          <div><h5 class="va-character-header" id="follow-table-header">Following</h5></div>
+          <div class="grid va-character-wrapper follow-table-body"></div>
 
           <table class="minimalist follow-table u-full-width" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
@@ -152,6 +159,10 @@
       </div>
 
       <div class="one-half column" id="right-col">
+
+        <div><h5 class="va-character-header" id="roles-table-header">String Here</h5></div>
+        <div class="grid va-character-wrapper roles-table-body"></div>
+
         <table class="minimalist roles-table u-full-width">
           <caption id="roles-table-caption">Viewing:</caption>
           <thead id="roles-table-head">
@@ -162,6 +173,7 @@
           </thead>
           <tbody class="minimalist roles-table-body"></tbody>
         </table>
+
       </div>
 
     </div>
@@ -190,8 +202,8 @@
 
         <div class="one-half column" id="va-left-container">
 
-          <div><h5 class="grid va-character-header" id="va-popular-header">Popular Characters</h5></div>
-          <div class="grid va-character-wrapper va-popular-characters"></div>
+          <div><h5 class="va-character-header" id="va-popular-header">Popular Characters</h5></div>
+          <div class="grid va-character-wrapper va-popular-characters-body"></div>
 
           <table class="minimalist va-popular-characters u-full-width">
             <thead id="va-popular-head">
@@ -200,15 +212,15 @@
                 <th>Show Name</th>
               </tr>
             </thead>
-            <tbody class="minimalist va-popular-body"></tbody>
+            <tbody class="minimalist va-popular-characters-body"></tbody>
           </table>
 
         </div>
 
         <div class="one-half column" id="va-right-container">
 
-          <div><h5 class="grid va-character-header" id="va-uw-header">Underwatched Characters</h5></div>
-          <div class="grid va-character-wrapper va-uw-characters"></div>
+          <div><h5 class=" va-character-header" id="va-uw-header">Underwatched Characters</h5></div>
+          <div class="grid va-character-wrapper va-uw-characters-body"></div>
 
           <table class="minimalist va-uw-characters u-full-width">
             <thead id="va-uw-head">
@@ -217,7 +229,7 @@
                 <th>Show Name</th>
               </tr>
             </thead>
-            <tbody class="minimalist va-uw-body"></tbody>
+            <tbody class="minimalist va-uw-characters-body"></tbody>
           </table>
 
         </div>
@@ -226,10 +238,10 @@
 
       <div class="row" id="va-bottom-container">
 
-        <div class="one-half column">
+        <div>
 
           <div><h5 class="va-character-header" id="va-cmain-header">Main Characters</h5></div>
-          <div class="grid va-character-wrapper va-main-characters"></div>
+          <div class="grid va-character-wrapper va-main-characters-body"></div>
 
           <table class="minimalist va-main-characters u-full-width">
             <thead id="va-main-head">
@@ -238,15 +250,15 @@
                 <th>Show Name</th>
               </tr>
             </thead>
-            <tbody class="minimalist va-main-body"></tbody>
+            <tbody class="minimalist va-main-characters-body"></tbody>
           </table>
 
         </div>
 
-        <div class="one-half column">
+        <div>
 
           <div><h5 class="va-character-header" id="va-csupport-header">Supporting Characters</h5></div>
-          <div class="grid va-character-wrapper va-support-characters"></div>
+          <div class="grid va-character-wrapper va-support-characters-body"></div>
 
           <table class="minimalist va-support-characters u-full-width">
             <thead id="va-support-head">
@@ -255,7 +267,7 @@
                 <th>Show Name</th>
               </tr>
             </thead>
-            <tbody class="minimalist va-support-body"></tbody>
+            <tbody class="minimalist va-support-characters-body"></tbody>
           </table>
 
         </div>

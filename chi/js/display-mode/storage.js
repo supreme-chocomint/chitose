@@ -9,6 +9,7 @@ function setDisplayModeFromStorage() {
   if (!(window.currentDisplay)) {
     let keys = Object.keys(window.displayModes);
     window.currentDisplay = window.displayModes[keys[0]];
+    window.currentDisplay.activate();
   }
 
 }
