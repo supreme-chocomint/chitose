@@ -31,7 +31,6 @@ function displayModeSwitchOnClick() {
       break;
   }
 
-  clearSeasonSpecificData();
   populateVATableWithSeasonCache();
 
   // if first visit or refreshed
