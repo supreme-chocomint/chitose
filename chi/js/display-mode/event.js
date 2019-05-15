@@ -34,7 +34,8 @@ function displayModeSwitchOnClick() {
   clearSeasonSpecificData();
   populateVATableWithSeasonCache();
 
-  if (voiceActorId) {  // undefined if never viewed details before
+  // if first visit or refreshed
+  if (voiceActorId != undefined && voiceActorId != 0) {
     fillVaBasicInfo(window.voiceActors[voiceActorId]);
     fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
   }
