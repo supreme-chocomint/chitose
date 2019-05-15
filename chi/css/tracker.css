@@ -232,7 +232,7 @@ th { /* Makes header occupy one line only */
   margin-top: 1rem;
 }
 
-#va-side-containers > div.grid, #va-bottom-container {
+#va-side-containers > div.grid, #va-bottom-container.grid {
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);

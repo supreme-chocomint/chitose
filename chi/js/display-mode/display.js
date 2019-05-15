@@ -19,16 +19,14 @@ var Minimalist = {
 
     this.vaPopularTableBody = document.querySelector(".minimalist.va-popular-body");
     this.vaUWTableBody = document.querySelector(".minimalist.va-uw-body");
-    this.vaMainCharacters = document.getElementById("va-main-characters");
-    this.vaSupportCharacters = document.getElementById("va-support-characters");
+    this.vaMainTableBody = document.querySelector(".minimalist.va-main-body");
+    this.vaSupportTableBody = document.querySelector(".minimalist.va-support-body");
 
     document.getElementById("va-left-container").classList.add("minimalist");
     document.getElementById("va-right-container").classList.add("minimalist");
+    document.getElementById("va-bottom-container").classList.add("minimalist");
     document.getElementById("left-col").classList.add("minimalist");
     document.getElementById("right-col").classList.add("minimalist");
-
-    this.subhandler = Object.create(Grid);
-    this.subhandler.init();
 
   },
 
@@ -225,9 +223,11 @@ var Minimalist = {
         tableBody = this.vaUWTableBody;
         break;
       case "va-main-characters":
+        tableBody = this.vaMainTableBody;
+        break;
       case "va-support-characters":
-        this.subhandler.addCharacterEntry(containerId, role);
-        return;
+        tableBody = this.vaSupportTableBody;
+        break;
     }
 
     let row = document.createElement("tr");
@@ -254,14 +254,16 @@ var Minimalist = {
   },
 
   styleCharacterEntries(elementId) {
-    if (elementId == "va-bottom-container") {
-      this.subhandler.styleCharacterEntries(elementId);
-    }
   },
 
   clearSideContainers() {
     this.vaPopularTableBody.innerHTML = "";
     this.vaUWTableBody.innerHTML = "";
+  },
+
+  clearButtomContainer() {
+    this.vaMainTableBody.innerHTML = "";
+    this.vaSupportTableBody.innerHTML = "";
   }
 
 }
@@ -345,6 +347,11 @@ var Grid = {
   clearSideContainers() {
     this.vaPopularCharacters.innerHTML = "";
     this.vaUWCharacters.innerHTML = "";
+  },
+
+  clearButtomContainer() {
+    this.vaMainCharacters.innerHTML = "";
+    this.vaSupportCharacters.innerHTML = "";
   }
 
 }

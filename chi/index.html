@@ -172,7 +172,7 @@
 
     <div class="row">
       <input type="button" class="button" id="return-button" value="Return to Main View">
-      <input class="button" type="button" id="all-characters-switch" value="Toggle Character Grid">
+      <input class="button" type="button" id="all-characters-switch" value="Toggle All Characters">
     </div>
 
     <div class="row" id="va-info-name"></div>
@@ -225,10 +225,41 @@
       </div>
 
       <div class="row" id="va-bottom-container">
-        <div><h5 class="va-character-header" id="va-cmain-header">Main Characters</h5></div>
-        <div class="va-character-wrapper" id="va-main-characters"></div>
-        <div><h5 class="va-character-header" id="va-csupport-header">Supporting Characters</h5></div>
-        <div class="va-character-wrapper" id="va-support-characters"></div>
+
+        <div class="one-half column">
+
+          <div><h5 class="va-character-header" id="va-cmain-header">Main Characters</h5></div>
+          <div class="grid va-character-wrapper va-main-characters"></div>
+
+          <table class="minimalist va-main-characters u-full-width">
+            <thead id="va-main-head">
+              <tr>
+                <th>Character Name</th>
+                <th>Show Name</th>
+              </tr>
+            </thead>
+            <tbody class="minimalist va-main-body"></tbody>
+          </table>
+
+        </div>
+
+        <div class="one-half column">
+
+          <div><h5 class="va-character-header" id="va-csupport-header">Supporting Characters</h5></div>
+          <div class="grid va-character-wrapper va-support-characters"></div>
+
+          <table class="minimalist va-support-characters u-full-width">
+            <thead id="va-support-head">
+              <tr>
+                <th>Character Name</th>
+                <th>Show Name</th>
+              </tr>
+            </thead>
+            <tbody class="minimalist va-support-body"></tbody>
+          </table>
+
+        </div>
+
       </div>
 
       <p>

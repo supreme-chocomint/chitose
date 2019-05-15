@@ -232,10 +232,9 @@ function clearVaInfo() {
   document.getElementById("va-info-bio-text").innerHTML = "";
   document.getElementById("va-left-container").style.display = "none";
   document.getElementById("va-right-container").style.display = "none";
-  document.getElementById("va-main-characters").innerHTML = "";
-  document.getElementById("va-support-characters").innerHTML = "";
   document.getElementById("va-bottom-container").style.display = "none";
   window.currentDisplay.clearSideContainers();
+  window.currentDisplay.clearButtomContainer();
 
   changeSideContainerWidths("half");
   changeSideContainerWidths("half");
