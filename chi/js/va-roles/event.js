@@ -47,8 +47,7 @@ function VAOnClick(voiceActorId) {
 
 function unclick() {
 
-  let rolesTableCaption = document.getElementById("roles-table-caption");
-  rolesTableCaption.setAttribute("data-content", "");
+  window.currentDisplay.setRolesTableHeader("");
   window.clicked = "";
 
 }
@@ -56,11 +55,10 @@ function unclick() {
 function click(vaId) {
 
   let name = window.voiceActors[vaId].name;
-  let rolesTableCaption = document.getElementById("roles-table-caption");
   let quarter = document.getElementById("quarter-picker").value;
   let year = document.getElementById("year-picker").value;
 
-  rolesTableCaption.setAttribute("data-content", " " + name + " for " + parsedSeason(quarter, year));
+  window.currentDisplay.setRolesTableHeader(" " + name + " for " + parsedSeason(quarter, year));
   window.clicked = vaId;
 
 }

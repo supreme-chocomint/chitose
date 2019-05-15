@@ -5,6 +5,11 @@ window.onload = function() {
   window.seasonalRolesCounter = {};  // must be preserved across requests
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
+  window.displayModes = {
+    "minimalist": Object.create(Minimalist),
+    "grid": Object.create(Grid)
+  }
+  window.currentDisplay = null;
 
   lock();
 
@@ -17,9 +22,13 @@ window.onload = function() {
     if (!themeIsSet) {
       body.classList.add(defaultTheme);
     }
+    setDisplayModeFromStorage();
   }
   else {
     body.classList.add(defaultTheme);
+    let keys = Object.keys(window.displayModes);
+    window.currentDisplay = window.displayModes[keys[0]];
+    console.log(window);
   }
 
   setOnClicks();

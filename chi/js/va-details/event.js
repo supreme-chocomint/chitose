@@ -11,7 +11,7 @@ function VADetailsOnClick(voiceActorId) {
     id: voiceActorId,
     pageNum: 1
   }
-  console.log(isFetchingDetails());
+
   if (isFetchingDetails()) {
 
     let fetchingId = getFetchingDetailsId();

@@ -2,7 +2,7 @@
 function fillVATableAndPage(voiceActorIds) {
 
   let tableBody = document.getElementById("va-table-body");
-  let pageSize = 5;
+  let pageSize = window.currentDisplay.tablePageSize;
 
   tableBody.style.visibility = "none";  // to hide build process
   let entryCount = 0;
@@ -29,63 +29,7 @@ function fillVATableAndPage(voiceActorIds) {
 }
 
 function addVATableEntry(metadata) {
-
-  let row = document.createElement("tr");
-  let nameCol = document.createElement("td");
-  let name = document.createElement("a");
-  let imageCol = document.createElement("td");
-  let image = document.createElement("img");
-  let linkCol = document.createElement("td");
-  let link = document.createElement("a");
-  let numRolesCol = document.createElement("td");
-  let numRoles = document.createElement("span");
-  let followCol = document.createElement("td");
-  let followState = document.createElement("a");
-
-  name.innerHTML = metadata.name;
-  name.href = "javascript:void(0)";
-  name.onclick = function() {VADetailsOnClick(metadata.id)};
-  nameCol.appendChild(name);
-  row.appendChild(nameCol);
-
-  image.src = metadata.image;
-  image.alt = metadata.name;
-  image.style.display = "none";
-  imageCol.appendChild(image);
-
-  link.innerHTML = "Show All";
-  link.href = "javascript:void(0)";
-  link.classList.add("internal_link");
-  link.onclick = function() {VAOnClick(metadata.id)};
-  linkCol.appendChild(link);
-  row.appendChild(linkCol);
-
-  numRolesInt = window.seasonalRolesCounter[metadata.id];
-  if (numRolesInt) {
-    numRoles.innerHTML = numRolesInt;
-    numRolesCol.appendChild(numRoles);
-    row.appendChild(numRolesCol);
-  }
-
-  if (isFollowed(metadata.id)) { followState.innerHTML = "★"; }
-  else { followState.innerHTML = "☆"; }
-  followState.href = "javascript:void(0)";
-  followState.classList.add("symbol");  // makes character larger
-  followCol.classList.add("symbol");  // centers character
-  followState.onclick = function() {
-    followState.innerHTML = toggleFollow(metadata);
-  }
-
-  name.classList.add(metadata.id);
-  if (window.clicked == metadata.id) {
-    name.classList.add("clicked");
-  }
-  followCol.appendChild(followState);
-  row.appendChild(followCol);
-
-  row.classList.add(metadata.language);
-  document.getElementById("va-table-body").appendChild(row);
-
+  window.currentDisplay.addVATableEntry(metadata);
 }
 
 // Assumes page exists: will make empty page if it doesn't
@@ -149,28 +93,7 @@ function switchToPage(pageIndex, language) {
 }
 
 function setVATableSize(numElements) {
-
-  let vaTable = document.getElementById("va-table");
-  let vaTableHeaderRoles = document.getElementById("va-table-header-roles");
-  let vaTableHeaderFollow = document.getElementById("va-table-header-follow");
-  let vaTableState = vaTable.getAttribute("data-state");
-
-  if (numElements == 0){
-    vaTableHeaderRoles.style.display = "none";
-    vaTableHeaderFollow.style.display = "none";
-    addNoResultsIndicator("va-table-body");
-  }
-
-  else if (vaTableState == "search") {
-    vaTableHeaderRoles.style.display = "none";
-    vaTableHeaderFollow.style.display = "";
-  }
-
-  else {
-    vaTableHeaderRoles.style.display = "";
-    vaTableHeaderFollow.style.display = "";
-  }
-
+  window.currentDisplay.setVATableSize(numElements);
 }
 
 function setNavigationState(tableBody, pageSize, filter) {
@@ -213,9 +136,10 @@ function clearVATable() {
 
   document.getElementById("left-nav").classList.add("inactive");
   document.getElementById("right-nav").classList.add("inactive");
-  document.getElementById("va-table-caption").setAttribute("data-content", "");
   document.getElementById("language-filter").innerHTML = "";
   updateLanguageFilter("ALL");
+
+  window.currentDisplay.setVATableHeader("");
 
 }
 

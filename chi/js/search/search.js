@@ -20,8 +20,7 @@ function searchButtonOnClick() {
       clearVATable();
       setVATableState("search");
 
-      let vaTableCaption = document.getElementById("va-table-caption");
-      vaTableCaption.setAttribute("data-content", " search '" + searchTerm + "'");
+      window.currentDisplay.setVATableHeader(" search '" + searchTerm + "'");
 
       makeRequest(
         getQuery("VA SEARCH"),

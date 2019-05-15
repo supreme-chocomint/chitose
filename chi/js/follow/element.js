@@ -43,47 +43,7 @@ function unfollow(voiceActorMetadata) {
 }
 
 function addFollowTableEntry(metadata) {
-
-  let followTableBody = document.getElementById("follow-table-body");
-  let row = document.createElement("tr");
-  let nameCol = document.createElement("td");
-  let name = document.createElement("a");
-  let urlCol = document.createElement("td");
-  let url = document.createElement("a");
-  let deleteCol = document.createElement("td");
-  let deleteLink = document.createElement("a");
-
-  row.id = metadata.id;
-  name.classList.add(metadata.id);  // for coordinating with VA table
-  if (window.clicked == metadata.id) {
-    name.classList.add("clicked");
-  }
-
-  name.innerHTML = metadata.name;
-  name.href = "javascript:void(0)";
-  name.onclick = function() {VADetailsOnClick(metadata.id)};
-
-  url.innerHTML = "Show All";
-  url.href = "javascript:void(0)";
-  url.classList.add("internal_link");
-  url.onclick = function() {VAOnClick(metadata.id)};
-
-  deleteLink.innerHTML = "&times;";
-  deleteLink.href = "javascript:void(0)";
-  deleteCol.classList.add("symbol");
-  deleteLink.classList.add("symbol");
-  deleteLink.onclick = function() {
-    unfollow(metadata);
-  }
-
-  nameCol.appendChild(name);
-  urlCol.appendChild(url);
-  deleteCol.appendChild(deleteLink);
-  row.appendChild(nameCol);
-  row.appendChild(urlCol);
-  row.appendChild(deleteCol);
-  followTableBody.appendChild(row);
-
+  window.currentDisplay.addFollowTableEntry(metadata);
 }
 
 function removeFollowTableEntry(voiceActorId) {
@@ -95,5 +55,4 @@ function removeFollowTableEntry(voiceActorId) {
       break;  // id is unique, so get out
     }
   }
-
 }
