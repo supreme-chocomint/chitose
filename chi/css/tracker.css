@@ -108,6 +108,10 @@ a {
   text-decoration: var(--link-decoration);
 }
 
+th {
+  font-weight: normal;
+}
+
 td.symbol {
   text-align: center;
   padding: 0;

@@ -31,6 +31,7 @@ function displayModeSwitchOnClick() {
       break;
   }
 
+  window.currentDisplay.setVATableHeader(" VAs for " + parsedSeason(quarter, year));
   populateVATableWithSeasonCache();
 
   // if first visit or refreshed
