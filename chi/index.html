@@ -75,6 +75,7 @@
   <div id="settings">
     <p id="fetch-icon" class="jp" style="display:none"></p>
     <p id="lock-icon" style="display:none"></p>
+    <input type="button" id="display-mode-switch" value="Switch to Grid Mode">
     <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
   </div>
 
@@ -107,7 +108,7 @@
       <div class="one-half column" id="left-col">
         <div id="left-table-wrapper" class="u-full-width">
 
-          <table id="va-table" class="u-full-width">
+          <table class="minimalist va-table u-full-width">
             <caption id="va-table-caption">Viewing:</caption>
             <thead id="va-table-head"><tr>
               <th id="va-table-header-name" class="text">Name</th>
@@ -115,7 +116,7 @@
               <th id="va-table-header-roles"># Roles</th>
               <th class="symbol" id="va-table-header-follow">&nbsp;</th>
             </tr></thead>
-            <tbody id="va-table-body"></tbody>
+            <tbody class="minimalist va-table-body"></tbody>
           </table>
 
           <div id="navigation">
@@ -126,14 +127,14 @@
             <select id="language-filter"></select>
           </div>
 
-          <table id="follow-table" class="u-full-width" style="display:none;">
+          <table class="minimalist follow-table u-full-width" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
             <thead><tr>
               <th class="text">Name ★</th>
               <th>Season Roles</th>
               <th class="symbol">&nbsp;</th>
             </tr></thead>
-            <tbody id="follow-table-body"></tbody>
+            <tbody class="minimalist follow-table-body"></tbody>
           </table>
 
           <div id="transfer" style="display:none;">
@@ -148,7 +149,7 @@
       </div>
 
       <div class="one-half column" id="right-col">
-        <table id="roles-table" class="u-full-width">
+        <table class="minimalist roles-table u-full-width">
           <caption id="roles-table-caption">Viewing:</caption>
           <thead id="roles-table-head">
             <tr>
@@ -156,7 +157,7 @@
               <th class="text">Character Name</th>
             </tr>
           </thead>
-          <tbody id="roles-table-body"></tbody>
+          <tbody class="minimalist roles-table-body"></tbody>
         </table>
       </div>
 
@@ -168,7 +169,7 @@
 
     <div class="row">
       <input type="button" class="button" id="return-button" value="Return to Main View">
-      <input class="button" type="button" id="all-characters-switch" value="Toggle All Characters">
+      <input class="button" type="button" id="all-characters-switch" value="Toggle Character Grid">
     </div>
 
     <div class="row" id="va-info-name"></div>

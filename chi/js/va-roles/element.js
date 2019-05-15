@@ -3,7 +3,7 @@ function addRolesTableEntry(metadata) {
 }
 
 function clearRolesTable() {
-  let table = document.getElementById("roles-table-body");
+  let table = window.currentDisplay.rolesTableBody;
   table.innerHTML = "";
   table.setAttribute("data-async-count", 0);
 }

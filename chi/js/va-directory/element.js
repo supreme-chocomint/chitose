@@ -1,7 +1,7 @@
 // populate with VAs and paginate
 function fillVATableAndPage(voiceActorIds) {
 
-  let tableBody = document.getElementById("va-table-body");
+  let tableBody = window.currentDisplay.vaTableBody;
   let pageSize = window.currentDisplay.tablePageSize;
 
   tableBody.style.visibility = "none";  // to hide build process
@@ -35,7 +35,7 @@ function addVATableEntry(metadata) {
 // Assumes page exists: will make empty page if it doesn't
 function switchToPage(pageIndex, language) {
 
-  let body = document.getElementById("va-table-body");
+  let body = window.currentDisplay.vaTableBody;
   let pageTracker = document.getElementById("page-tracker");
   let pageSize = body.getAttribute("data-pageSize");
   let pageCount = body.getAttribute("data-pageCount");
@@ -124,12 +124,12 @@ function setNavigationState(tableBody, pageSize, filter) {
 }
 
 function setVATableState(stateString) {
-  document.getElementById("va-table").setAttribute("data-state", stateString);
+  window.currentDisplay.vaTable.setAttribute("data-state", stateString);
 }
 
 function clearVATable() {
 
-  let tableBody = document.getElementById("va-table-body");
+  let tableBody = window.currentDisplay.vaTableBody;
   tableBody.innerHTML = "";
   tableBody.setAttribute("data-pageIndex", 0);
   tableBody.setAttribute("data-pageCount", 1);
@@ -144,7 +144,7 @@ function clearVATable() {
 }
 
 function resetVaTablePages(language) {
-  document.getElementById("va-table-body").setAttribute("data-pageIndex", 0);
+  window.currentDisplay.vaTable.setAttribute("data-pageIndex", 0);
   document.getElementById("left-nav").classList.add("inactive");
   document.getElementById("right-nav").classList.remove("inactive");
   switchToPage(0, language);

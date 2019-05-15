@@ -1,13 +1,18 @@
 window.onload = function() {
 
+  let minimalist = Object.create(Minimalist);
+  let grid = Object.create(Grid);
+  minimalist.init();
+  grid.init();
+
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
   window.voiceActors = {};
   window.seasonalRolesCounter = {};  // must be preserved across requests
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
   window.displayModes = {
-    "minimalist": Object.create(Minimalist),
-    "grid": Object.create(Grid)
+    "minimalist": minimalist,
+    "grid": grid
   }
   window.currentDisplay = null;
 
@@ -49,9 +54,9 @@ window.onload = function() {
 
 function leftTableSwitchOnClick() {
 
-  let vaTable = document.getElementById("va-table");
-  let followTable = document.getElementById("follow-table");
-  let followTableBody = document.getElementById("follow-table-body");
+  let vaTable = window.currentDisplay.vaTable;
+  let followTable = window.currentDisplay.followTable;
+  let followTableBody = window.currentDisplay.followTableBody;
 
   let searchBar = document.getElementById("search-bar");
   let searchButton = document.getElementById("search-button");

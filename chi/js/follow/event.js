@@ -1,7 +1,7 @@
 function importButtonOnClick() {
 
   let newFollows = document.getElementById("transfer-box").value;
-  let followTableBody = document.getElementById("follow-table-body");
+  let followTableBody = window.currentDisplay.followTableBody;
   let doImport = window.confirm("Importing will replace all existing follows. Are you sure?");
 
   if (doImport) {

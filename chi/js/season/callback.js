@@ -1,6 +1,6 @@
 function collectSeasonalVAsCallback(year, quarter, data) {
 
-  let vaTableBody = document.getElementById("va-table-body");
+  let vaTableBody = window.currentDisplay.vaTableBody;
   let asyncCount = vaTableBody.getAttribute("data-async-count");
 
   // cache raw data for use by roles table

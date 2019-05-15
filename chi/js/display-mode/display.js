@@ -1,16 +1,21 @@
-var Grid = {
-  name: "grid",
-  tablePageSize: 6
-}
-
 var Minimalist = {
 
   name: "minimalist",
   tablePageSize: 5,
 
+  init() {
+    this.vaTable = document.querySelector(".minimalist.va-table");
+    this.vaTableBody = document.querySelector(".minimalist.va-table-body");
+    this.followTable = document.querySelector(".minimalist.follow-table");
+    this.followTableBody = document.querySelector(".minimalist.follow-table-body");
+    this.rolesTable = document.querySelector(".minimalist.roles-table");
+    this.rolesTableBody = document.querySelector(".minimalist.roles-table-body");
+  },
+
+  // ---- Mutators ---- //
+
   addFollowTableEntry(metadata) {
 
-    let followTableBody = document.getElementById("follow-table-body");
     let row = document.createElement("tr");
     let nameCol = document.createElement("td");
     let name = document.createElement("a");
@@ -48,14 +53,18 @@ var Minimalist = {
     row.appendChild(nameCol);
     row.appendChild(urlCol);
     row.appendChild(deleteCol);
-    followTableBody.appendChild(row);
+    this.followTableBody.appendChild(row);
 
   },
 
   addNoResultsIndicator(tableId) {
     let row = document.createElement("tr");
     this.appendNACells(row, 2);
-    document.getElementById(tableId).appendChild(row);
+    if (tableId == "va-table-body") {
+      this.vaTableBody.appendChild(row);
+    } else if (tableId == "roles-table-body"){
+      this.rolesTableBody.appendChild(row);
+    }
   },
 
   appendNACells(row, numCol) {
@@ -122,16 +131,15 @@ var Minimalist = {
     row.appendChild(followCol);
 
     row.classList.add(metadata.language);
-    document.getElementById("va-table-body").appendChild(row);
+    this.vaTableBody.appendChild(row);
 
   },
 
   setVATableSize(numElements) {
 
-    let vaTable = document.getElementById("va-table");
     let vaTableHeaderRoles = document.getElementById("va-table-header-roles");
     let vaTableHeaderFollow = document.getElementById("va-table-header-follow");
-    let vaTableState = vaTable.getAttribute("data-state");
+    let vaTableState = this.vaTable.getAttribute("data-state");
 
     if (numElements == 0){
       vaTableHeaderRoles.style.display = "none";
@@ -174,13 +182,22 @@ var Minimalist = {
     charaNameCol.appendChild(charaName);
     row.appendChild(showNameCol);
     row.appendChild(charaNameCol);
-    document.getElementById("roles-table-body").appendChild(row);
+    this.rolesTableBody.appendChild(row);
 
   },
 
   setRolesTableHeader(header) {
     let rolesTableCaption = document.getElementById("roles-table-caption");
     rolesTableCaption.setAttribute("data-content", header);
-  }
+  },
+
+}
+
+var Grid = {
+
+  name: "grid",
+  tablePageSize: 6,
+
+  init() {}
 
 }

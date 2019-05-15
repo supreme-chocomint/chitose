@@ -5,7 +5,7 @@ function onSeasonChange() {
 }
 
 function onLanguageChange() {
-  let vaTableBody = document.getElementById("va-table-body");
+  let vaTableBody = window.currentDisplay.vaTableBody;
   let filter = document.getElementById("language-filter");
   let language = filter.options[filter.selectedIndex].value;
   resetVaTablePages(language);
@@ -15,8 +15,7 @@ function onLanguageChange() {
 function populateVATableWithSeason() {
 
   let quarterElement = document.getElementById("quarter-picker");
-  let vaTable = document.getElementById("va-table");
-  let vaTableCaption = document.getElementById("va-table-caption");
+  let vaTable = window.currentDisplay.vaTable;
 
   let quarter = quarterElement.options[quarterElement.selectedIndex].value.toUpperCase();
   let year = document.getElementById("year-picker").value;
@@ -29,7 +28,7 @@ function populateVATableWithSeason() {
 
   clearSeasonSpecificData();
   vaTable.setAttribute("data-state", "season");
-  vaTableCaption.setAttribute("data-content", " VAs for " + parsedSeason(quarter, year));
+  window.currentDisplay.setVATableHeader(" VAs for " + parsedSeason(quarter, year));
 
   // get from cache if it exists, otherwise do request
   if (window.seasonRawData[year] && window.seasonRawData[year][quarter]) {

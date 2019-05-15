@@ -4,10 +4,10 @@ function clearTransferBox() {
 
 function disableFollowing() {
 
-  let vaTable = document.getElementById("va-table");
+  let vaTable = window.currentDisplay.vaTable;
   vaTable.style.display = "";
 
-  document.getElementById("follow-table").style.display = "none";
+  window.currentDisplay.followTable.style.display = "none";
   document.getElementById("left-table-switch").disabled = true;
 
 }
@@ -47,7 +47,7 @@ function addFollowTableEntry(metadata) {
 }
 
 function removeFollowTableEntry(voiceActorId) {
-  let body = document.getElementById("follow-table-body");
+  let body = window.currentDisplay.followTableBody;
   for (let row of body.children) {
     if (row.id == voiceActorId) {
       body.removeChild(row);

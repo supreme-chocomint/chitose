@@ -5,7 +5,7 @@ function collectSeasonalRolesCallback(voiceActorId, year, quarter, data) {
   collectSeasonalRoles(voiceActorId, data);
   cacheSeasonRawData(year, quarter, data);
 
-  let rolesTableBody = document.getElementById("roles-table-body");
+  let rolesTableBody = window.currentDisplay.rolesTableBody;
   let asyncCount = rolesTableBody.getAttribute("data-async-count");
 
   if (asyncCount) {
