@@ -186,6 +186,11 @@ input#dark-mode-switch {
   width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
 }
 
+th { /* Makes header occupy one line only */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 /* Images
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
