@@ -1,22 +1,13 @@
 window.onload = function() {
 
-  let minimalist = Object.create(Minimalist);
-  let grid = Object.create(Grid);
-  minimalist.init();
-  grid.init();
-
   window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
   window.voiceActors = {};
   window.seasonalRolesCounter = {};  // must be preserved across requests
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
-  window.displayModes = {
-    "minimalist": minimalist,
-    "grid": grid
-  }
-  window.currentDisplay = null;
 
   lock();
+  buildDisplayModes();
 
   let body = document.getElementsByTagName("body")[0];
   let defaultTheme = "light";
@@ -27,12 +18,9 @@ window.onload = function() {
     if (!themeIsSet) {
       body.classList.add(defaultTheme);
     }
-    setDisplayModeFromStorage();
   }
   else {
     body.classList.add(defaultTheme);
-    let keys = Object.keys(window.displayModes);
-    window.currentDisplay = window.displayModes[keys[0]];
   }
 
   setOnClicks();

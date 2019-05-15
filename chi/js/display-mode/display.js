@@ -26,44 +26,20 @@ var Minimalist = {
 
   activate() {
 
-    document.getElementById("va-left-container").classList.add("minimalist");
-    document.getElementById("va-right-container").classList.add("minimalist");
-    document.getElementById("va-bottom-container").classList.add("minimalist");
-    document.getElementById("left-col").classList.add("minimalist");
-    document.getElementById("right-col").classList.add("minimalist");
-
     let subs = document.getElementById("va-bottom-container").children;
     for (let sub of subs) {
       sub.classList.add("one-half");
       sub.classList.add("column");
     }
 
-    let detailsPage = document.getElementById("va-info-container");
-    let tables = detailsPage.querySelectorAll("table.minimalist");
-    for (let table of tables) {
-      table.style.display = "";
-    }
-
-  },
-
-  deactivate() {
-
-    document.getElementById("va-left-container").classList.remove("minimalist");
-    document.getElementById("va-right-container").classList.remove("minimalist");
-    document.getElementById("va-bottom-container").classList.remove("minimalist");
-    document.getElementById("left-col").classList.remove("minimalist");
-    document.getElementById("right-col").classList.remove("minimalist");
-
-    let subs = document.getElementById("va-bottom-container").children;
-    for (let sub of subs) {
-      sub.classList.remove("one-half");
-      sub.classList.remove("column");
-    }
-
-    let detailsPage = document.getElementById("va-info-container");
-    let tables = detailsPage.querySelectorAll("table.minimalist");
-    for (let table of tables) {
-      table.style.display = "none";
+    let staticTopElements = document.querySelectorAll(".static-display-top");
+    for (let e of staticTopElements) {
+      if (e.classList.contains("minimalist")) {
+        e.style.display = "";
+      }
+      else {
+        e.style.display = "none";
+      }
     }
 
   },
@@ -342,15 +318,12 @@ var Grid = {
     document.getElementById("left-col").classList.add("grid");
     document.getElementById("right-col").classList.add("grid");
 
-  },
-
-  deactivate() {
-
-    document.getElementById("va-left-container").classList.remove("grid");
-    document.getElementById("va-right-container").classList.remove("grid");
-    document.getElementById("va-bottom-container").classList.remove("grid");
-    document.getElementById("left-col").classList.remove("grid");
-    document.getElementById("right-col").classList.remove("grid");
+    let staticTopElements = document.querySelectorAll(".static-display-top");
+    for (let e of staticTopElements) {
+      if (e.classList.contains("grid")) {
+        e.style.display = "";
+      }
+    }
 
   },
 

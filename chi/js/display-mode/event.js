@@ -1,47 +1,34 @@
 function displayModeSwitchOnClick() {
 
+  let urlFragments = window.location.href.split("?");
+  switch (urlFragments[1]) {
+    case "grid":
+      window.location.replace(urlFragments[0] + "?minimalist");
+      break;
+    case "minimalist":
+      window.location.replace(urlFragments[0] + "?grid");
+      break;
+  }
+
+}
+
+function buildDisplayModes() {
+
   let _switch = document.getElementById("display-mode-switch");
-  let voiceActorId = document.getElementById("va-info-container").getAttribute("data-va-id");
 
-  let quarterElement = document.getElementById("quarter-picker");
-  let quarter = quarterElement.options[quarterElement.selectedIndex].value.toUpperCase();
-  let year = document.getElementById("year-picker").value;
+  for (let mode of Object.values(window.displayModes)) {
+    mode.init();
+  }
 
-  lock();
-  setFetchingDetails(voiceActorId);
-  _switch.classList.add("disabled");
-
-  clearVATable();
-  clearRolesTable();
-  clearVaInfo();
-  unclick();
+  window.currentDisplay.activate();
 
   switch (window.currentDisplay.name) {
-    case "minimalist":
-      window.currentDisplay.deactivate();
-      window.currentDisplay = window.displayModes["grid"];
-      window.currentDisplay.activate();
+    case "grid":
       _switch.value = "Switch to Minimalist Mode";
       break;
-    case "grid":
-      window.currentDisplay.deactivate();
-      window.currentDisplay = window.displayModes["minimalist"];
-      window.currentDisplay.activate();
+    case "minimalist":
       _switch.value = "Switch to Grid Mode";
       break;
   }
-
-  window.currentDisplay.setVATableHeader(" VAs for " + parsedSeason(quarter, year));
-  populateVATableWithSeasonCache();
-
-  // if first visit or refreshed
-  if (voiceActorId != undefined && voiceActorId != 0) {
-    fillVaBasicInfo(window.voiceActors[voiceActorId]);
-    fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
-  }
-
-  unlock();
-  unsetFetchingDetails();
-  _switch.classList.remove("disabled");
 
 }

@@ -2,7 +2,6 @@ function refreshButtonOnClick() {
   if (!isLocked()) {
     lock();
     document.getElementById("search-bar").value = "";
-    document.getElementById("va-info-container").setAttribute("data-va-id", 0);
     clearVATable();
     clearRolesTable();
     unclick();
