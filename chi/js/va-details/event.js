@@ -5,6 +5,7 @@ function VADetailsOnClick(voiceActorId) {
   let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
   let toggleCharactersButton = document.getElementById("all-characters-switch");
+  let toggleDisplayButton = document.getElementById("display-mode-switch");
   let roles = window.voiceActors[voiceActorId].roles;
 
   let variables = {
@@ -35,6 +36,7 @@ function VADetailsOnClick(voiceActorId) {
     mainContainer.style.display = "none";
     vaInfoContainer.style.display = "";
     toggleCharactersButton.classList.add("disabled");
+    toggleDisplayButton.classList.add("disabled");
     clearVaInfo();
 
     // use cache if it exists, otherwise request data

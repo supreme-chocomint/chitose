@@ -51,7 +51,7 @@ function fillVaAdvancedInfo(vaDetails) {
   let vaLeftContainer = document.getElementById("va-left-container");
   let vaRightContainer = document.getElementById("va-right-container");
   let vaBottomContainer = document.getElementById("va-bottom-container");
-  let toggleCharactersButton = document.getElementById("all-characters-switch");
+  let toggleDisplayButton = document.getElementById("display-mode-switch");
 
   // ----- Staff stats ----- //
 
@@ -89,9 +89,10 @@ function fillVaAdvancedInfo(vaDetails) {
       addCharacterEntry("va-support-characters", role);
     }
   }
-  styleCharacterEntries("va-bottom-container");
 
+  styleCharacterEntries("va-bottom-container");
   resizeCharacterContainers(vaDetails);
+  toggleDisplayButton.classList.remove("disabled");
 
 }
 
