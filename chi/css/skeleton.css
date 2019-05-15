@@ -63,6 +63,9 @@
   div#navigation {
     margin-bottom: 10%;
   }
+  #va-side-containers {
+    display: flex; /* Make child divs have same height as this */
+  }
 
   .one.column,
   .one.columns                    { width: 4.66666666667%; }

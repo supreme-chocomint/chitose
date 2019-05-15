@@ -227,10 +227,6 @@ input#dark-mode-switch {
   margin-top: 1rem;
 }
 
-#va-side-containers {
-  display: flex; /* Make child divs have same height as this */
-}
-
 #va-side-containers > div.grid, #va-bottom-container {
   padding-top: 2rem;
   border-radius: 4px;

@@ -17,15 +17,18 @@ var Minimalist = {
     this.rolesTable = document.querySelector(".minimalist.roles-table");
     this.rolesTableBody = document.querySelector(".minimalist.roles-table-body");
 
-    this.vaPopularCharacters = document.querySelector(".grid.va-popular-characters");
-    this.vaUWCharacters = document.querySelector(".grid.va-uw-characters");
+    this.vaPopularTableBody = document.querySelector(".minimalist.va-popular-body");
+    this.vaUWTableBody = document.querySelector(".minimalist.va-uw-body");
     this.vaMainCharacters = document.getElementById("va-main-characters");
     this.vaSupportCharacters = document.getElementById("va-support-characters");
 
-    document.getElementById("va-left-container").classList.add("grid");
-    document.getElementById("va-right-container").classList.add("grid");
+    document.getElementById("va-left-container").classList.add("minimalist");
+    document.getElementById("va-right-container").classList.add("minimalist");
     document.getElementById("left-col").classList.add("minimalist");
     document.getElementById("right-col").classList.add("minimalist");
+
+    this.subhandler = Object.create(Grid);
+    this.subhandler.init();
 
   },
 
@@ -212,6 +215,71 @@ var Minimalist = {
 
     let character = role.character;
     let show = role.show;
+    let tableBody;
+
+    switch (containerId) {
+      case "va-popular-characters":
+        tableBody = this.vaPopularTableBody;
+        break;
+      case "va-uw-characters":
+        tableBody = this.vaUWTableBody;
+        break;
+      case "va-main-characters":
+      case "va-support-characters":
+        this.subhandler.addCharacterEntry(containerId, role);
+        return;
+    }
+
+    let row = document.createElement("tr");
+    let charaCol = document.createElement("td");
+    let characterLink = document.createElement("a");
+    let showCol = document.createElement("td");
+    let showLink = document.createElement("a");
+
+    characterLink.href = character.url;
+    characterLink.target = "_blank";
+    characterLink.innerHTML = character.name;
+    characterLink.style.fontWeight = 'bold';
+    charaCol.appendChild(characterLink);
+    row.appendChild(charaCol);
+
+    showLink.href = show.siteUrl;
+    showLink.target = "_blank";
+    showLink.innerHTML = show.title.romaji;
+    showCol.appendChild(showLink);
+    row.appendChild(showCol);
+
+    tableBody.appendChild(row);
+
+  },
+
+  styleCharacterEntries(elementId) {
+    if (elementId == "va-bottom-container") {
+      this.subhandler.styleCharacterEntries(elementId);
+    }
+  },
+
+  clearSideContainers() {
+    this.vaPopularTableBody.innerHTML = "";
+    this.vaUWTableBody.innerHTML = "";
+  }
+
+}
+
+var Grid = {
+
+  name: "grid",
+  tablePageSize: 6,
+
+  init() {
+    this.vaMainCharacters = document.getElementById("va-main-characters");
+    this.vaSupportCharacters = document.getElementById("va-support-characters");
+  },
+
+  addCharacterEntry(containerId, role) {
+
+    let character = role.character;
+    let show = role.show;
 
     let container = this.getCharacterContainer(containerId);
     let div = document.createElement("div");
@@ -247,7 +315,6 @@ var Minimalist = {
   },
 
   getCharacterContainer(id) {
-    console.log(id);
     switch (id) {
       case "va-popular-characters":
         return this.vaPopularCharacters;
@@ -263,6 +330,7 @@ var Minimalist = {
   styleCharacterEntries(elementId) {
 
     // --- Make captions same width as thumbnails --- //
+    console.log(elementId);
 
     let thumbnail = document.getElementById(elementId).getElementsByClassName("thumbnail")[0];
     let style = window.getComputedStyle(thumbnail);
@@ -278,16 +346,5 @@ var Minimalist = {
     this.vaPopularCharacters.innerHTML = "";
     this.vaUWCharacters.innerHTML = "";
   }
-
-}
-
-var Grid = {
-
-  name: "grid",
-  tablePageSize: 6,
-
-  init() {},
-
-  styleCharacterEntries(elementId) {} // no styling
 
 }
