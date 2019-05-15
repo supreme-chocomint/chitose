@@ -105,27 +105,20 @@
 
     <div class="row">
 
-      <div class="one-half column" id="left-col">
-        <div id="left-table-wrapper" class="u-full-width">
+      <div class="one-half column">
+
+        <div id="left-col">
 
           <table class="minimalist va-table u-full-width">
             <caption id="va-table-caption">Viewing:</caption>
             <thead id="va-table-head"><tr>
-              <th id="va-table-header-name" class="text">Name</th>
-              <th id="va-table-header-link">Season Roles</th>
-              <th id="va-table-header-roles"># Roles</th>
-              <th class="symbol" id="va-table-header-follow">&nbsp;</th>
+              <th id="va-table-head-name" class="text">Name</th>
+              <th id="va-table-head-link">Season Roles</th>
+              <th id="va-table-head-roles"># Roles</th>
+              <th class="symbol" id="va-table-head-follow">&nbsp;</th>
             </tr></thead>
             <tbody class="minimalist va-table-body"></tbody>
           </table>
-
-          <div id="navigation">
-            <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
-            <span id="page-tracker">1/1</span>
-            <a href="javascript:void(0)" id="right-nav">&gt;</a>
-            <span>&nbsp;&nbsp;</span>
-            <select id="language-filter"></select>
-          </div>
 
           <table class="minimalist follow-table u-full-width" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
@@ -137,15 +130,25 @@
             <tbody class="minimalist follow-table-body"></tbody>
           </table>
 
-          <div id="transfer" style="display:none;">
-            <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
-            <div>
-              <input type="submit" class="button-primary" id="import-button" value="Import">
-              <input type="submit" class="button-primary" id="export-button" value="Export">
-            </div>
-          </div>
-
         </div>
+
+        <div id="navigation">
+          <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
+          <span id="page-tracker">1/1</span>
+          <a href="javascript:void(0)" id="right-nav">&gt;</a>
+          <span>&nbsp;&nbsp;</span>
+          <select id="language-filter"></select>
+        </div>
+
+
+        <div id="transfer" style="display:none;">
+          <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
+          <div>
+            <input type="submit" class="button-primary" id="import-button" value="Import">
+            <input type="submit" class="button-primary" id="export-button" value="Export">
+          </div>
+        </div>
+
       </div>
 
       <div class="one-half column" id="right-col">
@@ -186,13 +189,39 @@
       <div class="row" id="va-side-containers">
 
         <div class="one-half column" id="va-left-container">
-          <div><h5 class="va-character-header" id="va-popular-header">Popular Characters</h5></div>
-          <div class="va-character-wrapper" id="va-popular-characters"></div>
+
+          <div><h5 class="grid va-character-header" id="va-popular-header">Popular Characters</h5></div>
+          <div class="grid va-character-wrapper va-popular-characters"></div>
+
+          <table class="minimalist va-popular-characters">
+            <caption id="va-popular-caption">Popular Characters</caption>
+            <thead id="va-popular-head">
+              <tr>
+                <th class="text">Character Name</th>
+                <th class="text">Show Name</th>
+              </tr>
+            </thead>
+            <tbody class="minimalist va-popular-body"></tbody>
+          </table>
+
         </div>
 
         <div class="one-half column" id="va-right-container">
-          <div><h5 class="va-character-header" id="va-uw-header">Underwatched Characters</h5></div>
-          <div class="va-character-wrapper" id="va-uw-characters"></div>
+
+          <div><h5 class="grid va-character-header" id="va-uw-header">Underwatched Characters</h5></div>
+          <div class="grid va-character-wrapper va-uw-characters"></div>
+
+          <table class="minimalist va-uw-characters">
+            <caption id="va-uw-caption">Underwatched Characters</caption>
+            <thead id="va-uw-head">
+              <tr>
+                <th class="text">Character Name</th>
+                <th class="text">Show Name</th>
+              </tr>
+            </thead>
+            <tbody class="minimalist va-uw-body"></tbody>
+          </table>
+
         </div>
 
       </div>

@@ -5,6 +5,7 @@ function fillVaBasicInfo(vaDetails) {
   let vaText = document.getElementById("va-info-bio-text");
   let name = document.createElement("h4");
   let vaLeftContainer = document.getElementById("va-left-container");
+  let vaSideContainers = document.getElementById("va-side-containers");
 
   // ----- Staff basic info ----- //
 
@@ -27,6 +28,8 @@ function fillVaBasicInfo(vaDetails) {
     styleCharacterEntries("va-left-container");
     vaLeftContainer.style.display = "";
   }
+
+  vaSideContainers.style.display = "";  // try to resolve weird display bug
 
 }
 
@@ -181,55 +184,11 @@ function formatStats(va) {
 }
 
 function addCharacterEntry(containerId, role) {
-
-  let character = role.character;
-  let show = role.show;
-
-  let container = document.getElementById(containerId);
-  let div = document.createElement("div");
-  let thumbnail = document.createElement("div");
-  let text = document.createElement("p");
-  let characterLink = document.createElement("a");
-  let showLink = document.createElement("a");
-
-  thumbnail.style.backgroundImage = `url(${character.image})`;
-  thumbnail.classList.add("thumbnail");
-  thumbnail.onclick = function() { characterThumbnailOnClick(this); };
-  div.appendChild(thumbnail);
-
-  characterLink.href = character.url;
-  characterLink.target = "_blank";
-  characterLink.innerHTML = character.name;
-  characterLink.style.fontWeight = 'bold';
-  text.appendChild(characterLink);
-
-  text.innerHTML += "<br>";
-
-  showLink.href = show.siteUrl;
-  showLink.target = "_blank";
-  showLink.innerHTML = show.title.romaji;
-  text.appendChild(showLink);
-
-  text.classList.add("thumbnail-caption");
-  div.appendChild(text);
-
-  div.classList.add("thumbnail-wrapper");
-  container.appendChild(div);
-
+  window.currentDisplay.addCharacterEntry(containerId, role);
 }
 
 function styleCharacterEntries(elementId) {
-
-  // --- Make captions same width as thumbnails --- //
-
-  let thumbnail = document.getElementById(elementId).getElementsByClassName("thumbnail")[0];
-  let style = window.getComputedStyle(thumbnail);
-
-  let captions = document.getElementById(elementId).getElementsByClassName("thumbnail-caption");
-  for (let caption of captions) {
-    caption.style.width = style.width;
-  }
-
+  window.currentDisplay.styleCharacterEntries(elementId);
 }
 
 function addCharacterTableEntry(tableBodyId, vaDetails) {
@@ -271,13 +230,12 @@ function clearVaInfo() {
   document.getElementById("va-info-bio-portrait").style.backgroundImage = "";
   document.getElementById("va-info-bio-portrait").classList.remove("thumbnail");
   document.getElementById("va-info-bio-text").innerHTML = "";
-  document.getElementById("va-popular-characters").innerHTML = "";
-  document.getElementById("va-uw-characters").innerHTML = "";
   document.getElementById("va-left-container").style.display = "none";
   document.getElementById("va-right-container").style.display = "none";
   document.getElementById("va-main-characters").innerHTML = "";
   document.getElementById("va-support-characters").innerHTML = "";
   document.getElementById("va-bottom-container").style.display = "none";
+  window.currentDisplay.clearSideContainers();
 
   changeSideContainerWidths("half");
   changeSideContainerWidths("half");

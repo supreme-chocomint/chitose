@@ -1,15 +1,32 @@
+// Table caption, table heads, and div headers are assumed to be
+// unique, and thus are NOT part properties of displays (although they
+// are NOT accessed outside of the display objects) and are accessed by ID
+// instead of class like everything else
+
 var Minimalist = {
 
   name: "minimalist",
   tablePageSize: 5,
 
   init() {
+
     this.vaTable = document.querySelector(".minimalist.va-table");
     this.vaTableBody = document.querySelector(".minimalist.va-table-body");
     this.followTable = document.querySelector(".minimalist.follow-table");
     this.followTableBody = document.querySelector(".minimalist.follow-table-body");
     this.rolesTable = document.querySelector(".minimalist.roles-table");
     this.rolesTableBody = document.querySelector(".minimalist.roles-table-body");
+
+    this.vaPopularCharacters = document.querySelector(".grid.va-popular-characters");
+    this.vaUWCharacters = document.querySelector(".grid.va-uw-characters");
+    this.vaMainCharacters = document.getElementById("va-main-characters");
+    this.vaSupportCharacters = document.getElementById("va-support-characters");
+
+    document.getElementById("va-left-container").classList.add("grid");
+    document.getElementById("va-right-container").classList.add("grid");
+    document.getElementById("left-col").classList.add("minimalist");
+    document.getElementById("right-col").classList.add("minimalist");
+
   },
 
   // ---- Mutators ---- //
@@ -137,8 +154,8 @@ var Minimalist = {
 
   setVATableSize(numElements) {
 
-    let vaTableHeaderRoles = document.getElementById("va-table-header-roles");
-    let vaTableHeaderFollow = document.getElementById("va-table-header-follow");
+    let vaTableHeaderRoles = document.getElementById("va-table-head-roles");
+    let vaTableHeaderFollow = document.getElementById("va-table-head-follow");
     let vaTableState = this.vaTable.getAttribute("data-state");
 
     if (numElements == 0){
@@ -191,6 +208,77 @@ var Minimalist = {
     rolesTableCaption.setAttribute("data-content", header);
   },
 
+  addCharacterEntry(containerId, role) {
+
+    let character = role.character;
+    let show = role.show;
+
+    let container = this.getCharacterContainer(containerId);
+    let div = document.createElement("div");
+    let thumbnail = document.createElement("div");
+    let text = document.createElement("p");
+    let characterLink = document.createElement("a");
+    let showLink = document.createElement("a");
+
+    thumbnail.style.backgroundImage = `url(${character.image})`;
+    thumbnail.classList.add("thumbnail");
+    thumbnail.onclick = function() { characterThumbnailOnClick(this); };
+    div.appendChild(thumbnail);
+
+    characterLink.href = character.url;
+    characterLink.target = "_blank";
+    characterLink.innerHTML = character.name;
+    characterLink.style.fontWeight = 'bold';
+    text.appendChild(characterLink);
+
+    text.innerHTML += "<br>";
+
+    showLink.href = show.siteUrl;
+    showLink.target = "_blank";
+    showLink.innerHTML = show.title.romaji;
+    text.appendChild(showLink);
+
+    text.classList.add("thumbnail-caption");
+    div.appendChild(text);
+
+    div.classList.add("thumbnail-wrapper");
+    container.appendChild(div);
+
+  },
+
+  getCharacterContainer(id) {
+    console.log(id);
+    switch (id) {
+      case "va-popular-characters":
+        return this.vaPopularCharacters;
+      case "va-uw-characters":
+        return this.vaUWCharacters;
+      case "va-main-characters":
+        return this.vaMainCharacters;
+      case "va-support-characters":
+        return this.vaSupportCharacters;
+    }
+  },
+
+  styleCharacterEntries(elementId) {
+
+    // --- Make captions same width as thumbnails --- //
+
+    let thumbnail = document.getElementById(elementId).getElementsByClassName("thumbnail")[0];
+    let style = window.getComputedStyle(thumbnail);
+
+    let captions = document.getElementById(elementId).getElementsByClassName("thumbnail-caption");
+    for (let caption of captions) {
+      caption.style.width = style.width;
+    }
+
+  },
+
+  clearSideContainers() {
+    this.vaPopularCharacters.innerHTML = "";
+    this.vaUWCharacters.innerHTML = "";
+  }
+
 }
 
 var Grid = {
@@ -198,6 +286,8 @@ var Grid = {
   name: "grid",
   tablePageSize: 6,
 
-  init() {}
+  init() {},
+
+  styleCharacterEntries(elementId) {} // no styling
 
 }

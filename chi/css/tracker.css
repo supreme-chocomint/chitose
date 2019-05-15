@@ -170,10 +170,6 @@ input#dark-mode-switch {
 /* Table and table tool spacing/arrangement
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-#left-table-wrapper {
-  display: inline-block; /* Allows all children divs to have the same width */
-}
-
 #va-table-tools {
   padding-bottom: 1.5rem;  /* Makes it look better on mobile */
 }
@@ -235,7 +231,7 @@ input#dark-mode-switch {
   display: flex; /* Make child divs have same height as this */
 }
 
-#va-side-containers > div, #va-bottom-container {
+#va-side-containers > div.grid, #va-bottom-container {
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);
