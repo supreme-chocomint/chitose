@@ -23,7 +23,7 @@ function fillVATableAndPage(voiceActorIds) {
 
   }
 
-  setVATableSize(voiceActorIds.length);
+  styleVATable();
   setNavigationState(tableBody, pageSize, "ALL");
 
 }
@@ -92,8 +92,8 @@ function switchToPage(pageIndex, language) {
 
 }
 
-function setVATableSize(numElements) {
-  window.currentDisplay.setVATableSize(numElements);
+function styleVATable() {
+  window.currentDisplay.styleVATable();
 }
 
 function setNavigationState(tableBody, pageSize, filter) {

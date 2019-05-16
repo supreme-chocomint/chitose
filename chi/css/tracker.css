@@ -90,6 +90,10 @@ html {
   margin-bottom: 10%;
 }
 
+#navigation, #transfer {
+  margin-bottom: 1.5rem;
+}
+
 #va-info-bio {
   margin-bottom: 1rem;
   display: flex;

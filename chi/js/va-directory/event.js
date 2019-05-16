@@ -23,6 +23,12 @@ function leftNavOnClick() {
   let pageIndex = window.currentDisplay.vaTableBody.getAttribute("data-pageIndex");
   let filter = document.getElementById("language-filter");
   let language = filter.options[filter.selectedIndex].value;
+
+  let x = window.scrollX;
+  let y = window.scrollY;
+  let height = document.body.clientHeight;
+  let yOffset = 0;
+
   pageIndex = parseInt(pageIndex);
 
   pageIndex--;
@@ -31,6 +37,9 @@ function leftNavOnClick() {
 
   if (pageIndex == 0){ left.classList.add("inactive"); }
   right.classList.remove("inactive");  // coordinate left and right navs
+
+  yOffset = document.body.clientHeight - height;
+  window.scroll(x, y + yOffset); // keep same distance from bottom of page
 
 }
 
@@ -41,6 +50,11 @@ function rightNavOnClick() {
   let tableBody = window.currentDisplay.vaTableBody;
   let filter = document.getElementById("language-filter");
   let language = filter.options[filter.selectedIndex].value;
+
+  let x = window.scrollX;
+  let y = window.scrollY;
+  let height = document.body.clientHeight;
+  let yOffset = 0;
 
   let pageIndex = tableBody.getAttribute("data-pageIndex");
   let lastPageIndex = tableBody.getAttribute("data-pageCount");
@@ -53,5 +67,8 @@ function rightNavOnClick() {
 
   if (pageIndex == lastPageIndex){ right.classList.add("inactive"); }
   left.classList.remove("inactive");  // coordinate left and right navs
+
+  yOffset = document.body.clientHeight - height;
+  window.scroll(x, y + yOffset); // keep same distance from bottom of page
 
 }

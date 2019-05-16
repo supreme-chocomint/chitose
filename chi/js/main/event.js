@@ -23,8 +23,7 @@ window.onload = function() {
     body.classList.add(defaultTheme);
   }
 
-  setOnClicks();
-  setOnKeyPresses();
+  setOnEvents();
   setDescription();
   buildSeasonPickers();
   buildLanguageFilter();
@@ -37,6 +36,14 @@ window.onload = function() {
   populateVATableWithSeason();
   if (hasStorageAccess) { lock(); populateFollowTable(); }
 
+}
+
+function setOnEvents() {
+  setOnClicks();
+  setOnKeyPresses();
+  window.onresize = function() {
+    window.currentDisplay.resetFixedDimensions();
+  }
 }
 
 function leftTableSwitchOnClick() {

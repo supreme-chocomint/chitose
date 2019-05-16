@@ -162,8 +162,9 @@ var Minimalist = {
 
   },
 
-  setVATableSize(numElements) {
+  styleVATable() {
 
+    let numElements = this.vaTableBody.children.length;
     let vaTableHeaderRoles = document.getElementById("va-table-head-roles");
     let vaTableHeaderFollow = document.getElementById("va-table-head-follow");
     let vaTableState = this.vaTable.getAttribute("data-state");
@@ -270,7 +271,9 @@ var Minimalist = {
   clearButtomContainer() {
     this.vaMainTableBody.innerHTML = "";
     this.vaSupportTableBody.innerHTML = "";
-  }
+  },
+
+  resetFixedDimensions() {}
 
 }
 
@@ -424,10 +427,45 @@ var Grid = {
 
   },
 
-  setVATableSize(numElements) {
+  styleVATable() {
+
+    let numElements = this.vaTableBody.children.length;
+    let free = this.tablePageSize - ((numElements - 1) % this.tablePageSize);
+    let addPageIndex = Math.ceil((numElements - 1) / this.tablePageSize);
+    let maxHeight = 0;
+    let largest;
+    let clones = [];
+
     if (numElements == 0){
       this.addNoResultsIndicator("va-table-body");
+      this.vaTableBody.style.height = ""; // make height default
+      return;
     }
+
+    for (let child of this.vaTableBody.children) {
+      if (child.clientHeight > maxHeight){
+        maxHeight = child.clientHeight;
+        largest = child;
+      }
+    }
+
+    for (let i = 0; i < free + this.tablePageSize; i++) {
+      clones.push(largest.cloneNode(true));
+      clones[i].id = `clone${i}`;
+      this.vaTableBody.appendChild(clones[i]);
+    }
+
+    this.vaTableBody.style.visibility = "hidden";
+    setNavigationState(this.vaTableBody, this.tablePageSize, "ALL");
+    switchToPage(addPageIndex, "ALL");
+    this.vaTableBody.style.height = this.vaTableBody.clientHeight + "px";
+
+    this.vaTableBody.style.visibility = "";
+    switchToPage(0, "ALL");
+    for (let clone of clones) {
+      this.vaTableBody.removeChild(clone);
+    }
+
   },
 
   setVATableHeader(header) {
@@ -536,6 +574,10 @@ var Grid = {
   clearButtomContainer() {
     this.vaMainTableBody.innerHTML = "";
     this.vaSupportTableBody.innerHTML = "";
+  },
+
+  resetFixedDimensions() {
+    this.vaTableBody.style.height = "auto";
   }
 
 }
