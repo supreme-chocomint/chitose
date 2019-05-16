@@ -294,13 +294,6 @@ var Grid = {
     this.followTableBody = document.querySelector(".grid.follow-table-body");
     this.rolesTable = document.querySelector(".grid.roles-table");
     this.rolesTableBody = document.querySelector(".grid.roles-table-body");
-    /*
-    this.vaTable = document.querySelector(".minimalist.va-table");
-    this.vaTableBody = document.querySelector(".minimalist.va-table-body");
-    this.followTable = document.querySelector(".minimalist.follow-table");
-    this.followTableBody = document.querySelector(".minimalist.follow-table-body");
-    this.rolesTable = document.querySelector(".minimalist.roles-table");
-    this.rolesTableBody = document.querySelector(".minimalist.roles-table-body"); */
 
     this.vaPopularTableBody = document.querySelector(".grid.va-popular-characters-body");
     this.vaUWTableBody = document.querySelector(".grid.va-uw-characters-body");
@@ -331,24 +324,35 @@ var Grid = {
     let div = document.createElement("div");
     let thumbnail = document.createElement("div");
     let text = document.createElement("p");
+    let nameLink = document.createElement("a");
     let seasonLink = document.createElement("a");
     let deleteLink = document.createElement("a");
 
+    div.id = metadata.id;
+
     thumbnail.style.backgroundImage = `url(${metadata.image})`;
     thumbnail.classList.add("thumbnail");
-    thumbnail.onclick = function() { VADetailsOnClick(metadata.id) };
+
+    deleteLink.innerHTML = "&times;";
+    deleteLink.href = "javascript:void(0)";
+    deleteLink.classList.add("symbol");
+    deleteLink.onclick = function() {
+      unfollow(metadata);
+    }
+    thumbnail.appendChild(deleteLink);
     div.appendChild(thumbnail);
 
-    text.innerHTML += metadata.name + "<br>";
+    nameLink.innerHTML = metadata.name;
+    nameLink.href = "javascript:void(0);";
+    nameLink.onclick = function() {VADetailsOnClick(metadata.id)};
+    text.appendChild(nameLink);
+    text.appendChild(document.createElement("br"));
 
     seasonLink.href = "javascript:void(0)";
-    seasonLink.innerHTML += "Show Season Roles";
+    seasonLink.innerHTML += "Show Roles";
+    seasonLink.onclick = function() {VAOnClick(metadata.id)};
     text.appendChild(seasonLink);
-    text.innerHTML += "<br>";
-
-    deleteLink.href = "javascript:void(0)";
-    deleteLink.innerHTML = "Remove";
-    text.appendChild(deleteLink);
+    text.appendChild(document.createElement("br"));
 
     text.classList.add("thumbnail-caption");
     div.appendChild(text);
@@ -385,40 +389,36 @@ var Grid = {
     let seasonLink = document.createElement("a");
     let followState = document.createElement("a");
 
+    div.id = metadata.id;
+
     thumbnail.style.backgroundImage = `url(${metadata.image})`;
     thumbnail.classList.add("thumbnail");
-    thumbnail.onclick = function() { VADetailsOnClick(metadata.id) };
-    div.appendChild(thumbnail);
-
-    nameLink.innerHTML = metadata.name;
-    nameLink.href = "javascript:void(0)";
-    nameLink.onclick = function() {VADetailsOnClick(metadata.id)};
-    text.appendChild(nameLink);
-    text.innerHTML += "<br>";
-
-    numRolesInt = window.seasonalRolesCounter[metadata.id];
-    if (numRolesInt) {
-      seasonLink.innerHTML = `Show ${numRolesInt} Season Role(s)`;
-      seasonLink.href = "javascript:void(0)";
-      seasonLink.classList.add("internal_link");
-      seasonLink.onclick = function() {VAOnClick(metadata.id)};
-      text.appendChild(seasonLink);
-      text.innerHTML += "<br>";
-    }
 
     if (isFollowed(metadata.id)) { followState.innerHTML = "★"; }
     else { followState.innerHTML = "☆"; }
-    followState.href = "javascript:void(0)";
+    followState.href = "javascript:void(0);";
     followState.classList.add("symbol");  // makes character larger
     followState.onclick = function() {
       followState.innerHTML = toggleFollow(metadata);
     }
+    thumbnail.appendChild(followState);
+    div.appendChild(thumbnail);
 
-    nameLink.classList.add(metadata.id);
-    if (window.clicked == metadata.id) {
-      nameLink.classList.add("clicked");
+    nameLink.innerHTML = metadata.name;
+    nameLink.href = "javascript:void(0);";
+    nameLink.onclick = function() {VADetailsOnClick(metadata.id);};
+    text.appendChild(nameLink);
+    text.appendChild(document.createElement("br"));
+
+    numRolesInt = window.seasonalRolesCounter[metadata.id];
+    if (numRolesInt) {
+      seasonLink.innerHTML = `Roles: ${numRolesInt}`;
+      seasonLink.href = "javascript:void(0)";
+      seasonLink.classList.add("internal_link");
+      seasonLink.onclick = function() {VAOnClick(metadata.id)};
+      text.appendChild(seasonLink);
+      text.appendChild(document.createElement("br"));
     }
-    text.appendChild(followState);
 
     text.classList.add("thumbnail-caption");
     div.classList.add("thumbnail-wrapper");
@@ -499,6 +499,7 @@ var Grid = {
 
     thumbnail.style.backgroundImage = `url(${character.image})`;
     thumbnail.classList.add("thumbnail");
+    thumbnail.classList.add("clickable");
     thumbnail.onclick = function() { characterThumbnailOnClick(this); };
     div.appendChild(thumbnail);
 

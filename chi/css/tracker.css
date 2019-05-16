@@ -65,6 +65,10 @@ body {
   margin: 1rem;
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 /* General page spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -227,7 +231,7 @@ th { /* Makes header occupy one line only */
   background-size: cover;
   background-position: top center;
   background-repeat: no-repeat;
-  cursor: pointer;
+  position: relative; /* allow things to be positioned inside */
 }
 
 .thumbnail-caption {
@@ -266,4 +270,10 @@ th { /* Makes header occupy one line only */
 .va-character-wrapper div {
   display: inline-block;
   vertical-align: top; /* Make top of divs line up, instead of bottom */
+}
+
+.grid .symbol {
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
 }
