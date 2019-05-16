@@ -244,8 +244,9 @@ th { /* Makes header occupy one line only */
 
 #va-side-containers > div.grid,
 #va-bottom-container.grid,
-#left-col.grid,
-#right-col.grid {
+.va-table.grid,
+.roles-table.grid,
+.follow-table.grid {
   padding-top: 2rem;
   border-radius: 4px;
   border-color: var(--color);

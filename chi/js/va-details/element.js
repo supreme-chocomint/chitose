@@ -25,7 +25,6 @@ function fillVaBasicInfo(vaDetails) {
     for (let role of vaDetails.popularRoles) {
       addCharacterEntry("va-popular-characters", role);
     }
-    styleCharacterEntries("va-left-container");
     vaLeftContainer.style.display = "";
   }
 
@@ -76,7 +75,6 @@ function fillVaAdvancedInfo(vaDetails) {
     for (let uwRole of vaDetails.uwRoles) {
       addCharacterEntry("va-uw-characters", uwRole);
     }
-    styleCharacterEntries("va-right-container");
   }
 
   // ----- All characters ----- //
@@ -90,7 +88,6 @@ function fillVaAdvancedInfo(vaDetails) {
     }
   }
 
-  styleCharacterEntries("va-bottom-container");
   resizeCharacterContainers(vaDetails);
   toggleDisplayButton.classList.remove("disabled");
 
@@ -186,10 +183,6 @@ function formatStats(va) {
 
 function addCharacterEntry(containerId, role) {
   window.currentDisplay.addCharacterEntry(containerId, role);
-}
-
-function styleCharacterEntries(elementId) {
-  window.currentDisplay.styleCharacterEntries(elementId);
 }
 
 function addCharacterTableEntry(tableBodyId, vaDetails) {

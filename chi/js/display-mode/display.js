@@ -1,8 +1,3 @@
-// Table caption, table heads, and div headers are assumed to be
-// unique, and thus are NOT part properties of displays (although they
-// are NOT accessed outside of the display objects) and are accessed by ID
-// instead of class like everything else
-
 var Minimalist = {
 
   name: "minimalist",
@@ -267,8 +262,6 @@ var Minimalist = {
 
   },
 
-  styleCharacterEntries(elementId) {},  // do nothing b/c they're table cells
-
   clearSideContainers() {
     this.vaPopularTableBody.innerHTML = "";
     this.vaUWTableBody.innerHTML = "";
@@ -294,6 +287,9 @@ var Grid = {
     this.followTableBody = document.querySelector(".grid.follow-table-body");
     this.rolesTable = document.querySelector(".grid.roles-table");
     this.rolesTableBody = document.querySelector(".grid.roles-table-body");
+
+    this.vaTableHeader = document.getElementById("va-table-header");
+    this.rolesTableHeader = document.getElementById("roles-table-header");
 
     this.vaPopularTableBody = document.querySelector(".grid.va-popular-characters-body");
     this.vaUWTableBody = document.querySelector(".grid.va-uw-characters-body");
@@ -350,6 +346,7 @@ var Grid = {
 
     seasonLink.href = "javascript:void(0)";
     seasonLink.innerHTML += "Show Roles";
+    seasonLink.classList.add("internal_link");
     seasonLink.onclick = function() {VAOnClick(metadata.id)};
     text.appendChild(seasonLink);
     text.appendChild(document.createElement("br"));
@@ -360,23 +357,17 @@ var Grid = {
     div.classList.add("thumbnail-wrapper");
     this.followTableBody.appendChild(div);
 
+    this.followTableBody.lastChild.style.width = window.getComputedStyle(thumbnail).width;
+
   },
 
   addNoResultsIndicator(tableId) {
-    let row = document.createElement("tr");
-    this.appendNACells(row, 2);
+    let div = document.createElement("p");
+    div.appendChild(document.createTextNode("Nothing found :("));
     if (tableId == "va-table-body") {
-      this.vaTableBody.appendChild(row);
+      this.vaTableBody.appendChild(div);
     } else if (tableId == "roles-table-body"){
-      this.rolesTableBody.appendChild(row);
-    }
-  },
-
-  appendNACells(row, numCol) {
-    for (let i = 0; i < numCol; i++) {
-      let col = document.createElement("td");
-      col.innerHTML = "N/A";
-      row.appendChild(col);
+      this.rolesTableBody.appendChild(div);
     }
   },
 
@@ -405,7 +396,7 @@ var Grid = {
     div.appendChild(thumbnail);
 
     nameLink.innerHTML = metadata.name;
-    nameLink.href = "javascript:void(0);";
+    nameLink.href = "javascript:void(0)";
     nameLink.onclick = function() {VADetailsOnClick(metadata.id);};
     text.appendChild(nameLink);
     text.appendChild(document.createElement("br"));
@@ -413,12 +404,14 @@ var Grid = {
     numRolesInt = window.seasonalRolesCounter[metadata.id];
     if (numRolesInt) {
       seasonLink.innerHTML = `Roles: ${numRolesInt}`;
-      seasonLink.href = "javascript:void(0)";
-      seasonLink.classList.add("internal_link");
-      seasonLink.onclick = function() {VAOnClick(metadata.id)};
-      text.appendChild(seasonLink);
-      text.appendChild(document.createElement("br"));
+    } else {
+      seasonLink.innerHTML = "Show Roles";
     }
+    seasonLink.href = "javascript:void(0)";
+    seasonLink.classList.add("internal_link");
+    seasonLink.onclick = function() {VAOnClick(metadata.id)};
+    text.appendChild(seasonLink);
+    text.appendChild(document.createElement("br"));
 
     text.classList.add("thumbnail-caption");
     div.classList.add("thumbnail-wrapper");
@@ -427,62 +420,55 @@ var Grid = {
     div.appendChild(text);
     this.vaTableBody.appendChild(div);
 
+    this.vaTableBody.lastChild.style.width = window.getComputedStyle(thumbnail).width;
+
   },
 
   setVATableSize(numElements) {
-
-    let vaTableHeaderRoles = document.getElementById("va-table-head-roles");
-    let vaTableHeaderFollow = document.getElementById("va-table-head-follow");
-    let vaTableState = this.vaTable.getAttribute("data-state");
-
     if (numElements == 0){
-      vaTableHeaderRoles.style.display = "none";
-      vaTableHeaderFollow.style.display = "none";
-      addNoResultsIndicator("va-table-body");
-    }
-
-    else if (vaTableState == "search") {
-      vaTableHeaderRoles.style.display = "none";
-      vaTableHeaderFollow.style.display = "";
-    }
-
-    else {
-      vaTableHeaderRoles.style.display = "";
-      vaTableHeaderFollow.style.display = "";
+      this.addNoResultsIndicator("va-table-body");
     }
   },
 
   setVATableHeader(header) {
-    let vaTableCaption = document.getElementById("va-table-caption");
-    vaTableCaption.setAttribute("data-content", header);
+    if (header == "") {
+      this.vaTable.style.display = "none";
+      this.vaTableHeader.innerHTML = header;
+    } else {
+      this.vaTable.style.display = "";
+      let h = header.trim();
+      h = h[0].toUpperCase() + h.slice(1);
+      this.vaTableHeader.innerHTML = h;
+    }
   },
 
   addRolesTableEntry(metadata) {
-
-    let row = document.createElement("tr");
-    let showNameCol = document.createElement("td");
-    let showName = document.createElement("a");
-    let charaNameCol = document.createElement("td");
-    let charaName = document.createElement("a");
-
-    showName.innerHTML = metadata.showName;
-    showName.href = metadata.showUrl;
-    showName.target = "_blank";  // open in new tab
-    charaName.innerHTML = metadata.characterName;
-    charaName.href = metadata.characterUrl;
-    charaName.target = "_blank";  // open in new tab
-
-    showNameCol.appendChild(showName);
-    charaNameCol.appendChild(charaName);
-    row.appendChild(showNameCol);
-    row.appendChild(charaNameCol);
-    this.rolesTableBody.appendChild(row);
-
+    let role = {
+      character: {
+        name: metadata.characterName,
+        image: metadata.characterImage.large,
+        url: metadata.characterUrl
+      },
+      show: {
+        title: {
+          romaji: metadata.showName
+        },
+        siteUrl: metadata.showUrl
+      }
+    };
+    addCharacterEntry("roles-table-body", role);
   },
 
   setRolesTableHeader(header) {
-    let rolesTableCaption = document.getElementById("roles-table-caption");
-    rolesTableCaption.setAttribute("data-content", header);
+    if (header == "") {
+      this.rolesTable.style.display = "none";
+      this.rolesTableHeader.innerHTML = header;
+    } else {
+      this.rolesTable.style.display = "";
+      let h = header.trim();
+      h = h[0].toUpperCase() + h.slice(1);
+      this.rolesTableHeader.innerHTML = h;
+    }
   },
 
   addCharacterEntry(containerId, role) {
@@ -522,6 +508,9 @@ var Grid = {
     div.classList.add("thumbnail-wrapper");
     container.appendChild(div);
 
+    // doesn't work until appended to container for some reason
+    container.lastChild.style.width = window.getComputedStyle(thumbnail).width;
+
   },
 
   getCharacterContainer(id) {
@@ -534,21 +523,9 @@ var Grid = {
         return this.vaMainTableBody;
       case "va-support-characters":
         return this.vaSupportTableBody;
+      case "roles-table-body":
+        return this.rolesTableBody;
     }
-  },
-
-  styleCharacterEntries(elementId) {
-
-    // --- Make captions same width as thumbnails --- //
-
-    let thumbnail = document.getElementById(elementId).getElementsByClassName("thumbnail")[0];
-    let style = window.getComputedStyle(thumbnail);
-
-    let captions = document.getElementById(elementId).getElementsByClassName("thumbnail-caption");
-    for (let caption of captions) {
-      caption.style.width = style.width;
-    }
-
   },
 
   clearSideContainers() {

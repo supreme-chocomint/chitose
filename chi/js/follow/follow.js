@@ -58,7 +58,6 @@ function collectFollowingCallback(numFollowing, data) {
 
   let numEntries = window.currentDisplay.followTableBody.children.length;
   if (numEntries == numFollowing) {
-    window.currentDisplay.styleCharacterEntries("left-col");
     unlock();
   }
 
