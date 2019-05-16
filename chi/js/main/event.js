@@ -46,6 +46,44 @@ function setOnEvents() {
   }
 }
 
+function setOnClicks() {
+
+  let searchButton = document.getElementById("search-button");
+  let refreshButton = document.getElementById("refresh-button");
+  let displayModeSwitch = document.getElementById("display-mode-switch");
+  let darkModeSwitch = document.getElementById("dark-mode-switch");
+  let leftTableSwitch = document.getElementById("left-table-switch");
+  let importButton = document.getElementById("import-button");
+  let exportButton = document.getElementById("export-button");
+  let returnButton = document.getElementById("return-button");
+  let allCharactersSwitch = document.getElementById("all-characters-switch");
+
+  searchButton.onclick = function() { searchButtonOnClick(); }
+  refreshButton.onclick = function() { refreshButtonOnClick(); }
+  displayModeSwitch.onclick = function() { displayModeSwitchOnClick(); }
+  darkModeSwitch.onclick = function() { darkModeSwitchOnClick(); }
+  leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
+  importButton.onclick = function() { importButtonOnClick(); }
+  exportButton.onclick = function() { exportButtonOnClick(); }
+  returnButton.onclick = function() { returnButtonOnClick(); }
+  allCharactersSwitch.onclick = function() { allCharactersSwitchOnClick(); }
+  setNavigationOnClicks();
+
+}
+
+function setOnKeyPresses() {
+
+  let searchBar = document.getElementById("search-bar");
+  let ENTER = 13;
+
+  searchBar.addEventListener("keyup", function(event) {
+    if (event.keyCode == ENTER) {
+      searchButtonOnClick();
+    }
+  });
+
+}
+
 function leftTableSwitchOnClick() {
 
   let vaTable = window.currentDisplay.vaTable;
@@ -94,40 +132,13 @@ function leftTableSwitchOnClick() {
 
 }
 
-function setOnClicks() {
-
-  let searchButton = document.getElementById("search-button");
-  let refreshButton = document.getElementById("refresh-button");
-  let displayModeSwitch = document.getElementById("display-mode-switch");
-  let darkModeSwitch = document.getElementById("dark-mode-switch");
-  let leftTableSwitch = document.getElementById("left-table-switch");
-  let importButton = document.getElementById("import-button");
-  let exportButton = document.getElementById("export-button");
-  let returnButton = document.getElementById("return-button");
-  let allCharactersSwitch = document.getElementById("all-characters-switch");
-
-  searchButton.onclick = function() { searchButtonOnClick(); }
-  refreshButton.onclick = function() { refreshButtonOnClick(); }
-  displayModeSwitch.onclick = function() { displayModeSwitchOnClick(); }
-  darkModeSwitch.onclick = function() { darkModeSwitchOnClick(); }
-  leftTableSwitch.onclick = function() { leftTableSwitchOnClick(); }
-  importButton.onclick = function() { importButtonOnClick(); }
-  exportButton.onclick = function() { exportButtonOnClick(); }
-  returnButton.onclick = function() { returnButtonOnClick(); }
-  allCharactersSwitch.onclick = function() { allCharactersSwitchOnClick(); }
-  setNavigationOnClicks();
-
-}
-
-function setOnKeyPresses() {
-
-  let searchBar = document.getElementById("search-bar");
-  let ENTER = 13;
-
-  searchBar.addEventListener("keyup", function(event) {
-    if (event.keyCode == ENTER) {
-      searchButtonOnClick();
-    }
-  });
-
+function refreshButtonOnClick() {
+  if (!isLocked()) {
+    lock();
+    document.getElementById("search-bar").value = "";
+    clearVATable();
+    clearRolesTable();
+    unclick();
+    populateVATableWithSeason();
+  }
 }
