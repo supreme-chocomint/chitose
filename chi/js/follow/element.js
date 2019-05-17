@@ -16,15 +16,15 @@ function toggleFollow(voiceActorMetadata) {
   following = getFollowing();
   if (following == {}) {
     follow(voiceActorMetadata);
-    return "★";
+    return getBlackStar();
   }
   else if (voiceActorMetadata.id in following) {
     unfollow(voiceActorMetadata);
-    return "☆";
+    return getWhiteStar();
   }
   else {
     follow(voiceActorMetadata);
-    return "★";
+    return getBlackStar();
   }
 }
 
@@ -55,4 +55,16 @@ function removeFollowTableEntry(voiceActorId) {
       break;  // id is unique, so get out
     }
   }
+}
+
+function getBlackStar() {
+  return "<i class='fas fa-star'></i>";
+}
+
+function getWhiteStar() {
+  return "<i class='far fa-star'></i>";
+}
+
+function getDeleteIcon() {
+  return "<i class='fas fa-times'></i>";
 }

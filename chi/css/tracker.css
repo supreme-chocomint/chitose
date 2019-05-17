@@ -140,10 +140,7 @@ th {
 td.symbol {
   text-align: center;
   padding: 0;
-}
-
-a.symbol {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .jp {
@@ -194,6 +191,10 @@ input#dark-mode-switch {
   font-size: 2rem;
   opacity: var(--obj-opacity);
   pointer-events: var(--mouse-response);
+}
+
+.follow-icon {
+  font-size: 2rem;
 }
 
 /* Table and table tool spacing/arrangement
@@ -277,8 +278,17 @@ th { /* Makes header occupy one line only */
   vertical-align: top; /* Make top of divs line up, instead of bottom */
 }
 
-.grid .symbol {
+.grid .thumbnail-icon {
+  color: white;
+}
+
+.grid .thumbnail-icon-wrapper {
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.6);  /* grey */
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  border-radius: 50%;
   position: absolute;
-  bottom: 0;
+  bottom: 0.5rem;
   right: 0.5rem;
 }
