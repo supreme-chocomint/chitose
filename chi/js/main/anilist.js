@@ -259,6 +259,6 @@ function handleResponse(response) {
 }
 
 function handleError(error) {
-  alert('Error, check console');
+  alert("Error. See console for more details.");
   console.error(error);
 }

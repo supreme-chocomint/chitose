@@ -11,7 +11,8 @@ function main() {
   }
   window.currentDisplay = null;
 
-  let urlFragments = window.location.href.split("?");
+  let baseUrl = window.location.href.split("#")[0];
+  let urlFragments = baseUrl.split("?");
   switch (urlFragments[1]) {
     case "grid":
     case "minimalist":

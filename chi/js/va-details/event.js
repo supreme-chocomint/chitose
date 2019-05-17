@@ -1,67 +1,9 @@
 function VADetailsOnClick(voiceActorId) {
-
-  let mainContainer = document.getElementById("main-container");
-  let vaInfoContainer = document.getElementById("va-info-container");
-  let vaLeftContainer = document.getElementById("va-left-container");
-  let vaRightContainer = document.getElementById("va-right-container");
-  let toggleCharactersButton = document.getElementById("all-characters-switch");
-  let toggleDisplayButton = document.getElementById("display-mode-switch");
-  let voiceActor = window.voiceActors[voiceActorId];
-
-  let variables = {
-    id: voiceActorId,
-    pageNum: 1
-  }
-
-  if (isFetchingDetails()) {
-
-    let fetchingId = getFetchingDetailsId();
-    if (fetchingId == voiceActorId) {
-      mainContainer.style.display = "none";
-      vaInfoContainer.style.display = "";
-    }
-    else if (fetchingId != 0){  // purely defensive check
-      window.alert(
-        `Currently busy fetching data for ${window.voiceActors[fetchingId].name}.
-        View their details page to see progress.`
-      );
-    }
-
-  }
-  else {
-
-    setFetchingDetails(voiceActorId);
-    mainContainer.style.display = "none";
-    vaInfoContainer.style.display = "";
-    toggleCharactersButton.classList.add("disabled");
-    toggleDisplayButton.classList.add("disabled");
-    clearVaInfo();
-
-    // use cache if it exists, otherwise request data
-    if (voiceActor && voiceActor.roles && voiceActor.roles.length != 0) {
-      fillVaBasicInfo(window.voiceActors[voiceActorId]);
-      fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
-      unsetFetchingDetails();
-    }
-    else {
-      document.getElementById("va-info-bio-text").innerHTML = "Getting initial data...";
-      makeRequest(getQuery("VA ID"), variables, collectVADetails);
-    }
-
-  }
-
+  window.location.hash = voiceActorId;
 }
 
 function returnButtonOnClick() {
-
-  let mainContainer = document.getElementById("main-container");
-  let vaInfoContainer = document.getElementById("va-info-container");
-  let vaLeftContainer = document.getElementById("va-left-container");
-  let vaRightContainer = document.getElementById("va-right-container");
-
-  mainContainer.style.display = "";
-  vaInfoContainer.style.display = "none";
-
+  window.location.hash = "";
 }
 
 function allCharactersSwitchOnClick() {

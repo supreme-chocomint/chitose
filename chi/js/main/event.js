@@ -1,6 +1,5 @@
 window.onload = function() {
 
-  lock();
   buildDisplayModes();
 
   let body = document.getElementsByTagName("body")[0];
@@ -18,6 +17,36 @@ window.onload = function() {
   }
 
   setOnEvents();
+
+  // redirect if required; to main tab is default
+  let redirect = tabRedirect();
+  switch (redirect) {
+    case "main":
+      // build main in this case b/c window just loaded
+      setMainTabLoaded(true);
+      buildMainTab(hasStorageAccess);
+      break;
+    case "va-details":
+      // va-details are built unconditionally, so handled by tabRedirect()
+      // can't build main b/c depends on items being visible
+      setMainTabLoaded(false);
+      break;
+  }
+
+}
+
+function setOnEvents() {
+  setOnClicks();
+  setOnKeyPresses();
+  setOnHashChange();
+  window.onresize = function() {
+    window.currentDisplay.resetFixedDimensions();
+  }
+}
+
+function buildMainTab(hasStorageAccess) {
+
+  lock();
   setDescription();
   buildSeasonPickers();
   buildLanguageFilter();
@@ -30,14 +59,6 @@ window.onload = function() {
   populateVATableWithSeason();
   if (hasStorageAccess) { lock(); populateFollowTable(); }
 
-}
-
-function setOnEvents() {
-  setOnClicks();
-  setOnKeyPresses();
-  window.onresize = function() {
-    window.currentDisplay.resetFixedDimensions();
-  }
 }
 
 function setOnClicks() {

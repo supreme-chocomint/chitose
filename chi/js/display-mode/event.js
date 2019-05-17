@@ -1,12 +1,14 @@
 function displayModeSwitchOnClick() {
 
-  let urlFragments = window.location.href.split("?");
+  let baseUrl = window.location.href.split("#")[0];
+  let hash = window.location.hash;
+  let urlFragments = baseUrl.split("?");
   switch (urlFragments[1]) {
     case "grid":
-      window.location.replace(urlFragments[0] + "?minimalist");
+      window.location.replace(urlFragments[0] + "?minimalist" + hash);
       break;
     case "minimalist":
-      window.location.replace(urlFragments[0] + "?grid");
+      window.location.replace(urlFragments[0] + "?grid" + hash);
       break;
   }
 
