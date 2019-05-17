@@ -303,6 +303,8 @@ var Grid = {
     this.vaMainTableBody = document.querySelector(".grid.va-main-characters-body");
     this.vaSupportTableBody = document.querySelector(".grid.va-support-characters-body");
 
+    this.searchTableBody = this.vaTableBody;
+
   },
 
   activate() {
@@ -461,15 +463,16 @@ var Grid = {
   styleVATable() {
 
     let numElements = this.vaTableBody.children.length;
-    let free = this.tablePageSize - ((numElements - 1) % this.tablePageSize);
+    let free = this.tablePageSize - (numElements % this.tablePageSize);
     let addPageIndex = Math.ceil((numElements - 1) / this.tablePageSize);
     let maxHeight = 0;
     let largest;
     let clones = [];
 
+    this.vaTableBody.style.height = ""; // make height default to work with
+
     if (numElements == 0){
       this.addNoResultsIndicator("va-table-body");
-      this.vaTableBody.style.height = ""; // make height default
       return;
     }
 
@@ -609,6 +612,37 @@ var Grid = {
 
   resetFixedDimensions() {
     this.vaTableBody.style.height = "auto";
+  },
+
+  addMediaSearchEntry(media) {
+
+    let container = this.searchTableBody;
+    let div = document.createElement("div");
+    let thumbnail = document.createElement("div");
+    let text = document.createElement("p");
+    let link = document.createElement("a");
+
+    thumbnail.style.backgroundImage = `url(${media.coverImage.large})`;
+    thumbnail.classList.add("thumbnail");
+    thumbnail.classList.add("clickable");
+    thumbnail.onclick = function() { console.log("clicked"); };
+    div.appendChild(thumbnail);
+
+    link.href = media.siteUrl;
+    link.target = "_blank";
+    link.innerHTML = media.title.romaji;
+    text.appendChild(link);
+    div.appendChild(text);
+
+    text.classList.add("thumbnail-caption");
+    div.appendChild(text);
+
+    div.classList.add("thumbnail-wrapper");
+    container.appendChild(div);
+
+    // doesn't work until appended to container for some reason
+    container.lastChild.style.width = window.getComputedStyle(thumbnail).width;
+
   }
 
 }

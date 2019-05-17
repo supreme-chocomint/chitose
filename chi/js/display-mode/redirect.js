@@ -32,6 +32,9 @@ function main() {
   document.baseTitle = document.title.split(" - ")[0].trim();
   document.mainTitle = document.title;
 
+  console.log("Katta na! GAHAHA");
+  console.log("---");
+
 }
 
 main();

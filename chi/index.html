@@ -29,7 +29,6 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src='js/main/element.js'></script>
   <script src='js/main/event.js'></script>
-  <script src='js/main/string.js'></script>
   <script src='js/main/anilist.js'></script>
   <script src='js/main/state.js'></script>
   <script src='js/display-mode/display.js'></script>
@@ -39,8 +38,10 @@
   <script src='js/follow/event.js'></script>
   <script src='js/follow/follow.js'></script>
   <script src='js/helpers/parse.js'></script>
+  <script src='js/helpers/string.js'></script>
   <script src='js/helpers/table.js'></script>
   <script src='js/search/search.js'></script>
+  <script src='js/search/element.js'></script>
   <script src='js/tab/tab.js'></script>
   <script src='js/theme/theme.js'></script>
   <script src='js/va-details/callback.js'></script>
@@ -92,12 +93,15 @@
 
     <div class="row" id="va-table-tools">
       <input type="search" id="search-bar" placeholder="Search voice actors">
+      <select id="search-picker"></select>
       <input type="submit" class="button-primary" id="search-button" value="Search">
       <input type="button" class="button" id="left-table-switch" value="Toggle Following">
       <input type="button" class="button" id="refresh-button" value="Refresh">
       <select id="year-picker"></select>
       <select id="quarter-picker"></select>
     </div>
+
+    <div class="row" id="tool-help"></div>
 
     <div class="row">
 
@@ -147,7 +151,6 @@
           <span>&nbsp;&nbsp;</span>
           <select id="language-filter"></select>
         </div>
-
 
         <div id="transfer" style="display:none;">
           <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>

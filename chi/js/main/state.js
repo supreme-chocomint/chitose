@@ -17,8 +17,6 @@ function unlock() {
 function setStorageState() {
   try {
     localStorage.getItem("following");
-    console.log("Katta na! GAHAHA");
-    console.log("---");
     return true;
   }
   catch (AccessDeniedError) {

@@ -49,6 +49,7 @@ function buildMainTab(hasStorageAccess) {
   lock();
   setDescription();
   buildSeasonPickers();
+  buildSearchPicker();
   buildLanguageFilter();
   clearSearchBar();
   clearTransferBox();

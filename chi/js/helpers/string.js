@@ -13,3 +13,18 @@ function getDescriptionString() {
     " (the data provider) is online."
   return string;
 }
+
+function getExplainString() {
+  let string = `
+  <p>
+  Search by show examples:<br>
+  "Humanity has Declined", "Jinrui wa Suitai Shimashita", or "人類は衰退しました"
+  </p>
+  <p>
+  Search by character examples:<br>
+  "Phos", "Phos from Land of the Lustrous" (CHARACTER_NAME from SHOW_NAME),
+  "Phos, 宝石の国" (CHARACTER_NAME, SHOW_NAME), or variants
+  </p>
+  `;
+  return string;
+}

@@ -14,7 +14,6 @@ function getQuery(type) {
       large
     }
   `;
-
   let voiceActorCompleteFragment = `
     id
     name {
@@ -94,7 +93,7 @@ function getQuery(type) {
         siteUrl
         language
         image {
-          medium
+          large
         }
         characters (perPage: 1) {
           nodes {
@@ -106,8 +105,8 @@ function getQuery(type) {
 
   }
   `;
-  let seasonShowListQuery = `
-  query ($season: MediaSeason!, $seasonYear: Int!, $page: Int, $perPage: Int) {
+  let characterSearchQuery = `
+  query ($page: Int, $perPage: Int, $search:String) {
 
     Page (page: $page, perPage: $perPage) {
 
@@ -119,22 +118,91 @@ function getQuery(type) {
         perPage
       }
 
-      media (season: $season, seasonYear: $seasonYear, format: TV, type: ANIME, sort: POPULARITY_DESC) {
+      characters (search: $search) {
         id
-        title {
-          english
-          romaji
+        name {
+          first
+          last
         }
-        startDate {
-          year
-          month
-          day
+        siteUrl
+        image {
+          large
+        }
+        media (sort: POPULARITY_DESC) {
+          nodes {
+            id
+          }
         }
       }
+    }
 
+  }
+  `;
+  let animeSearchQuery = `
+  query ($page: Int, $perPage: Int, $search:String) {
+
+    Page (page: $page, perPage: $perPage) {
+
+      pageInfo {
+        total
+        currentPage
+        lastPage
+        hasNextPage
+        perPage
+      }
+
+      media (search: $search, type: ANIME) {
+        id
+        title {
+          romaji
+          english
+          native
+        }
+        siteUrl
+        coverImage {
+          large
+        }
+      }
+    }
+
+  }
+  `;
+
+  let characterIdQuery = `
+  query ($id: Int) {
+    Character (id: $id) {
+      id
+      name {
+        first
+        last
+        native
+      }
+      image {
+        large
+      }
+      favourites
+      siteUrl
+      media (sort: POPULARITY_DESC, perPage: 1) {
+        edges {
+          characterRole
+        }
+        nodes {
+          id
+          title {
+            romaji
+            english
+            native
+            userPreferred
+          }
+          popularity
+          meanScore
+          siteUrl
+        }
+      }
     }
   }
   `;
+
   let fullSeasonDataQuery = `
   query ($season: MediaSeason!, $seasonYear: Int!, $page: Int, $perPage: Int, $format: MediaFormat!) {
     Page(page: $page, perPage: $perPage) {
@@ -185,50 +253,20 @@ function getQuery(type) {
   }
   `;
 
-  let characterIdQuery = `
-  query ($id: Int) {
-    Character (id: $id) {
-      id
-      name {
-        first
-        last
-        native
-      }
-      image {
-        large
-      }
-      favourites
-      siteUrl
-      media (sort: POPULARITY_DESC, perPage: 1) {
-        edges {
-          characterRole
-        }
-        nodes {
-          id
-          title {
-            romaji
-            english
-            native
-            userPreferred
-          }
-          popularity
-          meanScore
-          siteUrl
-        }
-      }
-    }
+  switch (type) {
+    case "VA SEARCH":
+      return staffSearchQuery;
+    case "ANIME SEARCH":
+      return animeSearchQuery;
+    case "CHARACTER SEARCH":
+      return characterSearchQuery;
+    case "VA ID":
+      return staffIdQuery;
+    case "CHARACTER ID":
+      return characterIdQuery;
+    default:
+      return fullSeasonDataQuery;
   }
-  `;
-
-  if (type == "VA SEARCH") {
-    return staffSearchQuery;
-  } else if (type == "VA ID") {
-    return staffIdQuery;
-  } else if (type == "CHARACTER ID") {
-    return characterIdQuery;
-  } else {
-    return fullSeasonDataQuery;
-  };
 
 }
 

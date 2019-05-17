@@ -4,7 +4,7 @@ function fillVATableAndPage(voiceActorIds) {
   let tableBody = window.currentDisplay.vaTableBody;
   let pageSize = window.currentDisplay.tablePageSize;
 
-  tableBody.style.visibility = "none";  // to hide build process
+  tableBody.style.visibility = "hidden";  // to hide build process
   let entryCount = 0;
 
   for (let id of voiceActorIds) {
@@ -14,18 +14,13 @@ function fillVATableAndPage(voiceActorIds) {
     updateLanguageFilter(va.language);
     let row = tableBody.lastChild;
     row.id = entryCount;
-
-    if (entryCount >= pageSize) {
-      tableBody.children[entryCount].style.display = "none";
-    }
-
     entryCount++;
 
   }
 
   styleVATable();
+  switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
-
 }
 
 function addVATableEntry(metadata) {
@@ -84,7 +79,6 @@ function switchToPage(pageIndex, language) {
         console.log("Pg." + pageIndex + ", e." + i + " doesn't exist. Probably expected behaviour.");
       }
     }
-
   }
 
   body.style.display = "";
