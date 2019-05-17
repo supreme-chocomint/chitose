@@ -15,7 +15,7 @@ function leftNavOnClick() {
 
   let x = window.scrollX;
   let y = window.scrollY;
-  let height = document.body.clientHeight;
+  let height = window.currentDisplay.vaTable.clientHeight;
   let yOffset = 0;
 
   pageIndex = parseInt(pageIndex);
@@ -27,7 +27,7 @@ function leftNavOnClick() {
   if (pageIndex == 0){ left.classList.add("inactive"); }
   right.classList.remove("inactive");  // coordinate left and right navs
 
-  yOffset = document.body.clientHeight - height;
+  yOffset = window.currentDisplay.vaTable.clientHeight - height;
   window.scroll(x, y + yOffset); // keep same distance from bottom of page
 
 }
@@ -42,7 +42,7 @@ function rightNavOnClick() {
 
   let x = window.scrollX;
   let y = window.scrollY;
-  let height = document.body.clientHeight;
+  let height = window.currentDisplay.vaTable.clientHeight;
   let yOffset = 0;
 
   let pageIndex = tableBody.getAttribute("data-pageIndex");
@@ -57,7 +57,7 @@ function rightNavOnClick() {
   if (pageIndex == lastPageIndex){ right.classList.add("inactive"); }
   left.classList.remove("inactive");  // coordinate left and right navs
 
-  yOffset = document.body.clientHeight - height;
+  yOffset = window.currentDisplay.vaTable.clientHeight - height;
   window.scroll(x, y + yOffset); // keep same distance from bottom of page
 
 }
