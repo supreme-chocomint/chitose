@@ -49,7 +49,8 @@ function collectFollowingCallback(numFollowing, data) {
     id: staff.id,
     name: parsedName(staff.name),
     url: staff.siteUrl,
-    image: staff.image.large
+    image: staff.image.large,
+    language: staff.language
   }
 
   addFollowTableEntry(metadata);
