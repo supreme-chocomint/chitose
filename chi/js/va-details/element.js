@@ -14,19 +14,11 @@ function buildVaDetailsTab(voiceActorId) {
   }
 
   if (isFetchingDetails()) {
-
     let fetchingId = getFetchingDetailsId();
     if (fetchingId == voiceActorId) {
       mainContainer.style.display = "none";
       vaInfoContainer.style.display = "";
     }
-    else if (fetchingId != 0){  // purely defensive check
-      window.alert(
-        `Currently busy fetching data for ${window.voiceActors[fetchingId].name}.
-        View their details page to see progress.`
-      );
-    }
-
   }
   else {
 
@@ -65,6 +57,7 @@ function fillVaBasicInfo(vaDetails) {
 
   name.innerHTML = vaDetails.name;
   vaHeader.appendChild(name);
+  document.title = vaDetails.name + " - " + document.baseTitle;
 
   vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
   vaPortrait.classList.add("thumbnail");

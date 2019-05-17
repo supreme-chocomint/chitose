@@ -24,16 +24,28 @@ function mainTabLoaded() {
 
 function tabRedirect(){
 
-  let hash = window.location.hash.split("#").join("");
+  let hash = parseInt(window.location.hash.split("#").join(""));
   let redirect = "";
 
-  if (isNaN(parseInt(hash))) {
+  if (isNaN(hash)) {
     showMainTab();
+    document.title = document.mainTitle;
     redirect = "main";
   }
   else {
-    buildVaDetailsTab(parseInt(hash));
-    redirect = "va-details";
+    if ( isFetchingDetails() && (getFetchingDetailsId() != hash) ) {
+      window.location.hash = "";
+      window.alert(
+        `Currently busy fetching data for ${window.voiceActors[getFetchingDetailsId()].name}.
+        View their details page to see progress.`
+      );
+      showMainTab();
+      return "main";
+    }
+    else {
+      buildVaDetailsTab(hash);
+      redirect = "va-details";
+    }
   }
 
   return redirect;

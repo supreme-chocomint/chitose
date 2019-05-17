@@ -29,6 +29,9 @@ function main() {
   window.seasonRawData = {};
   window.seasonRawDataIndex = 0;
 
+  document.baseTitle = document.title.split(" - ")[0].trim();
+  document.mainTitle = document.title;
+
 }
 
 main();
