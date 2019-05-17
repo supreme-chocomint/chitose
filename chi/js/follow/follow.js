@@ -26,6 +26,7 @@ function populateFollowTable() {
 
   let following = getFollowing();
   let idArray = Object.keys(following);
+  window.currentDisplay.clearFollowTable();
 
   for (let id of idArray) {
     let variables = { id: id };

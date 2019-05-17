@@ -228,7 +228,7 @@ function clearVaInfo() {
   document.getElementById("va-right-container").style.display = "none";
   document.getElementById("va-bottom-container").style.display = "none";
   window.currentDisplay.clearSideContainers();
-  window.currentDisplay.clearButtomContainer();
+  window.currentDisplay.clearBottomContainer();
 
   changeSideContainerWidths("half");
   changeSideContainerWidths("half");

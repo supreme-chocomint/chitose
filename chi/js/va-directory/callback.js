@@ -64,6 +64,9 @@ function extractVAs(rolesCounter, voiceActors, rawData) {
       }
       else {
         rolesCounter[voiceActor.id] = 1;
+      }
+
+      if (!(voiceActor.id in voiceActors)) {
         voiceActors[voiceActor.id] = voiceActor;
       }
 

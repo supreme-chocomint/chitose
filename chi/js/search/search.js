@@ -53,7 +53,9 @@ function parseVASearchResults(data) {
         image: staffData.image.medium,
         language: staffData.language
       }
-      window.voiceActors[staffData.id] = voiceActor;
+      if (!(staffData.id in window.voiceActors)) {
+        window.voiceActors[staffData.id] = voiceActor;
+      }
       voiceActorArray.push(staffData.id);
     }
   }

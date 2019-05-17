@@ -1,11 +1,5 @@
 window.onload = function() {
 
-  window.mediaFormats = ["TV", "ONA", "TV_SHORT"];
-  window.voiceActors = {};
-  window.seasonalRolesCounter = {};  // must be preserved across requests
-  window.seasonRawData = {};
-  window.seasonRawDataIndex = 0;
-
   lock();
   buildDisplayModes();
 

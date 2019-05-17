@@ -6,7 +6,7 @@ function VADetailsOnClick(voiceActorId) {
   let vaRightContainer = document.getElementById("va-right-container");
   let toggleCharactersButton = document.getElementById("all-characters-switch");
   let toggleDisplayButton = document.getElementById("display-mode-switch");
-  let roles = window.voiceActors[voiceActorId].roles;
+  let voiceActor = window.voiceActors[voiceActorId];
 
   let variables = {
     id: voiceActorId,
@@ -38,7 +38,7 @@ function VADetailsOnClick(voiceActorId) {
     clearVaInfo();
 
     // use cache if it exists, otherwise request data
-    if (roles && roles.length != 0) {
+    if (voiceActor && voiceActor.roles && voiceActor.roles.length != 0) {
       fillVaBasicInfo(window.voiceActors[voiceActorId]);
       fillVaAdvancedInfo(window.voiceActors[voiceActorId]);
       unsetFetchingDetails();

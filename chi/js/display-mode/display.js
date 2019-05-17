@@ -84,6 +84,10 @@ var Minimalist = {
 
   },
 
+  clearFollowTable() {
+    this.followTableBody.innerHTML = "";
+  },
+
   addNoResultsIndicator(tableId) {
     let row = document.createElement("tr");
     this.appendNACells(row, 2);
@@ -268,7 +272,7 @@ var Minimalist = {
     this.vaUWTableBody.innerHTML = "";
   },
 
-  clearButtomContainer() {
+  clearBottomContainer() {
     this.vaMainTableBody.innerHTML = "";
     this.vaSupportTableBody.innerHTML = "";
   },
@@ -362,6 +366,10 @@ var Grid = {
 
     this.followTableBody.lastChild.style.width = window.getComputedStyle(thumbnail).width;
 
+  },
+
+  clearFollowTable() {
+    this.followTableBody.innerHTML = "";
   },
 
   addNoResultsIndicator(tableId) {
@@ -571,7 +579,7 @@ var Grid = {
     this.vaUWTableBody.innerHTML = "";
   },
 
-  clearButtomContainer() {
+  clearBottomContainer() {
     this.vaMainTableBody.innerHTML = "";
     this.vaSupportTableBody.innerHTML = "";
   },
