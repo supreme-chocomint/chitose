@@ -35,7 +35,7 @@ function fillMediaSearchTable(media) {
   // so just rely on scroll repositioning from page navigation clicks.
   // Also this table is the lowest element, so no issues with scroll-only.
   let resize = false;
-  styleVATable(resize);
+  window.currentDisplay.styleMediaSearchTable(resize);
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
   tableBody.style.visibility = "";
@@ -79,7 +79,7 @@ function fillCharacterBrowseTable(data) {
 
   // See fillMediaSearchTable() comment
   let resize = false;
-  styleVATable(resize);
+  window.currentDisplay.styleCharacterBrowseTable(resize);
 
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
@@ -90,7 +90,7 @@ function fillCharacterBrowseTable(data) {
 function fillVALanguageTable(characterName, voiceActors) {
 
   let tableBody = window.currentDisplay.vaLanguageTableBody;
-  let header = `VAs for ${characterName}`;
+  let header = ` VAs for ${characterName}`;
   window.currentDisplay.setVaLanguageTableHeader(header);
   tableBody.innerHTML = "";
 

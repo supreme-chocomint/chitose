@@ -17,6 +17,10 @@ var Minimalist = {
     this.vaMainTableBody = document.querySelector(".minimalist.va-main-characters-body");
     this.vaSupportTableBody = document.querySelector(".minimalist.va-support-characters-body");
 
+    this.searchTableBody = this.vaTableBody;
+    this.characterBrowseTableBody = this.vaTableBody;
+    this.vaLanguageTableBody = this.rolesTableBody;
+
   },
 
   activate() {
@@ -169,24 +173,33 @@ var Minimalist = {
   styleVATable() {
 
     let numElements = this.vaTableBody.children.length;
+    let vaTableHeaderLink = document.getElementById("va-table-head-link");
     let vaTableHeaderRoles = document.getElementById("va-table-head-roles");
     let vaTableHeaderFollow = document.getElementById("va-table-head-follow");
+    let vaTableHeaderExtra1 = document.getElementById("va-table-head-extra1");
     let vaTableState = this.vaTable.getAttribute("data-state");
 
     if (numElements == 0){
+      vaTableHeaderLink.style.display = "";
       vaTableHeaderRoles.style.display = "none";
       vaTableHeaderFollow.style.display = "none";
+      vaTableHeaderFollow.style.display = "none";
+      vaTableHeaderExtra1.style.display = "none";
       addNoResultsIndicator("va-table-body");
     }
 
     else if (vaTableState == "search") {
+      vaTableHeaderLink.style.display = "";
       vaTableHeaderRoles.style.display = "none";
       vaTableHeaderFollow.style.display = "";
+      vaTableHeaderExtra1.style.display = "none";
     }
 
     else {
+      vaTableHeaderLink.style.display = "";
       vaTableHeaderRoles.style.display = "";
       vaTableHeaderFollow.style.display = "";
+      vaTableHeaderExtra1.style.display = "none";
     }
   },
 
@@ -221,9 +234,13 @@ var Minimalist = {
   setRolesTableHeader(header) {
     let rolesTableCaption = document.getElementById("roles-table-caption");
     rolesTableCaption.setAttribute("data-content", header);
+    document.getElementById("roles-table-head-show-name").style.display = "";
+    document.getElementById("roles-table-head-character-name").style.display = "";
+    document.getElementById("roles-table-head-extra1").style.display = "none";
+    document.getElementById("roles-table-head-extra2").style.display = "none";
   },
 
-  addCharacterEntry(containerId, role) {
+  addCharacterEntry(containerId, role, onclick) {
 
     let character = role.character;
     let show = role.show;
@@ -242,26 +259,37 @@ var Minimalist = {
       case "va-support-characters":
         tableBody = this.vaSupportTableBody;
         break;
+      case "character-browse-table-body":
+        tableBody = this.vaTableBody;
     }
 
     let row = document.createElement("tr");
     let charaCol = document.createElement("td");
     let characterLink = document.createElement("a");
-    let showCol = document.createElement("td");
-    let showLink = document.createElement("a");
+    let auxiliaryCol = document.createElement("td");
+    let auxiliaryLink = document.createElement("a");
 
-    characterLink.href = character.url;
-    characterLink.target = "_blank";
+    if (onclick) {
+      characterLink.onclick = onclick;
+      characterLink.href = "javascript:void(0)";
+      auxiliaryLink.href = character.url;
+      auxiliaryLink.target = "_blank";
+      auxiliaryLink.innerHTML = "AniList";
+    } else {
+      characterLink.href = character.url;
+      characterLink.target = "_blank";
+      auxiliaryLink.href = show.siteUrl;
+      auxiliaryLink.target = "_blank";
+      auxiliaryLink.innerHTML = show.title.romaji;
+    }
+
     characterLink.innerHTML = character.name;
     characterLink.style.fontWeight = 'bold';
+
     charaCol.appendChild(characterLink);
     row.appendChild(charaCol);
-
-    showLink.href = show.siteUrl;
-    showLink.target = "_blank";
-    showLink.innerHTML = show.title.romaji;
-    showCol.appendChild(showLink);
-    row.appendChild(showCol);
+    auxiliaryCol.appendChild(auxiliaryLink);
+    row.appendChild(auxiliaryCol);
 
     tableBody.appendChild(row);
 
@@ -277,7 +305,63 @@ var Minimalist = {
     this.vaSupportTableBody.innerHTML = "";
   },
 
-  resetFixedDimensions() {}
+  resetFixedDimensions() {},
+
+  addMediaSearchEntry(media) {
+
+    let row = document.createElement("tr");
+    let actionCol = document.createElement("td");
+    let action = document.createElement("a");
+    let urlCol = document.createElement("td");
+    let url = document.createElement("a");
+
+    action.href = "javascript:void(0)";
+    action.onclick = function() {
+      collectMediaRoles(media);
+    };
+    action.innerHTML = media.title.romaji;
+
+    url.href = media.siteUrl;
+    url.target = "_blank";
+    url.innerHTML = "AniList";
+
+    actionCol.appendChild(action);
+    row.appendChild(actionCol);
+    urlCol.appendChild(url);
+    row.appendChild(urlCol);
+    this.searchTableBody.appendChild(row);
+
+  },
+
+  styleMediaSearchTable(){
+    document.getElementById("va-table-head-link").style.display = "none";
+    document.getElementById("va-table-head-roles").style.display = "none";
+    document.getElementById("va-table-head-follow").style.display = "none";
+    document.getElementById("va-table-head-extra1").style.display = "";
+  },
+
+  styleCharacterBrowseTable() {
+    document.getElementById("va-table-head-link").style.display = "none";
+    document.getElementById("va-table-head-roles").style.display = "none";
+    document.getElementById("va-table-head-follow").style.display = "none";
+    document.getElementById("va-table-head-extra1").style.display = "";
+  },
+
+  addVALanguageEntry(voiceActor) {
+
+  },
+
+  setVaLanguageTableHeader(header) {
+
+    this.setRolesTableHeader(header);
+    document.getElementById("roles-table-head-show-name").style.display = "none";
+    document.getElementById("roles-table-head-character-name").style.display = "none";
+
+    // Must go after call, as setRolesTableHeader() explicitly hides these
+    document.getElementById("roles-table-head-extra1").style.display = "";
+    document.getElementById("roles-table-head-extra2").style.display = "";
+
+  }
 
 }
 
