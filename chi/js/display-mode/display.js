@@ -305,6 +305,7 @@ var Grid = {
 
     this.searchTableBody = this.vaTableBody;
     this.characterBrowseTableBody = this.vaTableBody;
+    this.vaLanguageTableBody = this.rolesTableBody;
 
   },
 
@@ -385,14 +386,21 @@ var Grid = {
     this.followTableBody.innerHTML = "";
   },
 
-  addNoResultsIndicator(tableId) {
-    let div = document.createElement("p");
-    div.appendChild(document.createTextNode("Nothing found :("));
+  addNoResultsIndicator(tableId, message) {
+
+    let text = document.createElement("p");
+    text.classList.add("grid-table-message");
+    text.innerHTML = "Nothing found :(";
+
     if (tableId == "va-table-body") {
-      this.vaTableBody.appendChild(div);
+      this.vaTableBody.appendChild(text);
     } else if (tableId == "roles-table-body"){
-      this.rolesTableBody.appendChild(div);
+      this.rolesTableBody.appendChild(text);
+    } else if (tableId == "va-language-table-body") {
+      text.innerHTML += "<br>" + message;
+      this.vaLanguageTableBody.appendChild(text);
     }
+
   },
 
   addVATableEntry(metadata) {
@@ -461,7 +469,7 @@ var Grid = {
 
   },
 
-  styleVATable() {
+  styleVATable(resize) {
 
     let numElements = this.vaTableBody.children.length;
     let free = this.tablePageSize - (numElements % this.tablePageSize);
@@ -474,6 +482,10 @@ var Grid = {
 
     if (numElements == 0){
       this.addNoResultsIndicator("va-table-body");
+      return;
+    }
+
+    if (resize == false) {
       return;
     }
 
@@ -632,11 +644,7 @@ var Grid = {
     thumbnail.classList.add("thumbnail");
     thumbnail.classList.add("clickable");
     thumbnail.onclick = function() {
-      makeRequest(
-        getQuery("MEDIA ID ROLES"),
-        { id: media.id },
-        collectMediaRolesCallback
-      );
+      collectMediaRoles(media);
     };
     div.appendChild(thumbnail);
 
@@ -655,6 +663,39 @@ var Grid = {
     // doesn't work until appended to container for some reason
     container.lastChild.style.width = window.getComputedStyle(thumbnail).width;
 
+  },
+
+  addVALanguageEntry(voiceActor) {
+
+    let wrapper = document.createElement("div");
+    let thumbnail = document.createElement("div");
+    let text = document.createElement("p");
+    let nameLink = document.createElement("a");
+
+    thumbnail.style.backgroundImage = `url(${voiceActor.image.large})`;
+    thumbnail.classList.add("thumbnail");
+    thumbnail.classList.add("clickable");
+    thumbnail.onclick = function() {VADetailsOnClick(voiceActor.id)};
+
+    nameLink.innerHTML = parsedName(voiceActor.name);
+    nameLink.href = voiceActor.siteUrl;
+    nameLink.target = "_blank";
+
+    text.appendChild(nameLink);
+    text.innerHTML += "<br>" + voiceActor.language;
+    text.classList.add("thumbnail-caption");
+
+    wrapper.appendChild(thumbnail);
+    wrapper.appendChild(text);
+    wrapper.classList.add("thumbnail-wrapper");
+    this.vaLanguageTableBody.appendChild(wrapper);
+
+    this.vaLanguageTableBody.lastChild.style.width = window.getComputedStyle(thumbnail).width;
+
+  },
+
+  setVaLanguageTableHeader(header) {
+    this.setRolesTableHeader(header);
   }
 
 }

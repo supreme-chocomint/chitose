@@ -19,8 +19,8 @@ function fillVATableAndPage(voiceActorIds) {
   }
 
   styleVATable();
-  switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
+  switchToPage(0, "ALL");
   tableBody.style.visibility = "";
 
 }
@@ -88,8 +88,8 @@ function switchToPage(pageIndex, language) {
 
 }
 
-function styleVATable() {
-  window.currentDisplay.styleVATable();
+function styleVATable(resize) {
+  window.currentDisplay.styleVATable(resize);
 }
 
 function setNavigationState(tableBody, pageSize, filter) {

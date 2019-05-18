@@ -31,7 +31,11 @@ function fillMediaSearchTable(media) {
     entryCount++;
   }
 
-  styleVATable();
+  // Table often really large due to one long-named entry,
+  // so just rely on scroll repositioning from page navigation clicks.
+  // Also this table is the lowest element, so no issues with scroll-only.
+  let resize = false;
+  styleVATable(resize);
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
   tableBody.style.visibility = "";
@@ -52,12 +56,12 @@ function fillCharacterBrowseTable(data) {
   let entryCount = 0;
 
   for (let edge of data.Media.characters.edges) {
-    console.log(edge.node.name);
+    let name = parsedName(edge.node.name);
     let role = {
       character: {
         image: edge.node.image.large,
         url: edge.node.siteUrl,
-        name: parsedName(edge.node.name)
+        name: name
       },
       show: {
         siteUrl: data.Media.siteUrl,
@@ -65,7 +69,7 @@ function fillCharacterBrowseTable(data) {
       }
     }
     let onclick = function() {
-      fillVALanguageTable(edge.voiceActors);
+      fillVALanguageTable(name, edge.voiceActors);
     }
     window.currentDisplay.addCharacterEntry("character-browse-table-body", role, onclick);
     let row = tableBody.lastChild;
@@ -73,9 +77,34 @@ function fillCharacterBrowseTable(data) {
     entryCount++;
   }
 
-  styleVATable();
+  // See fillMediaSearchTable() comment
+  let resize = false;
+  styleVATable(resize);
+
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
   tableBody.style.visibility = "";
+
+}
+
+function fillVALanguageTable(characterName, voiceActors) {
+
+  let tableBody = window.currentDisplay.vaLanguageTableBody;
+  let header = `VAs for ${characterName}`;
+  window.currentDisplay.setVaLanguageTableHeader(header);
+  tableBody.innerHTML = "";
+
+  for (let va of voiceActors) {
+    window.currentDisplay.addVALanguageEntry(va);
+  }
+
+  if (voiceActors.length == 0) {
+    window.currentDisplay.addNoResultsIndicator(
+      "va-language-table-body",
+      `It's possible this character didn't have a speaking role
+      in the searched season/entry. Try searching under a different season
+      (e.g. Hibike Euphonium 2 instead of Hibike Euphonium).`
+    );
+  }
 
 }

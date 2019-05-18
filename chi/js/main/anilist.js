@@ -163,6 +163,36 @@ function getQuery(type) {
         coverImage {
           large
         }
+        characters (sort: FAVOURITES_DESC) {
+          edges {
+            id
+            voiceActors {
+              id
+              name {
+                first
+                last
+                native
+              }
+              language
+              siteUrl
+              image {
+                large
+              }
+            }
+            node {
+              id
+              siteUrl
+              name {
+                first
+                last
+                native
+              }
+              image {
+                large
+              }
+            }
+          }
+        }
       }
     }
 
@@ -202,49 +232,6 @@ function getQuery(type) {
       }
     }
   }
-  `;
-
-  let mediaIdRolesQuery = `
-  query ($id: Int) {
-  Media (id: $id) {
-    title {
-      romaji
-      english
-      native
-      userPreferred
-    }
-    siteUrl
-    characters (sort: FAVOURITES_DESC) {
-      edges {
-        id
-        voiceActors {
-          id
-          name {
-            first
-            last
-            native
-          }
-          language
-          image {
-            large
-          }
-        }
-        node {
-          id
-          siteUrl
-          name {
-            first
-            last
-            native
-          }
-          image {
-            large
-          }
-        }
-      }
-    }
-  }
-}
   `;
 
   let fullSeasonDataQuery = `
@@ -308,8 +295,6 @@ function getQuery(type) {
       return staffIdQuery;
     case "CHARACTER ID":
       return characterIdQuery;
-    case "MEDIA ID ROLES":
-      return mediaIdRolesQuery;
     default:
       return fullSeasonDataQuery;
   }
@@ -343,6 +328,23 @@ function handleResponse(response) {
 }
 
 function handleError(error) {
-  alert("Error. See console for more details.");
+  try {
+    let status = error.errors[0].status;
+    let message = error.errors[0].message;
+    if (status == 429) {
+      alert(`Sending too many requests (429 response). If this happened
+        when viewing a voice actor's details, the VA's AniList data is too fragmented.
+        Regardless of cause, wait a few seconds (or worse case, a minute), then refresh.
+        See console for details.`);
+    } else if (status == 404) {
+      alert(`404 Not Found response from AniList. Ensure url is correct.
+        See console for details.`);
+    }
+    else {
+      alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
+    }
+  } catch (e) {
+    alert("Error. See console for more details.");
+  }
   console.error(error);
 }

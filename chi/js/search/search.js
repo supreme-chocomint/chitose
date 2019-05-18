@@ -107,8 +107,9 @@ function collectAnimeSearchResultsCallback(data) {
 
 // Onclick for elements created by collectAnimeSearchResultsCallback()
 // Gets VAs and characters from media id
-function collectMediaRolesCallback(data) {
-  fillCharacterBrowseTable(data.data);
+function collectMediaRoles(media) {
+  let data = {Media: media};
+  fillCharacterBrowseTable(data);
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {

@@ -292,3 +292,7 @@ th { /* Makes header occupy one line only */
   bottom: 0.5rem;
   right: 0.5rem;
 }
+
+.grid-table-message {
+  padding: 2rem;
+}
