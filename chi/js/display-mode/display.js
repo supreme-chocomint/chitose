@@ -99,6 +99,12 @@ var Minimalist = {
       this.vaTableBody.appendChild(row);
     } else if (tableId == "roles-table-body"){
       this.rolesTableBody.appendChild(row);
+    } else if (tableId == "media-search-table-body") {
+      this.searchTableBody.appendChild(row);
+    } else if (tableId == "character-browse-table-body") {
+      this.characterBrowseTableBody.appendChild(row);
+    } else if (tableId == "va-language-table-body") {
+      this.vaLanguageTableBody.appendChild(row);
     }
   },
 
@@ -234,8 +240,8 @@ var Minimalist = {
   setRolesTableHeader(header) {
     let rolesTableCaption = document.getElementById("roles-table-caption");
     rolesTableCaption.setAttribute("data-content", header);
-    document.getElementById("roles-table-head-show-name").style.display = "";
-    document.getElementById("roles-table-head-character-name").style.display = "";
+    document.getElementById("roles-table-head-show").style.display = "";
+    document.getElementById("roles-table-head-character").style.display = "";
     document.getElementById("roles-table-head-extra1").style.display = "none";
     document.getElementById("roles-table-head-extra2").style.display = "none";
   },
@@ -334,28 +340,57 @@ var Minimalist = {
   },
 
   styleMediaSearchTable(){
+
+    if (this.searchTableBody.children.length == 0) {
+      addNoResultsIndicator("media-search-table-body");
+    }
+
     document.getElementById("va-table-head-link").style.display = "none";
     document.getElementById("va-table-head-roles").style.display = "none";
     document.getElementById("va-table-head-follow").style.display = "none";
     document.getElementById("va-table-head-extra1").style.display = "";
+
   },
 
   styleCharacterBrowseTable() {
+
+    if (this.characterBrowseTableBody.children.length == 0) {
+      addNoResultsIndicator("character-browse-table-body");
+    }
+
     document.getElementById("va-table-head-link").style.display = "none";
     document.getElementById("va-table-head-roles").style.display = "none";
     document.getElementById("va-table-head-follow").style.display = "none";
     document.getElementById("va-table-head-extra1").style.display = "";
+
   },
 
   addVALanguageEntry(voiceActor) {
+
+    let row = document.createElement("tr");
+    let nameCol = document.createElement("td");
+    let langCol = document.createElement("td");
+    let name = document.createElement("a");
+    let lang = document.createElement("span");
+
+    name.onclick = function() {VADetailsOnClick(voiceActor.id)};
+    name.href = "javascript:void(0)";
+    name.innerHTML = parsedName(voiceActor.name);
+    lang.innerHTML = voiceActor.language;
+
+    langCol.appendChild(lang);
+    nameCol.appendChild(name);
+    row.appendChild(nameCol);
+    row.appendChild(langCol);
+    this.vaLanguageTableBody.appendChild(row);
 
   },
 
   setVaLanguageTableHeader(header) {
 
     this.setRolesTableHeader(header);
-    document.getElementById("roles-table-head-show-name").style.display = "none";
-    document.getElementById("roles-table-head-character-name").style.display = "none";
+    document.getElementById("roles-table-head-show").style.display = "none";
+    document.getElementById("roles-table-head-character").style.display = "none";
 
     // Must go after call, as setRolesTableHeader() explicitly hides these
     document.getElementById("roles-table-head-extra1").style.display = "";
@@ -480,6 +515,10 @@ var Grid = {
       this.vaTableBody.appendChild(text);
     } else if (tableId == "roles-table-body"){
       this.rolesTableBody.appendChild(text);
+    } else if (tableId == "media-search-table-body") {
+      this.searchTableBody.appendChild(text);
+    } else if (tableId == "character-browse-table-body") {
+      this.characterBrowseTableBody.appendChild(text);
     } else if (tableId == "va-language-table-body") {
       text.innerHTML += "<br>" + message;
       this.vaLanguageTableBody.appendChild(text);
@@ -747,6 +786,19 @@ var Grid = {
     // doesn't work until appended to container for some reason
     container.lastChild.style.width = window.getComputedStyle(thumbnail).width;
 
+  },
+
+  styleMediaSearchTable() {
+    if (this.searchTableBody.children.length == 0) {
+      addNoResultsIndicator("media-search-table-body");
+    }
+  },
+
+  styleCharacterBrowseTable() {
+    if (this.characterBrowseTableBody.children.length == 0) {
+      addNoResultsIndicator("character-browse-table-body");
+
+    }
   },
 
   addVALanguageEntry(voiceActor) {
