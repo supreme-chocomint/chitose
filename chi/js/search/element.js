@@ -34,9 +34,48 @@ function fillMediaSearchTable(media) {
   styleVATable();
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
+  tableBody.style.visibility = "";
 
 }
 
 function addMediaSearchEntry(media) {
   window.currentDisplay.addMediaSearchEntry(media);
+}
+
+function fillCharacterBrowseTable(data) {
+
+  let tableBody = window.currentDisplay.characterBrowseTableBody;
+  let pageSize = window.currentDisplay.tablePageSize;
+
+  tableBody.style.visibility = "hidden";  // to hide build process
+  tableBody.innerHTML = "";
+  let entryCount = 0;
+
+  for (let edge of data.Media.characters.edges) {
+    console.log(edge.node.name);
+    let role = {
+      character: {
+        image: edge.node.image.large,
+        url: edge.node.siteUrl,
+        name: parsedName(edge.node.name)
+      },
+      show: {
+        siteUrl: data.Media.siteUrl,
+        title: data.Media.title
+      }
+    }
+    let onclick = function() {
+      fillVALanguageTable(edge.voiceActors);
+    }
+    window.currentDisplay.addCharacterEntry("character-browse-table-body", role, onclick);
+    let row = tableBody.lastChild;
+    row.id = entryCount;
+    entryCount++;
+  }
+
+  styleVATable();
+  switchToPage(0, "ALL");
+  setNavigationState(tableBody, pageSize, "ALL");
+  tableBody.style.visibility = "";
+
 }

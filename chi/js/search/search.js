@@ -100,9 +100,15 @@ function parseVASearchResults(data) {
 }
 
 function collectAnimeSearchResultsCallback(data) {
-  let mediaArray = data.data.Page.media;
-  fillMediaSearchTable(mediaArray);  // filling VA table for ease
+  let mediaArray = data.data.Page.media.filter(m => (m.isAdult == false));
+  fillMediaSearchTable(mediaArray);
   unlock();
+}
+
+// Onclick for elements created by collectAnimeSearchResultsCallback()
+// Gets VAs and characters from media id
+function collectMediaRolesCallback(data) {
+  fillCharacterBrowseTable(data.data);
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {

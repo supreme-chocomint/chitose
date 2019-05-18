@@ -21,6 +21,8 @@ function fillVATableAndPage(voiceActorIds) {
   styleVATable();
   switchToPage(0, "ALL");
   setNavigationState(tableBody, pageSize, "ALL");
+  tableBody.style.visibility = "";
+
 }
 
 function addVATableEntry(metadata) {

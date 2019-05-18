@@ -159,6 +159,7 @@ function getQuery(type) {
           native
         }
         siteUrl
+        isAdult
         coverImage {
           large
         }
@@ -201,6 +202,49 @@ function getQuery(type) {
       }
     }
   }
+  `;
+
+  let mediaIdRolesQuery = `
+  query ($id: Int) {
+  Media (id: $id) {
+    title {
+      romaji
+      english
+      native
+      userPreferred
+    }
+    siteUrl
+    characters (sort: FAVOURITES_DESC) {
+      edges {
+        id
+        voiceActors {
+          id
+          name {
+            first
+            last
+            native
+          }
+          language
+          image {
+            large
+          }
+        }
+        node {
+          id
+          siteUrl
+          name {
+            first
+            last
+            native
+          }
+          image {
+            large
+          }
+        }
+      }
+    }
+  }
+}
   `;
 
   let fullSeasonDataQuery = `
@@ -264,6 +308,8 @@ function getQuery(type) {
       return staffIdQuery;
     case "CHARACTER ID":
       return characterIdQuery;
+    case "MEDIA ID ROLES":
+      return mediaIdRolesQuery;
     default:
       return fullSeasonDataQuery;
   }

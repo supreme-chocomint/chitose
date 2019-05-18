@@ -304,6 +304,7 @@ var Grid = {
     this.vaSupportTableBody = document.querySelector(".grid.va-support-characters-body");
 
     this.searchTableBody = this.vaTableBody;
+    this.characterBrowseTableBody = this.vaTableBody;
 
   },
 
@@ -543,7 +544,7 @@ var Grid = {
     }
   },
 
-  addCharacterEntry(containerId, role) {
+  addCharacterEntry(containerId, role, onclick) {
 
     let character = role.character;
     let show = role.show;
@@ -558,7 +559,10 @@ var Grid = {
     thumbnail.style.backgroundImage = `url(${character.image})`;
     thumbnail.classList.add("thumbnail");
     thumbnail.classList.add("clickable");
-    thumbnail.onclick = function() { characterThumbnailOnClick(this); };
+    if (!onclick) {
+      onclick = function() { characterThumbnailOnClick(this); };
+    }
+    thumbnail.onclick = onclick;
     div.appendChild(thumbnail);
 
     characterLink.href = character.url;
@@ -597,6 +601,8 @@ var Grid = {
         return this.vaSupportTableBody;
       case "roles-table-body":
         return this.rolesTableBody;
+      case "character-browse-table-body":
+        return this.characterBrowseTableBody;
     }
   },
 
@@ -625,7 +631,13 @@ var Grid = {
     thumbnail.style.backgroundImage = `url(${media.coverImage.large})`;
     thumbnail.classList.add("thumbnail");
     thumbnail.classList.add("clickable");
-    thumbnail.onclick = function() { console.log("clicked"); };
+    thumbnail.onclick = function() {
+      makeRequest(
+        getQuery("MEDIA ID ROLES"),
+        { id: media.id },
+        collectMediaRolesCallback
+      );
+    };
     div.appendChild(thumbnail);
 
     link.href = media.siteUrl;
