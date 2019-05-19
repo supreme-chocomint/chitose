@@ -10,7 +10,9 @@ function collectVADetails(data) {
     url: staff.siteUrl,
     image: staff.image.large,
     popularity: staff.favourites,
-    numCorruptRoles: 0
+    numCorruptRoles: 0,  // roles not directly accessible through VA
+    numOrphanRoles: 0,  // roles not accessible through character search or VA
+    toFixCount: 0
   };
 
   window.voiceActors[details.id] = details;
@@ -25,9 +27,9 @@ function extractVARoles(vaDataPage) {
   let charaEdges = staff.characters.edges;
   let charaNodes = staff.characters.nodes;
 
-  let vaInfoContainer = document.getElementById("va-info-container");
+  let va = window.voiceActors[staff.id];
   let doneCharacter = false;
-  let corruptRolesCount = 0;
+  let ignoredCount = 0;
 
   for (let charaNode of charaNodes) {
 
@@ -43,7 +45,7 @@ function extractVARoles(vaDataPage) {
             image: charaNode.image.large,
             characterRole: charaEdge.role
           }
-          window.voiceActors[staff.id].roles.push({show: show, character: character});
+          va.roles.push({show: show, character: character});
           doneCharacter = true;
           break;  // optimization
         }
@@ -54,30 +56,38 @@ function extractVARoles(vaDataPage) {
     }
 
     // detect AniList character data inconsistency
+    // ignore if too many inconsistencies
     if (!doneCharacter) {
-      let variables = {
-        id: charaNode.id
-      };
-      makeRequest(
-        getQuery("CHARACTER ID"),
-        variables,
-        function(characterData) {
-          addAniListCorruptRoles(vaDataPage, characterData);
-        }
-      );
-      corruptRolesCount++;
+      if (va.numCorruptRoles <= 30) {
+        let variables = {
+          id: charaNode.id
+        };
+        makeRequest(
+          getQuery("CHARACTER ID"),
+          variables,
+          function(characterData) {
+            addAniListCorruptRoles(vaDataPage, characterData);
+          }
+        );
+        va.toFixCount++;
+      }
+      else {
+        ignoredCount++;
+      }
+      va.numCorruptRoles++;
     }
-    doneCharacter = false;
 
   }
 
-  vaInfoContainer.setAttribute("data-va-corrupt-roles", corruptRolesCount);
-
-  if (corruptRolesCount == 0) {
+  if (va.toFixCount == 0) {
     decideNextStep(vaDataPage);
   } else {
     // callbacks will decide next step
-    console.log("Attempted to fix corrupt roles: " + corruptRolesCount);
+    console.log("Attempted to fix corrupt roles: " + va.toFixCount);
+  }
+
+  if (ignoredCount){
+    console.log(`Ignored ${ignoredCount} roles to prevent 429 error from AniList.`);
   }
 
 }
@@ -109,8 +119,7 @@ function getMediaEdgeIds(charaNode) {
 
 function addAniListCorruptRoles(vaDataPage, data) {
 
-  let vaInfoContainer = document.getElementById("va-info-container");
-  let toFixCount = vaInfoContainer.getAttribute("data-va-corrupt-roles");
+  let id = vaDataPage.data.Staff.id;
   let charaNode = data.data.Character;
   let character, show, role;
 
@@ -127,18 +136,17 @@ function addAniListCorruptRoles(vaDataPage, data) {
 
     show = charaNode.media.nodes[0];
     role = {show: show, character: character};
-    window.voiceActors[vaDataPage.data.Staff.id].roles.push(role);
+    window.voiceActors[id].roles.push(role);
 
   } catch (IsolatedEdgeException) {
     console.log("Character data for " + charaNode.id +
                 "/" + parsedName(charaNode.name) + " unrecoverable.");
-    window.voiceActors[vaDataPage.data.Staff.id].numCorruptRoles += 1;
+    window.voiceActors[id].numOrphanRoles += 1;
   }
 
-  toFixCount--;
-  vaInfoContainer.setAttribute("data-va-corrupt-roles", toFixCount);
+  window.voiceActors[id].toFixCount--;
 
-  if (toFixCount == 0) {
+  if (window.voiceActors[id].toFixCount == 0) {
     decideNextStep(vaDataPage);
   }
 

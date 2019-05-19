@@ -22,9 +22,20 @@ function getExplainString() {
   </p>
   <p>
   Search by character examples:<br>
-  "Phos", "Phos from Land of the Lustrous" (CHARACTER_NAME from SHOW_NAME),
-  "Phos, 宝石の国" (CHARACTER_NAME, SHOW_NAME), or variants
+  "Phos", "Phos from Land of the Lustrous" (character_name from show_name),
+  "Phos, 宝石の国" (character_name, show_name), or variants
   </p>
   `;
   return string;
+}
+
+function getVaFragmentationErrorString() {
+  return "Too many requests sent to AniList, due to the voice actor's data " +
+  "being too fragmented (often the case with dub actors with lots of work done). " +
+  "As a result, character data may be noticeably incomplete and biased " +
+  "towards popular characters/shows.";
+}
+
+function getVaFragmentationNoticeString() {
+  return "<b>Warning</b>: couldn't get all characters, due to high AniList data fragmentation.";
 }

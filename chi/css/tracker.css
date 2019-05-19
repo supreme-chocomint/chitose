@@ -159,7 +159,7 @@ input, select, textarea {
   color: var(--input-color);
 }
 
-input:disabled {
+input:disabled, select:disabled {
   opacity: 0.5;
 }
 

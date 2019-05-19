@@ -107,30 +107,36 @@ function leftTableSwitchOnClick() {
   let followTableBody = window.currentDisplay.followTableBody;
 
   let searchBar = document.getElementById("search-bar");
+  let searchPicker = document.getElementById("search-picker");
   let searchButton = document.getElementById("search-button");
   let refreshButton = document.getElementById("refresh-button");
 
   let navDiv = document.getElementById("navigation");
   let tranferDiv = document.getElementById("transfer");
 
+  let state = vaTable.getAttribute("data-state");
+
   // switch to VAs
   if (vaTable.style.display == "none") {
 
-    // make sure follow states are up-to-date
-    // because refetching everything > writing a new function
-    changed = followTableBody.getAttribute("data-changed");
-    if (changed == "true") {
-      clearVATable();
-      populateVATableWithSeason();
-      followTableBody.setAttribute("data-changed", "false");
+    if (state == "season"){
+      // make sure follow states are up-to-date
+      // because refetching everything > writing a new function
+      changed = followTableBody.getAttribute("data-changed");
+      if (changed == "true") {
+        clearVATable();
+        populateVATableWithSeason();
+        followTableBody.setAttribute("data-changed", "false");
+      }
     }
 
     // there's probably a better way to turn these all off
     vaTable.style.display = "";
     followTable.style.display = "none";
     searchBar.disabled = false;
+    searchPicker.disabled = false;
     searchButton.disabled = false;
-    refreshButton.classList.remove("disabled");
+    refreshButton.disabled = false;
     navDiv.style.display = "";
     tranferDiv.style.display = "none";
 
@@ -140,8 +146,9 @@ function leftTableSwitchOnClick() {
     vaTable.style.display = "none";
     followTable.style.display = "";
     searchBar.disabled = true;
+    searchPicker.disabled = true;
     searchButton.disabled = true;
-    refreshButton.classList.add("disabled");
+    refreshButton.disabled = true;
     navDiv.style.display = "none";
     tranferDiv.style.display = "";
   }

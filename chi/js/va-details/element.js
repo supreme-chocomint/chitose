@@ -101,9 +101,14 @@ function fillVaAdvancedInfo(vaDetails) {
 
   // ----- Staff stats ----- //
 
+  if (vaDetails.numCorruptRoles > 30) {
+    window.alert(getVaFragmentationErrorString());
+    vaText.innerHTML = getVaFragmentationNoticeString() + "<br>";
+  }
+
   sortRolesByFavourites(vaDetails.roles);
   calculateStatistics(vaDetails.id);
-  vaText.innerHTML = formatStats(vaDetails);
+  vaText.innerHTML += formatStats(vaDetails);
 
   aniListLink.href = vaDetails.url;
   aniListLink.target = "_blank"; // open in new tab
