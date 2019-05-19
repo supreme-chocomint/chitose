@@ -104,6 +104,8 @@ function fillVaAdvancedInfo(vaDetails) {
   if (vaDetails.numCorruptRoles > 30) {
     window.alert(getVaFragmentationErrorString());
     vaText.innerHTML = getVaFragmentationNoticeString() + "<br>";
+  } else {
+    vaText.innerHTML = "";
   }
 
   sortRolesByFavourites(vaDetails.roles);

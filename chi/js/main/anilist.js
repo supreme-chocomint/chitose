@@ -48,27 +48,21 @@ function getQuery(type) {
           meanScore
           siteUrl
         }
-      }
-      nodes {
-        id
-        name {
-          first
-          last
-          native
-        }
-        favourites
-        image {
-          large
-        }
-        siteUrl
-        media {
-          edges {
-            id
+        node {
+          id
+          name {
+            first
+            last
+            native
           }
+          favourites
+          image {
+            large
+          }
+          siteUrl
         }
       }
     }
-
   `;
 
   let staffSearchQuery = `

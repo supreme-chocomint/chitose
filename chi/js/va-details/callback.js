@@ -16,7 +16,6 @@ function collectVADetails(data) {
   };
 
   window.voiceActors[details.id] = details;
-
   extractVARoles(data);
 
 }
@@ -25,69 +24,49 @@ function extractVARoles(vaDataPage) {
 
   let staff = vaDataPage.data.Staff;
   let charaEdges = staff.characters.edges;
-  let charaNodes = staff.characters.nodes;
-
   let va = window.voiceActors[staff.id];
-  let doneCharacter = false;
-  let ignoredCount = 0;
 
-  for (let charaNode of charaNodes) {
+  for (let charaEdge of charaEdges) {
 
-    for (let id of getMediaEdgeIds(charaNode)) {
-      for (let charaEdge of charaEdges) {
-        if (charaEdge.id == id) {
-          let show = getMainShowofCharacter(charaEdge);
-          let character = {
-            id: charaNode.id,
-            favourites: charaNode.favourites,
-            name: parsedName(charaNode.name),
-            url: charaNode.siteUrl,
-            image: charaNode.image.large,
-            characterRole: charaEdge.role
-          }
-          va.roles.push({show: show, character: character});
-          doneCharacter = true;
-          break;  // optimization
+    let show = getMainShowofCharacter(charaEdge);
+
+    if (show == null) {
+
+      let variables = {
+        id: charaEdge.node.id
+      };
+      makeRequest(
+        getQuery("CHARACTER ID"),
+        variables,
+        function(characterData) {
+          addAniListCorruptRoles(vaDataPage, characterData);
         }
-      }
-      if (doneCharacter) {
-        break; // optimization
-      }
-    }
-
-    // detect AniList character data inconsistency
-    // ignore if too many inconsistencies
-    if (!doneCharacter) {
-      if (va.numCorruptRoles <= 30) {
-        let variables = {
-          id: charaNode.id
-        };
-        makeRequest(
-          getQuery("CHARACTER ID"),
-          variables,
-          function(characterData) {
-            addAniListCorruptRoles(vaDataPage, characterData);
-          }
-        );
-        va.toFixCount++;
-      }
-      else {
-        ignoredCount++;
-      }
+      );
+      va.toFixCount++;
       va.numCorruptRoles++;
-    }
+      // callback will decide next step
 
+    }
+    else {
+
+      let character = {
+        id: charaEdge.node.id,
+        favourites: charaEdge.node.favourites,
+        name: parsedName(charaEdge.node.name),
+        url: charaEdge.node.siteUrl,
+        image: charaEdge.node.image.large,
+        characterRole: charaEdge.role
+      }
+      va.roles.push({show: show, character: character});
+
+    }
   }
 
   if (va.toFixCount == 0) {
     decideNextStep(vaDataPage);
-  } else {
-    // callbacks will decide next step
-    console.log("Attempted to fix corrupt roles: " + va.toFixCount);
   }
-
-  if (ignoredCount){
-    console.log(`Ignored ${ignoredCount} roles to prevent 429 error from AniList.`);
+  else {
+    console.log(`${va.name} - corrupt roles to fix: ${va.toFixCount}`);
   }
 
 }
@@ -107,14 +86,6 @@ function getMainShowofCharacter(charaEdge) {
 
   return mainShow;
 
-}
-
-function getMediaEdgeIds(charaNode) {
-  let ids = [];
-  for (let obj of charaNode.media.edges) {
-    ids.push(obj.id);
-  }
-  return ids;
 }
 
 function addAniListCorruptRoles(vaDataPage, data) {
@@ -165,22 +136,10 @@ function requestNextVaPage(data) {
   makeRequest(
     getQuery("VA ID"),
     variables,
-    function(newData) {
-      addOldEdges(data, newData)
-    }
+    extractVARoles
   );
 
   displayPageProgress(nextPage, lastPage);
-
-}
-
-function addOldEdges(existingData, newData) {
-
-  existingEdges = existingData.data.Staff.characters.edges;
-  newEdges = newData.data.Staff.characters.edges;
-  newData.data.Staff.characters.edges = existingEdges.concat(newEdges);
-
-  extractVARoles(newData);
 
 }
 
@@ -188,7 +147,7 @@ function decideNextStep(vaDataPage) {
 
   // weeeeeeeeeee
   if (vaDataPage.data.Staff.characters.pageInfo.currentPage == 1) {
-    if (vaDataPage.data.Staff.characters.nodes.length != 0) {
+    if (vaDataPage.data.Staff.characters.edges.length != 0) {
       fillVaBasicInfo(window.voiceActors[vaDataPage.data.Staff.id]);
     }
     else { // Not a voice actor

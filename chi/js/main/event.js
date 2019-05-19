@@ -56,6 +56,7 @@ function buildMainTab(hasStorageAccess) {
 
   clearVATable();  // For those with itchy trigger fingers
   setSeason("", "");  // Set to current season
+  unclick();
 
   populateVATableWithSeason();
   if (hasStorageAccess) { lock(); populateFollowTable(); }
