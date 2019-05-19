@@ -123,13 +123,29 @@ function getQuery(type) {
           large
         }
         media (sort: POPULARITY_DESC) {
-          nodes {
-            id
+        	edges {
+            node {
+              id
+              title {
+                romaji
+                english
+                native
+                userPreferred
+              }
+              isAdult
+            }
+            voiceActors {
+              id
+              name {
+                first
+                last
+                native
+              }
+            }
           }
         }
       }
     }
-
   }
   `;
   let animeSearchQuery = `

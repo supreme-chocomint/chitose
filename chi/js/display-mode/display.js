@@ -92,19 +92,13 @@ var Minimalist = {
     this.followTableBody.innerHTML = "";
   },
 
-  addNoResultsIndicator(tableId) {
+  addNoResultsIndicator(tableId, message) {
     let row = document.createElement("tr");
     this.appendNACells(row, 2);
-    if (tableId == "va-table-body") {
-      this.vaTableBody.appendChild(row);
-    } else if (tableId == "roles-table-body"){
-      this.rolesTableBody.appendChild(row);
-    } else if (tableId == "media-search-table-body") {
-      this.searchTableBody.appendChild(row);
-    } else if (tableId == "character-browse-table-body") {
-      this.characterBrowseTableBody.appendChild(row);
-    } else if (tableId == "va-language-table-body") {
-      this.vaLanguageTableBody.appendChild(row);
+    this.getTableBody(tableId).appendChild(row);
+    if (message) {
+      this.getTableBody(tableId).lastChild.firstChild.innerHTML +=
+        " in selected entry/season";
     }
   },
 
@@ -246,42 +240,26 @@ var Minimalist = {
     document.getElementById("roles-table-head-extra2").style.display = "none";
   },
 
-  addCharacterEntry(containerId, role, onclick) {
+  addCharacterEntry(tableBodyId, role, onclick) {
 
     let character = role.character;
     let show = role.show;
-    let tableBody;
 
-    switch (containerId) {
-      case "va-popular-characters":
-        tableBody = this.vaPopularTableBody;
-        break;
-      case "va-uw-characters":
-        tableBody = this.vaUWTableBody;
-        break;
-      case "va-main-characters":
-        tableBody = this.vaMainTableBody;
-        break;
-      case "va-support-characters":
-        tableBody = this.vaSupportTableBody;
-        break;
-      case "character-browse-table-body":
-        tableBody = this.vaTableBody;
-    }
-
+    let tableBody = this.getTableBody(tableBodyId);
     let row = document.createElement("tr");
     let charaCol = document.createElement("td");
     let characterLink = document.createElement("a");
     let auxiliaryCol = document.createElement("td");
     let auxiliaryLink = document.createElement("a");
 
-    if (onclick) {
+    if (onclick) { // Link to character
       characterLink.onclick = onclick;
       characterLink.href = "javascript:void(0)";
       auxiliaryLink.href = character.url;
       auxiliaryLink.target = "_blank";
       auxiliaryLink.innerHTML = "AniList";
-    } else {
+    }
+    else { // Link to character and show
       characterLink.href = character.url;
       characterLink.target = "_blank";
       auxiliaryLink.href = show.siteUrl;
@@ -299,6 +277,25 @@ var Minimalist = {
 
     tableBody.appendChild(row);
 
+  },
+
+  getTableBody(id) {
+    switch (id) {
+      case "va-popular-characters":
+        return this.vaPopularTableBody;
+      case "va-uw-characters":
+        return this.vaUWTableBody;
+      case "va-main-characters":
+        return this.vaMainTableBody;
+      case "va-support-characters":
+        return this.vaSupportTableBody;
+      case "media-seach-table-body":
+        return this.searchTableBody;
+      case "character-browse-table-body":
+        return this.characterBrowseTableBody;
+      case "va-language-table-body":
+        return this.vaLanguageTableBody
+    }
   },
 
   clearSideContainers() {
@@ -337,6 +334,10 @@ var Minimalist = {
     row.appendChild(urlCol);
     this.searchTableBody.appendChild(row);
 
+  },
+
+  setCharacterBrowseHeader(header) {
+    this.setVATableHeader(header);
   },
 
   styleMediaSearchTable(){
@@ -708,10 +709,12 @@ var Grid = {
 
     text.innerHTML += "<br>";
 
-    showLink.href = show.siteUrl;
-    showLink.target = "_blank";
-    showLink.innerHTML = show.title.romaji;
-    text.appendChild(showLink);
+    if (show) {
+      showLink.href = show.siteUrl;
+      showLink.target = "_blank";
+      showLink.innerHTML = show.title.romaji;
+      text.appendChild(showLink);
+    }
 
     text.classList.add("thumbnail-caption");
     div.appendChild(text);
@@ -786,6 +789,10 @@ var Grid = {
     // doesn't work until appended to container for some reason
     container.lastChild.style.width = window.getComputedStyle(thumbnail).width;
 
+  },
+
+  setCharacterBrowseHeader(header) {
+    this.setVATableHeader(header);
   },
 
   styleMediaSearchTable(resize) {

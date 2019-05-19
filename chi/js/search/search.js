@@ -113,7 +113,7 @@ function collectMediaRoles(media) {
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
-  console.log(data, isCompoundSearch);
+  fillCharacterSearchTable(data)
   unlock();
 }
 
@@ -126,5 +126,5 @@ function extractAnime(searchTerm) {
   if (!(a == undefined)) {
     a = searchTerm.split(" from ").slice(-1)[0];
   }
-  return a.trim();
+  return (searchTerm == a) ? null : a.trim();
 }

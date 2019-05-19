@@ -1,7 +1,7 @@
 function buildSearchPicker() {
 
   let searchPicker = document.getElementById("search-picker");
-  let searches = ["Voice actor", "Show", "Character"];
+  let searches = ["Voice actor", "Anime", "Character"];
   let searchCodes = ["VA SEARCH", "ANIME SEARCH", "CHARACTER SEARCH"];
 
   for (let i = 0; i < searches.length; i++) {
@@ -50,7 +50,9 @@ function fillCharacterBrowseTable(data) {
 
   let tableBody = window.currentDisplay.characterBrowseTableBody;
   let pageSize = window.currentDisplay.tablePageSize;
+  let header = ` ${data.Media.title.romaji} characters`;
 
+  window.currentDisplay.setCharacterBrowseHeader(header);
   tableBody.style.visibility = "hidden";  // to hide build process
   tableBody.innerHTML = "";
   let entryCount = 0;
@@ -62,10 +64,6 @@ function fillCharacterBrowseTable(data) {
         image: edge.node.image.large,
         url: edge.node.siteUrl,
         name: name
-      },
-      show: {
-        siteUrl: data.Media.siteUrl,
-        title: data.Media.title
       }
     }
     let onclick = function() {
@@ -101,7 +99,7 @@ function fillVALanguageTable(characterName, voiceActors) {
   if (voiceActors.length == 0) {
     window.currentDisplay.addNoResultsIndicator(
       "va-language-table-body",
-      `It's possible this character didn't have a speaking role
+      `<br>It's possible this character didn't have a speaking role
       in the searched season/entry. Try searching under a different season
       (e.g. Hibike Euphonium 2 instead of Hibike Euphonium).`
     );
