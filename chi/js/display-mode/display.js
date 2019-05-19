@@ -788,17 +788,12 @@ var Grid = {
 
   },
 
-  styleMediaSearchTable() {
-    if (this.searchTableBody.children.length == 0) {
-      addNoResultsIndicator("media-search-table-body");
-    }
+  styleMediaSearchTable(resize) {
+    this.styleVATable(resize);
   },
 
-  styleCharacterBrowseTable() {
-    if (this.characterBrowseTableBody.children.length == 0) {
-      addNoResultsIndicator("character-browse-table-body");
-
-    }
+  styleCharacterBrowseTable(resize) {
+    this.styleVATable(resize);
   },
 
   addVALanguageEntry(voiceActor) {
