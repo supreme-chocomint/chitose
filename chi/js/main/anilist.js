@@ -133,6 +133,9 @@ function getQuery(type) {
                 userPreferred
               }
               isAdult
+              siteUrl
+              type
+              popularity
             }
             voiceActors {
               id
@@ -141,6 +144,11 @@ function getQuery(type) {
                 last
                 native
               }
+              image {
+                large
+              }
+              siteUrl
+              language
             }
           }
         }

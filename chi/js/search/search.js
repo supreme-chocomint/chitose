@@ -113,7 +113,7 @@ function collectMediaRoles(media) {
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
-  fillCharacterSearchTable(data)
+  fillCharacterSearchTable(data);
   unlock();
 }
 

@@ -31,7 +31,8 @@
   <script src='js/main/event.js'></script>
   <script src='js/main/anilist.js'></script>
   <script src='js/main/state.js'></script>
-  <script src='js/display-mode/display.js'></script>
+  <script src='js/display-mode/grid.js'></script>
+  <script src='js/display-mode/minimalist.js'></script>
   <script src='js/display-mode/event.js'></script>
   <script src="js/display-mode/redirect.js"></script>
   <script src='js/follow/element.js'></script>
@@ -178,11 +179,28 @@
             <tr>
               <th id="roles-table-head-show">Show Name</th>
               <th id="roles-table-head-character">Character Name</th>
-              <th id="roles-table-head-extra1">Voice Actor Name</th>
-              <th id="roles-table-head-extra2">Language</th>
             </tr>
           </thead>
           <tbody class="minimalist roles-table-body"></tbody>
+        </table>
+
+        <div class="grid va-language-table" style="display:none;">
+          <div>
+            <h5 class="grid va-character-header" id="va-language-table-header"></h5>
+          </div>
+          <div class="grid va-character-wrapper va-language-table-body"></div>
+        </div>
+
+        <table class="minimalist va-language-table u-full-width" style="display:none;">
+          <caption id="va-language-table-caption">Viewing:</caption>
+          <thead id="va-language-table-head">
+            <tr>
+              <th id="va-language-table-head-name">Voice Actor Name</th>
+              <th id="va-language-table-head-language">Language</th>
+              <th id="va-language-table-head-entry">Entry</th>
+            </tr>
+          </thead>
+          <tbody class="minimalist va-language-table-body"></tbody>
         </table>
 
       </div>
