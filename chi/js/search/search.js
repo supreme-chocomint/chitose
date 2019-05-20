@@ -112,11 +112,101 @@ function collectMediaRoles(media) {
   fillCharacterBrowseTable(data);
 }
 
+function parseCharacterBrowseData(edge) {
+  let name = parsedName(edge.node.name);
+  let role = {
+    character: {
+      image: edge.node.image.large,
+      url: edge.node.siteUrl,
+      name: name
+    }
+  }
+  edge.voiceActors.sort(function(a, b) {
+    return a.language > b.language;
+  })
+  let onclick = function() {
+    unclick();
+    fillVALanguageTable(name, edge.voiceActors);
+  }
+  return {role: role, onclick: onclick};
+}
+
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
   let notAdult = function(media) { return !(media.node.isAdult) };
   let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
   fillCharacterSearchTable(characterArray);
   unlock();
+}
+
+function parseCharacterSearchData(character) {
+
+  let voiceActors = {};
+  let voiceActorsArray = [];
+  let isAnimated = false;
+  let name = parsedName(character.name);
+  let role = {
+    character: {
+      image: character.image.large,
+      url: character.siteUrl,
+      name: name
+    }
+  }
+
+  let edgesByEntryPopularity = character.media.edges.sort(function(a, b) {
+    return b.node.popularity - a.node.popularity;  // sort descending
+  });
+
+  for (let edge of edgesByEntryPopularity) {
+    let entry = edge.node;
+    if (entry.type != "ANIME") {
+      continue;
+    }
+    isAnimated = true;
+    let voiceActorData = edge.voiceActors;
+    for (let data of voiceActorData) {
+      let voiceActorObj = data;
+      voiceActorObj.media = [entry];
+      if (voiceActors[data.id] == undefined) {
+        // keep first encountered (most popular first)
+        voiceActors[data.id] = voiceActorObj;
+      }
+      else {
+        voiceActors[data.id].media.push(entry);
+      }
+    }
+  }
+
+  if (!isAnimated) {
+    return null;
+  }
+
+  voiceActorsArray = Object.values(voiceActors);
+  role.character.nameEmbellish = `from ${voiceActorsArray[0].media[0].title.romaji}`;
+
+  let sortedVoiceActors = voiceActorsArray.sort(function(a, b) {
+    // sort by language, then media popularity
+    if (a.language == b.language) {
+      if (a.media[0].popularity > b.media[0].popularity) {
+        return -1;  // more popular first
+      } else {
+        return 1;
+      }
+    }
+    else {
+      if (a.language < b.language) {
+        return -1;  // alphabetical
+      };
+    }
+  })
+
+  let onclick = function() {
+    unclick();
+    let hasMediaEntries = true;
+    fillVALanguageTable(name, sortedVoiceActors, hasMediaEntries);
+  }
+
+  return {role: role, onclick: onclick};
+
 }
 
 function extractCharacter(searchTerm) {

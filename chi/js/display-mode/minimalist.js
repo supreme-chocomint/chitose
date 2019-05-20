@@ -246,6 +246,7 @@ var Minimalist = {
     let row = document.createElement("tr");
     let charaCol = document.createElement("td");
     let characterLink = document.createElement("a");
+    let characterEmbellish = document.createElement("span");
     let auxiliaryCol = document.createElement("td");
     let auxiliaryLink = document.createElement("a");
 
@@ -272,6 +273,11 @@ var Minimalist = {
     row.appendChild(charaCol);
     auxiliaryCol.appendChild(auxiliaryLink);
     row.appendChild(auxiliaryCol);
+
+    if (character.nameEmbellish) {
+      characterEmbellish.innerHTML = " " + character.nameEmbellish;
+      charaCol.appendChild(characterEmbellish);
+    }
 
     tableBody.appendChild(row);
 

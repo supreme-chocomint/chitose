@@ -57,22 +57,8 @@ function fillCharacterBrowseTable(data) {
   tableBody.innerHTML = "";
 
   for (let edge of data.Media.characters.edges) {
-    let name = parsedName(edge.node.name);
-    let role = {
-      character: {
-        image: edge.node.image.large,
-        url: edge.node.siteUrl,
-        name: name
-      }
-    }
-    edge.voiceActors.sort(function(a, b) {
-      return a.language > b.language;
-    })
-    let onclick = function() {
-      unclick();
-      fillVALanguageTable(name, edge.voiceActors);
-    }
-    window.currentDisplay.addCharacterEntry("character-browse-table-body", role, onclick);
+    let obj = parseCharacterBrowseData(edge);
+    window.currentDisplay.addCharacterEntry("character-browse-table-body", obj.role, obj.onclick);
   }
 
   // See fillMediaSearchTable() comment
@@ -94,70 +80,10 @@ function fillCharacterSearchTable(characters) {
   tableBody.innerHTML = "";
 
   for (let character of characters) {
-
-    let voiceActors = {};
-    let isAnimated = false;
-    let name = parsedName(character.name);
-    let role = {
-      character: {
-        image: character.image.large,
-        url: character.siteUrl,
-        name: name
-      }
+    let data = parseCharacterSearchData(character);
+    if (data != null) {  // null => character not animated
+      window.currentDisplay.addCharacterEntry("character-browse-table-body", data.role, data.onclick);
     }
-
-    let edgesByEntryPopularity = character.media.edges.sort(function(a, b) {
-      return b.node.popularity - a.node.popularity;  // sort descending
-    });
-
-    for (let edge of edgesByEntryPopularity) {
-      let entry = edge.node;
-      if (entry.type != "ANIME") {
-        continue;
-      }
-      isAnimated = true;
-      let voiceActorData = edge.voiceActors;
-      for (let data of voiceActorData) {
-        let voiceActorObj = data;
-        voiceActorObj.media = [entry];
-        if (voiceActors[data.id] == undefined) {
-          // keep first encountered (most popular first)
-          voiceActors[data.id] = voiceActorObj;
-        }
-        else {
-          voiceActors[data.id].media.push(entry);
-        }
-      }
-    }
-
-    if (!isAnimated) {
-      continue;
-    }
-
-    let sortedVoiceActors = Object.values(voiceActors).sort(function(a, b) {
-      if (a.language == b.language) {
-        console.log(a.media[0].popularity);
-        if (a.media[0].popularity > b.media[0].popularity) {
-          return -1;  // more popular first
-        } else {
-          return 1;
-        }
-      }
-      else {
-        if (a.language < b.language) {
-          return -1;  // alphabetical
-        };
-      }
-    })
-
-    let onclick = function() {
-      unclick();
-      let hasMediaEntries = true;
-      fillVALanguageTable(name, sortedVoiceActors, hasMediaEntries);
-    }
-
-    window.currentDisplay.addCharacterEntry("character-browse-table-body", role, onclick);
-
   }
 
   // Same behaviour as media search table
