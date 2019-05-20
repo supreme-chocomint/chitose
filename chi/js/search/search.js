@@ -113,7 +113,9 @@ function collectMediaRoles(media) {
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
-  fillCharacterSearchTable(data);
+  let notAdult = function(media) { return !(media.node.isAdult) };
+  let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
+  fillCharacterSearchTable(characterArray);
   unlock();
 }
 

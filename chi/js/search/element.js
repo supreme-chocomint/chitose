@@ -65,6 +65,9 @@ function fillCharacterBrowseTable(data) {
         name: name
       }
     }
+    edge.voiceActors.sort(function(a, b) {
+      return a.language > b.language;
+    })
     let onclick = function() {
       unclick();
       fillVALanguageTable(name, edge.voiceActors);
@@ -82,11 +85,10 @@ function fillCharacterBrowseTable(data) {
 
 }
 
-function fillCharacterSearchTable(data) {
+function fillCharacterSearchTable(characters) {
 
   let tableBody = window.currentDisplay.characterBrowseTableBody;
   let pageSize = window.currentDisplay.tablePageSize;
-  let characters = data.data.Page.characters;
 
   tableBody.style.visibility = "hidden";  // to hide build process
   tableBody.innerHTML = "";
@@ -104,7 +106,7 @@ function fillCharacterSearchTable(data) {
       }
     }
 
-    edgesByEntryPopularity = character.media.edges.sort(function(a, b) {
+    let edgesByEntryPopularity = character.media.edges.sort(function(a, b) {
       return b.node.popularity - a.node.popularity;  // sort descending
     });
 
@@ -132,10 +134,26 @@ function fillCharacterSearchTable(data) {
       continue;
     }
 
+    let sortedVoiceActors = Object.values(voiceActors).sort(function(a, b) {
+      if (a.language == b.language) {
+        console.log(a.media[0].popularity);
+        if (a.media[0].popularity > b.media[0].popularity) {
+          return -1;  // more popular first
+        } else {
+          return 1;
+        }
+      }
+      else {
+        if (a.language < b.language) {
+          return -1;  // alphabetical
+        };
+      }
+    })
+
     let onclick = function() {
       unclick();
       let hasMediaEntries = true;
-      fillVALanguageTable(name, Object.values(voiceActors), hasMediaEntries);
+      fillVALanguageTable(name, sortedVoiceActors, hasMediaEntries);
     }
 
     window.currentDisplay.addCharacterEntry("character-browse-table-body", role, onclick);

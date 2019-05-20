@@ -77,8 +77,8 @@ function switchToPage(pageIndex, language) {
       try {
         body.children[i].style.display = "";
       }
-      catch (IndexError) { // this page is not full
-        console.log("Pg." + pageIndex + ", e." + i + " doesn't exist. Probably expected behaviour.");
+      catch (IndexError) {
+        // this page is not full
       }
     }
   }

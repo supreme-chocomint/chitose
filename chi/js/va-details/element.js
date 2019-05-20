@@ -26,7 +26,6 @@ function buildVaDetailsTab(voiceActorId) {
     mainContainer.style.display = "none";
     vaInfoContainer.style.display = "";
     toggleCharactersButton.classList.add("disabled");
-    toggleDisplayButton.classList.add("disabled");
     clearVaInfo();
 
     // use cache if it exists, otherwise request data
@@ -143,7 +142,6 @@ function fillVaAdvancedInfo(vaDetails) {
   }
 
   resizeCharacterContainers(vaDetails);
-  toggleDisplayButton.classList.remove("disabled");
 
 }
 

@@ -252,6 +252,7 @@ var Minimalist = {
     if (onclick) { // Link to character
       characterLink.onclick = onclick;
       characterLink.href = "javascript:void(0)";
+      characterLink.classList.add("internal_link");
       auxiliaryLink.href = character.url;
       auxiliaryLink.target = "_blank";
       auxiliaryLink.innerHTML = "AniList";
@@ -321,6 +322,7 @@ var Minimalist = {
       collectMediaRoles(media);
     };
     action.innerHTML = media.title.romaji;
+    action.classList.add("internal_link");
 
     url.href = media.siteUrl;
     url.target = "_blank";
