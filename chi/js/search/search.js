@@ -4,9 +4,11 @@ function clearSearchBar() {
 
 function searchButtonOnClick() {
 
-  let searchTerm = document.getElementById("search-bar").value;
+  let searchBar = document.getElementById("search-bar");
+  let searchTerm = searchBar.value;
   let searchCode = document.getElementById("search-picker").value;
   let callback;
+  let isCompoundSearch = false;
   let variables = {
       perPage: 50,
       page: 1,
@@ -40,18 +42,19 @@ function searchButtonOnClick() {
         let character = extractCharacter(searchTerm);
         let anime = extractAnime(searchTerm);
         if (anime) {
+          isCompoundSearch = true;
+          searchBar.setAttribute("data-async-count", 0);
           variables.search = anime;
           makeRequest(
-            getQuery("ANIME SEARCH"),
+            getQuery("ANIME SEARCH CHARACTER ID"),
             variables,
-            function(data) {
-              let isCompoundSearch = true;
-              collectCharacterSearchResultsCallback(data, isCompoundSearch);
-            }
+            collectCharacterIdsHelperCallback
           );
         }
-        callback = collectCharacterSearchResultsCallback;
         variables.search = character;
+        callback = function(data) {
+          collectCharacterSearchResultsCallback(data, isCompoundSearch);
+        };
         break;
 
       default:
@@ -132,10 +135,52 @@ function parseCharacterBrowseData(edge) {
 }
 
 function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
+
+  let searchBar = document.getElementById("search-bar");
+  let async = searchBar.getAttribute("data-async-count");
+  if (isCompoundSearch) {
+    async++;
+    searchBar.setAttribute("data-async-count", async);
+    if (async >= 2) {
+      filterCharacterSearchById(data, window.cachedCharacterIds);
+    }
+    else { // let helper handle it
+      window.cachedResponse = data;
+      return;
+    }
+  }
+
   let notAdult = function(media) { return !(media.node.isAdult) };
   let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
   fillCharacterSearchTable(characterArray);
   unlock();
+
+}
+
+function filterCharacterSearchById(response, characterIds) {
+  let characters = response.data.Page.characters;
+  response.data.Page.characters = characters.filter(c => characterIds[c.id]);
+}
+
+function collectCharacterIdsHelperCallback(data) {
+
+  let searchBar = document.getElementById("search-bar");
+  let async = searchBar.getAttribute("data-async-count");
+  async++;
+  searchBar.setAttribute("data-async-count", async);
+
+  let media = data.data.Page.media;
+  window.cachedCharacterIds = {};
+  for (let m of media) {
+    for (let c of m.characters.edges) {
+      window.cachedCharacterIds[c.node.id] = true;
+    }
+  }
+
+  if (async == 2) {
+    collectCharacterSearchResultsCallback(window.cachedResponse, true);
+  }
+
 }
 
 function parseCharacterSearchData(character) {
@@ -181,7 +226,7 @@ function parseCharacterSearchData(character) {
   }
 
   voiceActorsArray = Object.values(voiceActors);
-  role.character.nameEmbellish = `from ${voiceActorsArray[0].media[0].title.romaji}`;
+  role.character.nameEmbellish = `from ${character.media.edges[0].node.title.romaji}`;
 
   let sortedVoiceActors = voiceActorsArray.sort(function(a, b) {
     // sort by language, then media popularity
@@ -195,7 +240,9 @@ function parseCharacterSearchData(character) {
     else {
       if (a.language < b.language) {
         return -1;  // alphabetical
-      };
+      } else {
+        return 1;
+      }
     }
   })
 
@@ -215,8 +262,6 @@ function extractCharacter(searchTerm) {
 
 function extractAnime(searchTerm) {
   let a = searchTerm.split(",").slice(-1)[0];
-  if (!(a == undefined)) {
-    a = searchTerm.split(" from ").slice(-1)[0];
-  }
+  a = a.split(" from ").slice(-1)[0];
   return (searchTerm == a) ? null : a.trim();
 }

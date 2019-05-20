@@ -217,6 +217,25 @@ function getQuery(type) {
   }
   `;
 
+  let animeSearchCharacterIdsQuery = `
+  query ($page: Int, $perPage: Int, $search:String) {
+
+    Page (page: $page, perPage: $perPage) {
+
+      media (search: $search, type: ANIME) {
+        characters (sort: FAVOURITES_DESC) {
+          edges {
+            node {
+              id
+            }
+          }
+        }
+      }
+    }
+
+  }
+  `;
+
   let characterIdQuery = `
   query ($id: Int) {
     Character (id: $id) {
@@ -307,6 +326,8 @@ function getQuery(type) {
       return staffSearchQuery;
     case "ANIME SEARCH":
       return animeSearchQuery;
+    case "ANIME SEARCH CHARACTER ID":
+      return animeSearchCharacterIdsQuery;
     case "CHARACTER SEARCH":
       return characterSearchQuery;
     case "VA ID":
