@@ -17,13 +17,12 @@ function getDescriptionString() {
 function getExplainString() {
   let string = `
   <p>
-  Search by show examples:<br>
-  "Humanity has Declined", "Jinrui wa Suitai Shimashita", or "人類は衰退しました"
-  </p>
-  <p>
-  Search by character examples:<br>
-  "Phos", "Phos from Land of the Lustrous" (character_name from show_name),
-  "Phos, 宝石の国" (character_name, show_name), or variants
+  <b>Examples:</b><br>
+  <b>Search by show:</b> "Humanity has Declined", "Jinrui wa Suitai Shimashita",
+  or "人類は衰退しました"<br>
+  <b>Search by character:</b> "Phos", "Phos from Land of the Lustrous"
+  (character_name from show_name), "Phos, 宝石の国" (character_name, show_name),
+  or variants. Languages can be mixed-and-matched.
   </p>
   `;
   return string;
