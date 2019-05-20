@@ -376,8 +376,7 @@ function handleError(error) {
         Regardless of cause, wait a few seconds (or worse case, a minute), then refresh.
         See console for details.`);
     } else if (status == 404) {
-      alert(`404 Not Found response from AniList. Ensure url is correct.
-        See console for details.`);
+      alert(`404 Not Found response from AniList. Ensure url is correct. See console for details.`);
     }
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
