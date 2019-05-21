@@ -355,7 +355,6 @@ function makeRequest(query, variables, callback, errorHandler) {
           })
       };
 
-  console.log(!errorHandler, errorHandler);
   if (errorHandler == undefined) {
     errorHandler = handleError;
   }

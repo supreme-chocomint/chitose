@@ -294,11 +294,10 @@ var Grid = {
 
     thumbnail.style.backgroundImage = `url(${character.image})`;
     thumbnail.classList.add("thumbnail");
-    thumbnail.classList.add("clickable");
-    if (!onclick) {
-      onclick = function() { characterThumbnailOnClick(this); };
+    if (onclick) {
+      thumbnail.classList.add("clickable");
+      thumbnail.onclick = onclick;
     }
-    thumbnail.onclick = onclick;
     div.appendChild(thumbnail);
 
     characterLink.href = character.url;

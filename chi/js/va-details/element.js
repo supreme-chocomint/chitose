@@ -60,7 +60,6 @@ function fillVaBasicInfo(vaDetails) {
 
   vaPortrait.style.backgroundImage = `url(${vaDetails.image})`;
   vaPortrait.classList.add("thumbnail");
-  vaPortrait.classList.add("action-not-ready");
 
   // ----- Popular characters ----- //
 
@@ -115,9 +114,6 @@ function fillVaAdvancedInfo(vaDetails) {
   aniListLink.target = "_blank"; // open in new tab
   aniListLink.innerHTML = "View on AniList";
   vaText.appendChild(aniListLink);
-
-  vaPortrait.onclick = function() { portraitThumbnailOnClick(this); };
-  vaPortrait.classList.remove("action-not-ready");
 
   // ----- Underwatched characters ----- //
 
