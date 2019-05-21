@@ -374,7 +374,7 @@ function handleError(error) {
     if (status == 429) {
       window.location.href = "429.html";  // add to history
     } else if (status == 404) {
-      window.location.replace("404.html");
+      window.location.href = "404.html";
     }
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
