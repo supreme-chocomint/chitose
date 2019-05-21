@@ -377,9 +377,9 @@ function handleError(error) {
     let status = error.errors[0].status;
     let message = error.errors[0].message;
     if (status == 429) {
-      window.location.href = "429.html";  // add to history
+      window.location.href = "429.html#" + JSON.stringify(error);  // add to history
     } else if (status == 404) {
-      window.location.href = "404.html";
+      window.location.href = "404.html#" + JSON.stringify(error);
     }
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
