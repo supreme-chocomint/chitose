@@ -137,6 +137,7 @@ function parseCharacterBrowseData(edge) {
     unclick();
     fillVALanguageTable(name, edge.voiceActors);
   }
+  addVasToGlobalHash(edge.voiceActors);
   return {role: role, onclick: onclick};
 }
 
@@ -284,6 +285,8 @@ function parseCharacterSearchData(character) {
     fillVALanguageTable(name, sortedVoiceActors, hasMediaEntries);
   }
 
+  addVasToGlobalHash(sortedVoiceActors);
+
   return {role: role, onclick: onclick};
 
 }
@@ -296,4 +299,20 @@ function extractAnime(searchTerm) {
   let a = searchTerm.split(",").slice(-1)[0];
   a = a.split(" from ").slice(-1)[0];
   return (searchTerm == a) ? null : a.trim();
+}
+
+function addVasToGlobalHash(rawVoiceActors) {
+  for (let rawVa of rawVoiceActors) {
+    let va = {
+      id: rawVa.id,
+      image: rawVa.image.large,
+      language: rawVa.language,
+      name: parsedName(rawVa.name),
+      url: rawVa.siteUrl
+    }
+    if (window.voiceActors[va.id] == undefined) {
+      // add if doesn't exist
+      window.voiceActors[va.id] = va;
+    }
+  }
 }

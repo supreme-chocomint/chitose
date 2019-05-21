@@ -76,14 +76,14 @@ var Grid = {
     // ----- Name ----- //
 
     nameLink.innerHTML = metadata.name;
-    nameLink.href = "javascript:void(0);";
+    nameLink.classList.add("clickable");
     nameLink.onclick = function() {VADetailsOnClick(metadata.id)};
     text.appendChild(nameLink);
     text.appendChild(document.createElement("br"));
 
     // ----- Roles link ----- //
 
-    seasonLink.href = "javascript:void(0)";
+    seasonLink.classList.add("clickable");
     seasonLink.innerHTML += "Show Roles";
     seasonLink.classList.add("internal_link");
     seasonLink.onclick = function() {VAOnClick(metadata.id)};
@@ -161,7 +161,7 @@ var Grid = {
     // ----- Name ----- //
 
     nameLink.innerHTML = metadata.name;
-    nameLink.href = "javascript:void(0)";
+    nameLink.classList.add("clickable");
     nameLink.onclick = function() {VADetailsOnClick(metadata.id);};
     text.appendChild(nameLink);
     text.appendChild(document.createElement("br"));
@@ -174,7 +174,7 @@ var Grid = {
     } else {
       seasonLink.innerHTML = "Show Roles";
     }
-    seasonLink.href = "javascript:void(0)";
+    seasonLink.classList.add("clickable");
     seasonLink.classList.add("internal_link");
     seasonLink.onclick = function() {VAOnClick(metadata.id)};
     text.appendChild(seasonLink);
@@ -409,6 +409,7 @@ var Grid = {
     let text = document.createElement("p");
     let mediaLink = document.createElement("a");
     let nameLink = document.createElement("a");
+    let rolesLink = document.createElement("a");
 
     thumbnail.style.backgroundImage = `url(${voiceActor.image.large})`;
     thumbnail.classList.add("thumbnail");
@@ -430,8 +431,14 @@ var Grid = {
       text.innerHTML += "<br>";
     }
 
-    text.innerHTML += voiceActor.language;
+    text.innerHTML += voiceActor.language + "<br>";
     text.classList.add("thumbnail-caption");
+
+    rolesLink.innerHTML = "See Roles";
+    rolesLink.classList.add("clickable");
+    rolesLink.classList.add("internal_link");
+    rolesLink.onclick = function() {VAOnClick(voiceActor.id)};
+    text.appendChild(rolesLink);
 
     wrapper.appendChild(thumbnail);
     wrapper.appendChild(text);

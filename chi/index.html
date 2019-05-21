@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>c h i 歳 - voice actor tracker</title>
+  <title>c h i 歳 - seasonal seiyuu tracker</title>
   <meta name="description" content="Track and lookup anime voice actors by season. Browse the voice actors of any season, and follow your favorites for easy access. Search in English or Japanese, and get direct links to AniList to find out more about particular shows, characters, or people.">
   <meta name="author" content="someone who actually liked Girlish Number">
 
@@ -17,7 +17,6 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100&amp;subset=japanese" rel="stylesheet">
-  <link href="assets/css/all.min.css" rel="stylesheet">
 
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -27,42 +26,11 @@
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src='js/display-mode/grid.js'></script>
-  <script src='js/display-mode/minimalist.js'></script>
-  <script src='js/display-mode/event.js'></script>
-  <script src='js/main/element.js'></script>
-  <script src='js/main/event.js'></script>
-  <script src='js/main/anilist.js'></script>
-  <script src='js/main/state.js'></script>
-  <script src="js/main/redirect.js"></script>
-  <script src='js/follow/element.js'></script>
-  <script src='js/follow/event.js'></script>
-  <script src='js/follow/follow.js'></script>
-  <script src='js/helpers/parse.js'></script>
-  <script src='js/helpers/string.js'></script>
-  <script src='js/helpers/table.js'></script>
-  <script src='js/search/search.js'></script>
-  <script src='js/search/element.js'></script>
-  <script src='js/tab/tab.js'></script>
-  <script src='js/theme/theme.js'></script>
-  <script src='js/va-details/callback.js'></script>
-  <script src='js/va-details/element.js'></script>
-  <script src='js/va-details/event.js'></script>
-  <script src='js/va-details/state.js'></script>
-  <script src='js/va-directory/callback.js'></script>
-  <script src='js/va-directory/event.js'></script>
-  <script src='js/va-directory/table.js'></script>
-  <script src='js/va-directory/tool.js'></script>
-  <script src='js/va-roles/callback.js'></script>
-  <script src='js/va-roles/element.js'></script>
-  <script src='js/va-roles/event.js'></script>
+  <script src="js/compressed.js"></script>
 
-  <!-- Favicon [https://favicon.io]
+  <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="manifest" href="assets/favicon/site.webmanifest">
+  <!--I didn't hire an artist-->
 
 </head>
 
@@ -71,270 +39,84 @@
   <!-- Floating Menu Items
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div id="settings">
-    <p id="fetch-icon" class="jp" style="display:none"></p>
-    <p id="lock-icon" style="display:none"></p>
-    <input type="button" id="display-mode-switch" value="Grid Mode">
-    <input type="button" id="dark-mode-switch" value="Dark Theme">
+    <p id="lock-icon"></p>
+
+    <input type="button" id="dark-mode-switch" value="Turn Dark Mode On">
   </div>
 
   <!-- Primary Page Layout
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <div class="container">
-    <div class="row" id="header">
-      <h2>c h i <span class="jp">歳</span></h2>
-      <h5>seasonal voice actor tracker</h5>
-    </div>
-  </div>
-
-  <div class="container" id="main-container">
 
     <div class="row">
-      <p id="description-text"></p>
+      <div class="u-full-width" id="description">
+        <div id="header">
+          <h2>c h i <span class="jp">歳</span></h2>
+          <h5>seasonal voice actor tracker</h5>
+        </div>
+        <p id="description-text"></p>
+      </div>
     </div>
 
     <div class="row" id="va-table-tools">
-      <input type="search" id="search-bar" placeholder="Search here">
-      <select id="search-picker"></select>
+      <input type="search" id="search-bar" placeholder="Search voice actors">
       <input type="submit" class="button-primary" id="search-button" value="Search">
-      <input type="button" class="button" id="left-table-switch" value="Toggle Following">
-      <input type="button" class="button" id="refresh-button" value="Refresh">
+      <input type="submit" class="button" id="left-table-switch" value="Toggle Following">
+      <input type="submit" class="button" id="refresh-button" value="Refresh">
       <select id="year-picker"></select>
       <select id="quarter-picker"></select>
     </div>
 
-    <div class="row" id="tool-help"></div>
-
     <div class="row">
 
-      <div class="one-half column">
-
-        <div id="left-col">
-
-          <div class="static-display-top grid va-table" style="display:none;">
-            <div>
-              <h5 class="grid va-character-header"id="va-table-header"></h5>
-            </div>
-            <div class="grid va-character-wrapper va-table-body"></div>
-          </div>
-
-          <table class="static-display-top minimalist va-table u-full-width" style="display:none;">
+      <div class="one-half column" id="left-col">
+        <div id="left-table-wrapper">
+          <table id="va-table">
             <caption id="va-table-caption">Viewing:</caption>
             <thead id="va-table-head"><tr>
-              <th id="va-table-head-name">Name</th>
-              <th id="va-table-head-link">Season Roles</th>
-              <th id="va-table-head-roles"># Roles</th>
-              <th class="symbol" id="va-table-head-follow">&nbsp;</th>
-              <th id="va-table-head-extra1">Link</th>
+              <th id="va-table-header-name" class="text">Name</th>
+              <th id="va-table-header-link" class="text">Link</th>
+              <th id="va-table-header-roles">Roles</th>
+              <th class="symbol" id="va-table-header-follow">&nbsp;</th>
             </tr></thead>
-            <tbody class="minimalist va-table-body"></tbody>
+            <tbody id="va-table-body"></tbody>
           </table>
-
-          <div class="grid follow-table" style="display:none;">
-            <div><h5 class="grid va-character-header" id="follow-table-header">Following</h5></div>
-            <div class="grid va-character-wrapper follow-table-body"></div>
-          </div>
-
-          <table class="minimalist follow-table u-full-width" style="display:none;">
+          <table id="follow-table">
             <caption id="follow-table-caption">Following</caption>
             <thead><tr>
-              <th>Name ★</th>
-              <th>Season Roles</th>
+              <th class="text">Name ★</th>
+              <th class="text">Link</th>
               <th class="symbol">&nbsp;</th>
             </tr></thead>
-            <tbody class="minimalist follow-table-body"></tbody>
+            <tbody id="follow-table-body"></tbody>
           </table>
-
-        </div>
-
-        <div id="navigation">
-          <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
-          <span id="page-tracker">1/1</span>
-          <a href="javascript:void(0)" id="right-nav">&gt;</a>
-          <span>&nbsp;&nbsp;</span>
-          <select id="language-filter"></select>
-        </div>
-
-        <div id="transfer" style="display:none;">
-          <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
-          <div>
-            <input type="submit" class="button-primary" id="import-button" value="Import">
-            <input type="submit" class="button-primary" id="export-button" value="Export">
+          <div id="navigation">
+            <a href="javascript:void(0)" id="left-nav" class="inactive">&lt;</a>
+            <span id="page-tracker">1/1</span>
+            <a href="javascript:void(0)" id="right-nav">&gt;</a>
+          </div>
+          <div id="transfer">
+            <textarea id="transfer-box" class="u-full-width" placeholder="Follow data goes here"></textarea>
+            <div>
+              <input type="submit" class="button-primary" id="import-button" value="Import">
+              <input type="submit" class="button-primary" id="export-button" value="Export">
+            </div>
           </div>
         </div>
-
       </div>
 
       <div class="one-half column" id="right-col">
-
-        <div class="grid roles-table" style="display:none;">
-          <div>
-            <h5 class="grid va-character-header" id="roles-table-header"></h5>
-          </div>
-          <div class="grid va-character-wrapper roles-table-body"></div>
-        </div>
-
-        <table class="static-display-top minimalist roles-table u-full-width" style="display:none;">
+        <table id="roles-table">
           <caption id="roles-table-caption">Viewing:</caption>
           <thead id="roles-table-head">
             <tr>
-              <th id="roles-table-head-show">Show Name</th>
-              <th id="roles-table-head-character">Character Name</th>
+              <th class="text">Show Name</th>
+              <th class="text">Character Name</th>
             </tr>
           </thead>
-          <tbody class="minimalist roles-table-body"></tbody>
+          <tbody id="roles-table-body"></tbody>
         </table>
-
-        <div class="grid va-language-table" style="display:none;">
-          <div>
-            <h5 class="grid va-character-header" id="va-language-table-header"></h5>
-          </div>
-          <div class="grid va-character-wrapper va-language-table-body"></div>
-        </div>
-
-        <table class="minimalist va-language-table u-full-width" style="display:none;">
-          <caption id="va-language-table-caption">Viewing:</caption>
-          <thead id="va-language-table-head">
-            <tr>
-              <th id="va-language-table-head-name">Voice Actor Name</th>
-              <th id="va-language-table-head-language">Language</th>
-              <th id="va-language-table-head-entry">Entry</th>
-            </tr>
-          </thead>
-          <tbody class="minimalist va-language-table-body"></tbody>
-        </table>
-
       </div>
-
-    </div>
-
-  </div>
-
-  <div class="container" id="va-info-container" style="display:none;">
-
-    <div class="row">
-      <input type="button" class="button" id="return-button" value="Return to Main View">
-      <input class="button" type="button" id="all-characters-switch" value="Toggle All Characters">
-    </div>
-
-    <div class="row" id="va-info-name"></div>
-
-    <div class="row" id="va-info-bio">
-        <div id="va-info-bio-portrait"></div>
-        <div>
-          <p id="va-info-bio-text"></p>
-        </div>
-    </div>
-
-    <div id="va-character-containers">
-
-      <div class="row" id="va-side-containers">
-
-        <div class="one-half column" id="va-left-container">
-
-          <div class="grid va-popular-characters">
-            <div>
-              <h5 class="static-display-top grid va-character-header"
-                  id="va-popular-header" style="display:none;">
-                Popular Characters
-              </h5>
-            </div>
-            <div class="grid va-character-wrapper va-popular-characters-body"></div>
-          </div>
-
-          <table class="static-display-top minimalist va-popular-characters u-full-width" style="display:none;">
-            <caption>Popular Characters</caption>
-            <thead id="va-popular-head">
-              <tr>
-                <th>Character Name</th>
-                <th>Show Name</th>
-              </tr>
-            </thead>
-            <tbody class="minimalist va-popular-characters-body"></tbody>
-          </table>
-
-        </div>
-
-        <div class="one-half column" id="va-right-container">
-
-          <div class="grid va-uw-characters">
-            <div>
-              <h5 class="static-display-top grid va-character-header"
-                  id="va-uw-header" style="display:none;">
-                Underwatched Characters
-              </h5>
-            </div>
-            <div class="grid va-character-wrapper va-uw-characters-body"></div>
-          </div>
-
-          <table class="static-display-top minimalist va-uw-characters u-full-width" style="display:none;">
-            <caption>Underwatched Characters</caption>
-            <thead id="va-uw-head">
-              <tr>
-                <th>Character Name</th>
-                <th>Show Name</th>
-              </tr>
-            </thead>
-            <tbody class="minimalist va-uw-characters-body"></tbody>
-          </table>
-
-        </div>
-
-      </div>
-
-      <div class="row" id="va-bottom-container">
-
-        <div>
-
-          <div>
-            <h5 class="static-display-top grid va-character-header"
-                id="va-cmain-header" style="display:none;">
-              Main Characters
-            </h5>
-          </div>
-          <div class="grid va-character-wrapper va-main-characters-body"></div>
-
-          <table class="static-display-top minimalist va-main-characters u-full-width" style="display:none;">
-            <caption>Main Characters</caption>
-            <thead id="va-main-head">
-              <tr>
-                <th>Character Name</th>
-                <th>Show Name</th>
-              </tr>
-            </thead>
-            <tbody class="minimalist va-main-characters-body"></tbody>
-          </table>
-
-        </div>
-
-        <div>
-
-          <div>
-            <h5 class="static-display-top grid va-character-header"
-                id="va-csupport-header" style="display:none;">
-              Supporting Characters
-            </h5>
-          </div>
-          <div class="grid va-character-wrapper va-support-characters-body"></div>
-
-          <table class="static-display-top minimalist va-support-characters u-full-width" style="display:none;">
-            <caption>Supporting Characters</caption>
-            <thead id="va-support-head">
-              <tr>
-                <th>Character Name</th>
-                <th>Show Name</th>
-              </tr>
-            </thead>
-            <tbody class="minimalist va-support-characters-body"></tbody>
-          </table>
-
-        </div>
-
-      </div>
-
-      <p>
-        * popular = most favorited characters<br>
-        * underwatched = semi-prominent characters from lesser-known but well-received shows
-      </p>
 
     </div>
 

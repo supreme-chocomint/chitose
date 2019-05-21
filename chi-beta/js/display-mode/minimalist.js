@@ -63,16 +63,16 @@ var Minimalist = {
     }
 
     name.innerHTML = metadata.name;
-    name.href = "javascript:void(0)";
+    name.classList.add("clickable");
     name.onclick = function() {VADetailsOnClick(metadata.id)};
 
     url.innerHTML = "Show All";
-    url.href = "javascript:void(0)";
+    url.classList.add("clickable");
     url.classList.add("internal_link");
     url.onclick = function() {VAOnClick(metadata.id)};
 
     deleteLink.innerHTML = getDeleteIcon();
-    deleteLink.href = "javascript:void(0)";
+    deleteLink.classList.add("clickable");
     deleteCol.classList.add("symbol");
     deleteLink.classList.add("symbol");
     deleteLink.onclick = function() {
@@ -126,7 +126,7 @@ var Minimalist = {
     let followState = document.createElement("a");
 
     name.innerHTML = metadata.name;
-    name.href = "javascript:void(0)";
+    name.classList.add("clickable");
     name.onclick = function() {VADetailsOnClick(metadata.id)};
     nameCol.appendChild(name);
     row.appendChild(nameCol);
@@ -137,7 +137,7 @@ var Minimalist = {
     imageCol.appendChild(image);
 
     link.innerHTML = "Show All";
-    link.href = "javascript:void(0)";
+    link.classList.add("clickable");
     link.classList.add("internal_link");
     link.onclick = function() {VAOnClick(metadata.id)};
     linkCol.appendChild(link);
@@ -152,7 +152,7 @@ var Minimalist = {
 
     if (isFollowed(metadata.id)) { followState.innerHTML = getBlackStar(); }
     else { followState.innerHTML = getWhiteStar(); }
-    followState.href = "javascript:void(0)";
+    followState.classList.add("clickable");
     followState.classList.add("symbol");  // makes character larger
     followCol.classList.add("symbol");  // centers character
     followState.onclick = function() {
@@ -252,7 +252,7 @@ var Minimalist = {
 
     if (onclick) { // Link to character
       characterLink.onclick = onclick;
-      characterLink.href = "javascript:void(0)";
+      characterLink.classList.add("clickable");
       characterLink.classList.add("internal_link");
       auxiliaryLink.href = character.url;
       auxiliaryLink.target = "_blank";
@@ -285,6 +285,10 @@ var Minimalist = {
 
   getTableBody(id) {
     switch (id) {
+      case "va-table-body":
+        return this.vaTableBody;
+        case "roles-table-body":
+          return this.rolesTableBody;
       case "va-popular-characters":
         return this.vaPopularTableBody;
       case "va-uw-characters":
@@ -322,7 +326,7 @@ var Minimalist = {
     let urlCol = document.createElement("td");
     let url = document.createElement("a");
 
-    action.href = "javascript:void(0)";
+    action.classList.add("clickable");
     action.onclick = function() {
       unclick();
       collectMediaRoles(media);
@@ -377,21 +381,29 @@ var Minimalist = {
     let row = document.createElement("tr");
     let nameCol = document.createElement("td");
     let langCol = document.createElement("td");
+    let rolesCol = document.createElement("td");
     let mediaCol = document.createElement("td");
     let name = document.createElement("a");
     let lang = document.createElement("span");
+    let roles = document.createElement("a");
     let media = document.createElement("a");
 
     name.onclick = function() {VADetailsOnClick(voiceActor.id)};
-    name.href = "javascript:void(0)";
+    name.classList.add("clickable");
     name.style.fontWeight = "bold";
     name.innerHTML = parsedName(voiceActor.name);
     lang.innerHTML = voiceActor.language;
+    roles.innerHTML = "See Roles";
+    roles.classList.add("clickable");
+    roles.classList.add("internal_link");
+    roles.onclick = function() {VAOnClick(voiceActor.id)};
 
+    rolesCol.appendChild(roles);
     langCol.appendChild(lang);
     nameCol.appendChild(name);
     row.appendChild(nameCol);
     row.appendChild(langCol);
+    row.appendChild(rolesCol);
     this.vaLanguageTableBody.appendChild(row);
 
     if (voiceActor.media) {
@@ -409,14 +421,16 @@ var Minimalist = {
         let newCol1 = document.createElement("td");
         let newCol2 = document.createElement("td");
         let newCol3 = document.createElement("td");
+        let newCol4 = document.createElement("td");
         let newLink = document.createElement("a");
         newLink.href = other.siteUrl;
         newLink.target = "_blank";
         newLink.innerHTML = other.title.romaji;
-        newCol3.appendChild(newLink);
+        newCol4.appendChild(newLink);
         newRow.appendChild(newCol1);
         newRow.appendChild(newCol2);
         newRow.appendChild(newCol3);
+        newRow.appendChild(newCol4);
         this.vaLanguageTableBody.appendChild(newRow);
       }
 
