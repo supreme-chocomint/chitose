@@ -71,13 +71,15 @@ function fillCharacterBrowseTable(data) {
 
 }
 
-function fillCharacterSearchTable(characters) {
+function fillCharacterSearchTable(characters, append) {
 
   let tableBody = window.currentDisplay.characterBrowseTableBody;
   let pageSize = window.currentDisplay.tablePageSize;
 
   tableBody.style.visibility = "hidden";  // to hide build process
-  tableBody.innerHTML = "";
+  if (!append) {
+    tableBody.innerHTML = "";
+  }
 
   for (let character of characters) {
     let data = parseCharacterSearchData(character);

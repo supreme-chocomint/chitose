@@ -9,6 +9,7 @@ function searchButtonOnClick() {
   let searchCode = document.getElementById("search-picker").value;
   let callback;
   let isCompoundSearch = false;
+  let followUp;
   let variables = {
       perPage: 50,
       page: 1,
@@ -41,6 +42,7 @@ function searchButtonOnClick() {
       case "CHARACTER SEARCH":
         let character = extractCharacter(searchTerm);
         let anime = extractAnime(searchTerm);
+        variables.search = character;
         if (anime) {
           isCompoundSearch = true;
           searchBar.setAttribute("data-async-count", 0);
@@ -50,11 +52,14 @@ function searchButtonOnClick() {
             variables,
             collectCharacterIdsHelperCallback
           );
+          callback = function(data) {
+            collectCompoundSearchResultsCallback(data, variables);
+          };
+          variables.search = character; // restore
         }
-        variables.search = character;
-        callback = function(data) {
-          collectCharacterSearchResultsCallback(data, isCompoundSearch);
-        };
+        else {
+          callback = collectCharacterSearchResultsCallback;
+        }
         break;
 
       default:
@@ -67,6 +72,7 @@ function searchButtonOnClick() {
       variables,
       callback
     );
+    window.cachedQueryVariables =  variables;
 
   }
 }
@@ -134,25 +140,51 @@ function parseCharacterBrowseData(edge) {
   return {role: role, onclick: onclick};
 }
 
-function collectCharacterSearchResultsCallback(data, isCompoundSearch) {
-
-  let searchBar = document.getElementById("search-bar");
-  let async = searchBar.getAttribute("data-async-count");
-  if (isCompoundSearch) {
-    async++;
-    searchBar.setAttribute("data-async-count", async);
-    if (async >= 2) {
-      filterCharacterSearchById(data, window.cachedCharacterIds);
-    }
-    else { // let helper handle it
-      window.cachedResponse = data;
-      return;
-    }
-  }
+function collectCharacterSearchResultsCallback(data) {
 
   let notAdult = function(media) { return !(media.node.isAdult) };
   let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
   fillCharacterSearchTable(characterArray);
+  unlock();
+
+}
+
+function collectCompoundSearchResultsCallback(data, append) {
+
+  let searchBar = document.getElementById("search-bar");
+  let async = parseInt(searchBar.getAttribute("data-async-count"));
+
+  async++;
+  searchBar.setAttribute("data-async-count", async);
+  if (async >= 2) {
+    filterCharacterSearchById(data, window.cachedCharacterIds);
+  }
+  else { // let helper handle it
+    window.cachedResponse = data;
+    return;
+  }
+
+  let notAdult = function(media) { return !(media.node.isAdult) };
+  let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
+
+  // only fill if done or have something to fill
+  if (!(data.data.Page.pageInfo.hasNextPage)) {
+    fillCharacterSearchTable(characterArray, append);
+  }
+  else if (characterArray.length != 0) {
+    fillCharacterSearchTable(characterArray, append);
+  }
+
+  if (data.data.Page.pageInfo.hasNextPage) {
+    window.cachedQueryVariables.page = parseInt(window.cachedQueryVariables.page) + 1;
+    let callback = function(data) {
+      let appendResults = true;
+      collectCompoundSearchResultsCallback(data, appendResults);
+    };
+    makeRequest(getQuery("CHARACTER SEARCH"), window.cachedQueryVariables, callback);
+    return;
+  }
+
   unlock();
 
 }
@@ -178,7 +210,7 @@ function collectCharacterIdsHelperCallback(data) {
   }
 
   if (async == 2) {
-    collectCharacterSearchResultsCallback(window.cachedResponse, true);
+    collectCompoundSearchResultsCallback(window.cachedResponse);
   }
 
 }
