@@ -367,16 +367,14 @@ function handleResponse(response) {
 }
 
 function handleError(error) {
+
   try {
     let status = error.errors[0].status;
     let message = error.errors[0].message;
     if (status == 429) {
-      alert(`Sending too many requests (429 response). If this happened
-        when viewing a voice actor's details, the VA's AniList data is too fragmented.
-        Regardless of cause, wait a few seconds (or worse case, a minute), then refresh.
-        See console for details.`);
+      window.location.href = "429";  // add to history
     } else if (status == 404) {
-      alert(`404 Not Found response from AniList. Ensure url is correct. See console for details.`);
+      window.location.replace("404");
     }
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
@@ -384,5 +382,7 @@ function handleError(error) {
   } catch (e) {
     alert("Error. See console for more details.");
   }
+
   console.error(error);
+
 }
