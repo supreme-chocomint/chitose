@@ -340,7 +340,7 @@ function getQuery(type) {
 
 }
 
-function makeRequest(query, variables, callback) {
+function makeRequest(query, variables, callback, errorHandler) {
 
   let url = 'https://graphql.anilist.co',
       options = {
@@ -355,9 +355,14 @@ function makeRequest(query, variables, callback) {
           })
       };
 
+  console.log(!errorHandler, errorHandler);
+  if (errorHandler == undefined) {
+    errorHandler = handleError;
+  }
+
   fetch(url, options).then(handleResponse)
                      .then(function(data){ callback(data) })
-                     .catch(handleError);
+                     .catch(errorHandler);
 }
 
 function handleResponse(response) {
