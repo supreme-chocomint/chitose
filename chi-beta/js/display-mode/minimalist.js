@@ -392,18 +392,18 @@ var Minimalist = {
     name.classList.add("clickable");
     name.style.fontWeight = "bold";
     name.innerHTML = parsedName(voiceActor.name);
-    lang.innerHTML = voiceActor.language;
+    lang.innerHTML = "<br>" + voiceActor.language + "<br>";
     roles.innerHTML = "See Roles";
     roles.classList.add("clickable");
     roles.classList.add("internal_link");
     roles.onclick = function() {VAOnClick(voiceActor.id)};
 
-    rolesCol.appendChild(roles);
-    langCol.appendChild(lang);
     nameCol.appendChild(name);
+    nameCol.appendChild(lang);
+    nameCol.appendChild(roles);
     row.appendChild(nameCol);
-    row.appendChild(langCol);
-    row.appendChild(rolesCol);
+    //row.appendChild(langCol);
+    //row.appendChild(rolesCol);
     this.vaLanguageTableBody.appendChild(row);
 
     if (voiceActor.media) {
@@ -418,8 +418,8 @@ var Minimalist = {
 
       for (let other of voiceActor.media.slice(1)) {
         let newRow = document.createElement("tr");
-        let newCol1 = document.createElement("td");
-        let newCol2 = document.createElement("td");
+        //let newCol1 = document.createElement("td");
+        //let newCol2 = document.createElement("td");
         let newCol3 = document.createElement("td");
         let newCol4 = document.createElement("td");
         let newLink = document.createElement("a");
@@ -427,8 +427,8 @@ var Minimalist = {
         newLink.target = "_blank";
         newLink.innerHTML = other.title.romaji;
         newCol4.appendChild(newLink);
-        newRow.appendChild(newCol1);
-        newRow.appendChild(newCol2);
+        //newRow.appendChild(newCol1);
+        //newRow.appendChild(newCol2);
         newRow.appendChild(newCol3);
         newRow.appendChild(newCol4);
         this.vaLanguageTableBody.appendChild(newRow);

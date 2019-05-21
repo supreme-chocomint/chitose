@@ -15,20 +15,6 @@ function parsedSeason(quarter, year) {
   return quarter.charAt(0).toUpperCase() + quarter.slice(1).toLowerCase() + " " + year;
 }
 
-// Naming sense is out the window
-// Makes undefined into empty string, and adds back </p>
-function fixHtmlArray(array, N) {
-  for (let i = 0; i < N; i++) {
-    if (array[i] == undefined) {
-      array[i] = "";
-    }
-    else if (array[i] != ""){
-      array[i] += "</p>";
-    }
-  }
-  return array;
-}
-
 // Thank you Stack Overflow: https://stackoverflow.com/a/33369954
 // Numbers, strings, and booleans return false
 function isJson(item) {
