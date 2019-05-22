@@ -272,6 +272,15 @@ th { /* Makes header occupy one line only */
   width: 100%;
 }
 
+.linked-header-wrapper {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.linked-header-wrapper > * {
+  margin-bottom: 0;
+}
+
 .va-character-header {
   text-align: center;
 }

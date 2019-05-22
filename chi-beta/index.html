@@ -29,6 +29,7 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src='js/display-mode/compressed.js'></script>
   <script src='js/main/compressed.js'></script>
+  <script src='js/main/quick-nav.js'></script>
   <script src='js/follow/compressed.js'></script>
   <script src='js/helpers/parse.js'></script>
   <script src='js/helpers/string.js'></script>
@@ -269,11 +270,14 @@
 
         <div>
 
-          <div>
+          <div class="linked-header-wrapper">
+            <a id="cmain-link"></a>
             <h5 class="static-display-top grid va-character-header"
                 id="va-cmain-header" style="display:none;">
               Main Characters
             </h5>
+            <a href="javascript:jumpTo('csupport-link');"
+                class="internal_link">(jump to supporting)</a>
           </div>
           <div class="grid va-character-wrapper va-main-characters-body"></div>
 
@@ -292,11 +296,14 @@
 
         <div>
 
-          <div>
+          <div class="linked-header-wrapper">
+            <a id="csupport-link"></a>
             <h5 class="static-display-top grid va-character-header"
                 id="va-csupport-header" style="display:none;">
               Supporting Characters
             </h5>
+            <a href="javascript:jumpTo('cmain-link');"
+                class="internal_link">(jump to main)</a>
           </div>
           <div class="grid va-character-wrapper va-support-characters-body"></div>
 
