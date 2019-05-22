@@ -272,12 +272,11 @@ th { /* Makes header occupy one line only */
   width: 100%;
 }
 
-.linked-header-wrapper {
-  text-align: center;
-  margin-bottom: 1.5rem;
+#va-cmain-header, #va-csupport-header {
+  margin-bottom: 2rem;
 }
 
-.linked-header-wrapper > * {
+#va-cmain-header > *, #va-csupport-header > * {
   margin-bottom: 0;
 }
 
