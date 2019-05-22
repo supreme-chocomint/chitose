@@ -414,6 +414,15 @@ there.
   #language-filter {
     float: right;
   }
+  .thumbnail-wrapper {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 12rem !important;
+  }
+  .thumbnail-wrapper > .thumbnail {
+    height: 17rem !important;
+    width: 12rem !important;
+  }
 }
 
 /* Larger than phablet (also point when grid becomes active) */

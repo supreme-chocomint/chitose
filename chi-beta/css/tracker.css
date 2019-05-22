@@ -213,7 +213,7 @@ input#dark-mode-switch {
 }
 
 #search-bar {
-  width: 18ch;  /* Fits an iPhone 5, so probably fits every smartphone */
+  width: 16ch;
 }
 
 th { /* Makes header occupy one line only */
@@ -224,11 +224,6 @@ th { /* Makes header occupy one line only */
 /* Images
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
-.thumbnail-wrapper {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .thumbnail {
   height: 17rem;
   width: 12rem;
@@ -237,6 +232,17 @@ th { /* Makes header occupy one line only */
   background-position: top center;
   background-repeat: no-repeat;
   position: relative; /* allow things to be positioned inside */
+}
+
+.thumbnail-wrapper {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: 8rem;
+}
+
+.thumbnail-wrapper > .thumbnail {
+  height: 13rem;
+  width: 8rem;
 }
 
 .thumbnail-caption {
