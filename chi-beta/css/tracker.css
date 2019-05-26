@@ -15,18 +15,20 @@
 :root {
   --bg-color: white;
   --color: black;
-  --internal-link-color: #E24B4B;
+  --action-link-color: #E24B4B;
+  --internal-link-color: #001f3f;
   --link-decoration: none;
   --input-color: black;
   --button-color: black;
   --button-hover-color: #333;
-  --dark-mode-button-color: white;
+  --dark-mode-button-color: black;
 }
 
 .dark {
   --bg-color: #272C38;
   --color: white;
-  --internal-link-color: #E24B4B;
+  --action-link-color: #E24B4B;
+  --internal-link-color: #AAAAAA;
   --link-decoration: none;
   --input-color: black;
   --button-color: white;
@@ -67,6 +69,14 @@ body {
 
 .clickable {
   cursor: pointer;
+}
+
+div.action_link {
+  box-shadow: 0px 0px 0px 3px var(--action-link-color);
+}
+
+div.internal_link {
+  box-shadow: 0px 0px 0px 3px var(--internal-link-color);
 }
 
 /* General page spacing
@@ -152,6 +162,10 @@ td.symbol {
   color: var(--internal-link-color);
 }
 
+.action_link {
+  color: var(--action-link-color);
+}
+
 /* Inputs, selects, textareas, button-like objects
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -177,7 +191,7 @@ input[type="button"]:focus {
 }
 
 input#dark-mode-switch {
-  color: var(--dark-mode-button-color)
+  color: var(--dark-mode-button-color);
   background-color: transparent;
 }
 
