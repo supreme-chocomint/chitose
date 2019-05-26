@@ -47,6 +47,7 @@ function getQuery(type) {
           popularity
           meanScore
           siteUrl
+          seasonInt
         }
         node {
           id

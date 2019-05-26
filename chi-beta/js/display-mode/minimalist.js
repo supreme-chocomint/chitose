@@ -244,6 +244,8 @@ var Minimalist = {
     let characterEmbellish = document.createElement("span");
     let auxiliaryCol = document.createElement("td");
     let auxiliaryLink = document.createElement("a");
+    let auxiliaryCol2 = document.createElement("td");
+    let auxiliaryText = document.createElement("span");
 
     if (onclick) { // Link to character
       characterLink.onclick = onclick;
@@ -267,6 +269,12 @@ var Minimalist = {
     row.appendChild(charaCol);
     auxiliaryCol.appendChild(auxiliaryLink);
     row.appendChild(auxiliaryCol);
+
+    if (show && show.seasonInt) {
+      auxiliaryText.innerHTML += parsedSeasonInt(show.seasonInt);
+      auxiliaryCol2.appendChild(auxiliaryText);
+      row.appendChild(auxiliaryCol2);
+    }
 
     if (character.nameEmbellish) {
       characterEmbellish.innerHTML = " " + character.nameEmbellish;

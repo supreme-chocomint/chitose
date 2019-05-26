@@ -318,6 +318,10 @@ var Grid = {
       text.appendChild(showLink);
     }
 
+    if (show && show.seasonInt) {
+      text.innerHTML += `<br>${parsedSeasonInt(show.seasonInt)}`;
+    }
+    
     text.classList.add("thumbnail-caption");
     div.appendChild(text);
 
