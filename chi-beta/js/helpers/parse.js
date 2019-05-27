@@ -16,7 +16,7 @@ function parsedSeason(quarter, year) {
 }
 
 function parsedSeasonInt(seasonInt) {
-  // In format YY[1-4] or Y[1-4]
+  // In format YY[1-4] or Y[1-4] or [1-4] (for year 2000)
   // Will probably break in 2050 due to AniList API's returned value
 
   let str = seasonInt.toString();
@@ -34,10 +34,14 @@ function parsedSeasonInt(seasonInt) {
 }
 
 function fourDigitYear(yearString) {
-  // Accepts 1 and 2 digit years e.g. 7 for 2007, 12 for 2012
+  // e.g. "7" for 2007, "12" for 2012, "" for 2000
 
   if (yearString.length > 2) {
     return yearString
+  }
+
+  if (yearString == ""){
+    yearString = "0";
   }
 
   let yearPartial = parseInt(yearString);

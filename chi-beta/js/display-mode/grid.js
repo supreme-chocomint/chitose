@@ -282,8 +282,8 @@ var Grid = {
     }
   },
 
-  addCharacterEntry(containerId, role, onclick) {
-
+  addCharacterEntry(containerId, role, onclick, showSeason) {
+  
     let character = role.character;
     let show = role.show;
 
@@ -320,11 +320,16 @@ var Grid = {
       text.appendChild(showLink);
     }
 
-    if (show && show.seasonInt) {
-      let seasonString = parsedSeasonInt(show.seasonInt);
-      season.innerHTML = `<br>${seasonString}`;
+    if (showSeason) {
+      if (show && show.seasonInt) {
+        let seasonString = parsedSeasonInt(show.seasonInt);
+        season.innerHTML = `<br>${seasonString}`;
+        season.setAttribute("data-sortable-id", sortableSeasonId(seasonString));
+      }
+      else {
+        season.setAttribute("data-sortable-id", 0);
+      }
       season.classList.add("season");
-      season.setAttribute("data-sortable-id", sortableSeasonId(seasonString));
       text.appendChild(season);
     }
     
@@ -418,7 +423,7 @@ var Grid = {
         thumbnailWrappers = Array.prototype.slice.call(table.childNodes).reverse();
       }
       else {
-        thumbnailWrappers = tinysort(table.childNodes, {data: "favourites"});
+        thumbnailWrappers = tinysort(table.childNodes, {data: "favourites", order: "desc"});
         for (let button of buttons) {
           button.classList.remove("active-organization");
         }

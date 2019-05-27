@@ -231,7 +231,9 @@ function formatStats(va) {
 }
 
 function addCharacterEntry(containerId, role) {
-  window.currentDisplay.addCharacterEntry(containerId, role);
+  // No onclick, so set third argument to null
+  let showSeason = true;
+  window.currentDisplay.addCharacterEntry(containerId, role, null, showSeason);
 }
 
 function addCharacterTableEntry(tableBodyId, vaDetails) {

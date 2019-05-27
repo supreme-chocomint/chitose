@@ -31,7 +31,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 1152px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -48,8 +48,8 @@
     padding: 0; }
 }
 
-/* For devices larger than 850px (original: 550px) */
-@media (min-width: 850px) {
+/* For devices larger than 1000px (original: 550px) */
+@media (min-width: 1000px) {
   .container {
     width: 80%; }
   .column,

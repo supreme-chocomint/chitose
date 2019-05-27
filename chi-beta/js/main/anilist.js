@@ -266,6 +266,7 @@ function getQuery(type) {
           popularity
           meanScore
           siteUrl
+          seasonInt
         }
       }
     }

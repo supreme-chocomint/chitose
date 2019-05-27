@@ -12,6 +12,9 @@ var Minimalist = {
     this.rolesTable = document.querySelector(".minimalist.roles-table");
     this.rolesTableBody = document.querySelector(".minimalist.roles-table-body");
 
+    this.vaMainTable = document.querySelector(".minimalist.va-main-characters");
+    this.vaSupportTable = document.querySelector(".minimalist.va-support-characters");
+
     this.vaPopularTableBody = document.querySelector(".minimalist.va-popular-characters-body");
     this.vaUWTableBody = document.querySelector(".minimalist.va-uw-characters-body");
     this.vaMainTableBody = document.querySelector(".minimalist.va-main-characters-body");
@@ -232,7 +235,7 @@ var Minimalist = {
     rolesTableCaption.setAttribute("data-content", header);
   },
 
-  addCharacterEntry(tableBodyId, role, onclick) {
+  addCharacterEntry(tableBodyId, role, onclick, showSeason, showFavourites) {
 
     let character = role.character;
     let show = role.show;
@@ -245,7 +248,9 @@ var Minimalist = {
     let auxiliaryCol = document.createElement("td");
     let auxiliaryLink = document.createElement("a");
     let auxiliaryCol2 = document.createElement("td");
-    let auxiliaryText = document.createElement("span");
+    let auxiliaryText2 = document.createElement("span");
+    let auxiliaryCol3 = document.createElement("td");
+    let auxiliaryText3 = document.createElement("span");
 
     if (onclick) { // Link to character
       characterLink.onclick = onclick;
@@ -264,17 +269,34 @@ var Minimalist = {
     }
 
     characterLink.innerHTML = character.name;
+    charaCol.setAttribute("data-favourites", character.favourites);
 
     charaCol.appendChild(characterLink);
     row.appendChild(charaCol);
     auxiliaryCol.appendChild(auxiliaryLink);
     row.appendChild(auxiliaryCol);
 
-    if (show && show.seasonInt) {
-      auxiliaryText.innerHTML += parsedSeasonInt(show.seasonInt);
-      auxiliaryCol2.appendChild(auxiliaryText);
+    if (showSeason) {
+      if (show && show.seasonInt) {
+        let seasonString = parsedSeasonInt(show.seasonInt);
+        auxiliaryText2.innerHTML = seasonString;
+        auxiliaryCol2.setAttribute("data-sortable-id", sortableSeasonId(seasonString));
+      }
+      else {
+        auxiliaryText2.innerHTML = "N/A";
+        auxiliaryCol2.setAttribute("data-sortable-id", 0);
+      }
+      auxiliaryCol2.appendChild(auxiliaryText2);
       row.appendChild(auxiliaryCol2);
     }
+
+    /*
+    if (showFavourites) {
+      auxiliaryText3.innerHTML = character.favourites;
+      auxiliaryCol3.appendChild(auxiliaryText3);
+      row.appendChild(auxiliaryCol3);
+    }
+    */
 
     if (character.nameEmbellish) {
       characterEmbellish.innerHTML = " " + character.nameEmbellish;
@@ -306,6 +328,99 @@ var Minimalist = {
       case "va-language-table-body":
         return this.vaLanguageTableBody
     }
+  },
+
+  setSortOnClicks() {
+    this.setSortOnClickForHeader(this.vaMainTable);
+    this.setSortOnClickForHeader(this.vaSupportTable);
+  },
+
+  setSortOnClickForHeader(table) {
+
+    let tableHead = table.querySelector('thead');
+
+    let sortFave = tableHead.querySelector(".sort-fave");
+    let sortTitle = tableHead.querySelector(".sort-title");
+    let sortSeason = tableHead.querySelector(".sort-season");
+    let sortTable = this.sortTable;
+
+    let clickables = [sortFave, sortTitle, sortSeason];
+    for (let clickable of clickables) {
+      clickable.classList.add("clickable");
+      clickable.classList.remove("active-organization");
+    }
+
+    sortFave.classList.add("active-organization");
+
+    let faveParams = {data: 'favourites', order: "desc"};
+    sortFave.parentNode.setAttribute("data-order", "desc");
+    sortFave.onclick = function(e){
+      sortTable(e, faveParams, table);
+      for (let clickable of clickables) {
+        clickable.classList.remove("active-organization");
+      }
+      sortFave.classList.add("active-organization");
+    };
+
+    let titleParams = {};
+    sortTitle.onclick = function(e){
+      sortTable(e, titleParams, table);
+      for (let clickable of clickables) {
+        clickable.classList.remove("active-organization");
+      }
+      sortTitle.classList.add("active-organization");
+      
+    };
+
+    let seasonParams = {data: 'sortable-id'};
+    sortSeason.onclick = function(e){
+      sortTable(e, seasonParams, table);
+      for (let clickable of clickables) {
+        clickable.classList.remove("active-organization");
+      }
+      sortSeason.classList.add("active-organization");
+    };
+
+  },
+
+  sortTable(e, sortParams, table) {  
+    // modified from https://tinysort.sjeiti.com/ example
+
+    let tableHead = table.querySelector('thead');
+    let tableHeaders = tableHead.querySelectorAll('th');
+    let tableBody = table.querySelector('tbody');
+    let tableHeader = e.target
+        ,tableHeaderIndex,isAscending,order
+      ;
+
+    while (tableHeader.nodeName !== 'TH') {
+      tableHeader = tableHeader.parentNode;
+    }
+
+    for (let workingHeader of tableHeaders) {
+      if (workingHeader != tableHeader) {
+        // reset all other sorts
+        workingHeader.setAttribute("data-order", "");
+      }
+    }
+
+    tableHeaderIndex = Array.prototype.indexOf.call(tableHeaders, tableHeader);
+
+    // Prioritize argument order if not currently sorted
+    currentOrder = tableHeader.getAttribute('data-order');
+    if (currentOrder == "" && sortParams['order']) {
+      order = sortParams['order'];
+    }
+    else {
+      isAscending = currentOrder === 'asc';
+      order = isAscending ? 'desc' : 'asc';
+      sortParams['order'] = order;
+    }
+    tableHeader.setAttribute('data-order', order);
+
+    sortParams['selector'] = 'td:nth-child('+(tableHeaderIndex+1)+')';
+    tinysort(tableBody.querySelectorAll('tr'), sortParams);
+
   },
 
   clearSideContainers() {
