@@ -68,7 +68,7 @@ var Grid = {
     deleteLink.innerHTML = getDeleteIcon();
     deleteLink.classList.add("thumbnail-icon");
     deleteWrapper.onclick = function() { unfollow(metadata); }
-    deleteWrapper.classList.add("thumbnail-icon-wrapper");
+    deleteWrapper.classList.add("delete-icon-wrapper");
     deleteWrapper.appendChild(deleteLink);
     thumbnail.appendChild(deleteWrapper);
     div.appendChild(thumbnail);
@@ -153,7 +153,7 @@ var Grid = {
     followWrapper.onclick = function() {
       followState.innerHTML = toggleFollow(metadata);
     }
-    followWrapper.classList.add("thumbnail-icon-wrapper");
+    followWrapper.classList.add("follow-icon-wrapper");
 
     followWrapper.appendChild(followState);
     thumbnail.appendChild(followWrapper);

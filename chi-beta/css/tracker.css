@@ -311,15 +311,23 @@ th { /* Makes header occupy one line only */
   color: white;
 }
 
-.grid .thumbnail-icon-wrapper {
+.grid .follow-icon-wrapper, .grid .delete-icon-wrapper {
   cursor: pointer;
   background-color: rgba(0, 0, 0, 0.6);  /* grey */
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
   border-radius: 50%;
   position: absolute;
   bottom: 0.5rem;
   right: 0.5rem;
+}
+
+.grid .follow-icon-wrapper {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.grid .delete-icon-wrapper {
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
 }
 
 .grid-table-message {
