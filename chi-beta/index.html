@@ -27,6 +27,7 @@
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.js" integrity="sha256-G2Ef4tKKUoh4D7ElJWVLcHr/Mt0ita2PO6kLGMBWEHc=" crossorigin="anonymous"></script>
   <script src='js/display-mode/grid.js'></script>
   <script src='js/display-mode/minimalist.js'></script>
   <script src='js/display-mode/event.js'></script>
@@ -293,7 +294,12 @@
               id="va-cmain-header" style="display:none;">
             <a id="cmain-link"></a>
             <h5>Main Characters</h5>
-            <a href="javascript:jumpTo('csupport-link');">(jump to supporting)</a>
+            <a href="javascript:jumpTo('csupport-link');">(jump to supporting)</a><br>
+            <span>Sort by:&nbsp;&nbsp;
+              <i id="sort-cmain-title" class="fas fa-film"></i>&nbsp;&nbsp;
+              <i id="sort-cmain-fave" class="fas fa-heart"></i>&nbsp;&nbsp;
+              <i id="sort-cmain-season" class="far fa-calendar-alt"></i>
+            </span>
           </div>
           <div class="grid va-character-wrapper va-main-characters-body"></div>
 
@@ -317,7 +323,12 @@
               id="va-csupport-header" style="display:none;">
             <a id="csupport-link"></a>
             <h5>Supporting Characters</h5>
-            <a href="javascript:jumpTo('cmain-link');">(jump to main)</a>
+            <a href="javascript:jumpTo('cmain-link');">(jump to main)</a><br>
+            <span>Sort by:&nbsp;&nbsp;
+              <i id="sort-csupport-title" class="fas fa-film"></i>&nbsp;&nbsp;
+              <i id="sort-csupport-fave" class="fas fa-heart"></i>&nbsp;&nbsp;
+              <i id="sort-csupport-season" class="far fa-calendar-alt"></i>
+            </span>
           </div>
           <div class="grid va-character-wrapper va-support-characters-body"></div>
 
@@ -339,7 +350,8 @@
 
       <p>
         * popular = most favorited characters<br>
-        * underwatched = semi-prominent characters from lesser-watched but well-received shows
+        * underwatched = semi-prominent characters from lesser-watched but well-received shows<br>
+        ** note: sorting puts non-latin letters at the end of the list (e.g. ϊ, ć, ø, etc will go after z)
       </p>
 
     </div>

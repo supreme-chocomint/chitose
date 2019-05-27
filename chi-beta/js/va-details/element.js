@@ -138,6 +138,7 @@ function fillVaAdvancedInfo(vaDetails) {
   }
 
   resizeCharacterContainers(vaDetails);
+  setSortOnClicks();
 
 }
 
@@ -281,4 +282,8 @@ function clearVaInfo() {
   changeSideContainerWidths("half");
   changeSideContainerWidths("half");
 
+}
+
+function setSortOnClicks() {
+  window.currentDisplay.setSortOnClicks();
 }

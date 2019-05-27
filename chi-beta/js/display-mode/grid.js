@@ -293,6 +293,7 @@ var Grid = {
     let text = document.createElement("p");
     let characterLink = document.createElement("a");
     let showLink = document.createElement("a");
+    let season = document.createElement("span");
 
     thumbnail.style.backgroundImage = `url(${character.image})`;
     thumbnail.classList.add("thumbnail");
@@ -314,18 +315,24 @@ var Grid = {
       text.innerHTML += "<i>from</i><br>";
       showLink.href = show.siteUrl;
       showLink.target = "_blank";
+      showLink.classList.add("title");
       showLink.innerHTML = show.title.romaji;
       text.appendChild(showLink);
     }
 
     if (show && show.seasonInt) {
-      text.innerHTML += `<br>${parsedSeasonInt(show.seasonInt)}`;
+      let seasonString = parsedSeasonInt(show.seasonInt);
+      season.innerHTML = `<br>${seasonString}`;
+      season.classList.add("season");
+      season.setAttribute("data-sortable-id", sortableSeasonId(seasonString));
+      text.appendChild(season);
     }
     
     text.classList.add("thumbnail-caption");
     div.appendChild(text);
 
     div.classList.add("thumbnail-wrapper");
+    div.setAttribute("data-favourites", character.favourites);
     container.appendChild(div);
 
     // doesn't work until appended to container for some reason
@@ -348,6 +355,101 @@ var Grid = {
       case "character-browse-table-body":
         return this.characterBrowseTableBody;
     }
+  },
+
+  setSortOnClicks() {
+
+    // Main characters
+    let sortMainByTitleBtn = document.getElementById("sort-cmain-title");
+    let sortMainByFaveBtn = document.getElementById("sort-cmain-fave");
+    let sortMainBySeasonBtn = document.getElementById("sort-cmain-season");
+    sortMainByTitleBtn.classList.add("clickable");
+    sortMainByFaveBtn.classList.add("clickable");
+    sortMainBySeasonBtn.classList.add("clickable");
+    this.setSortOnClicksForTable(this.vaMainTableBody, sortMainByTitleBtn, sortMainByFaveBtn, sortMainBySeasonBtn);
+
+    // Supporting characters
+    let sortSupportByTitleBtn = document.getElementById("sort-csupport-title");
+    let sortSupportByFaveBtn = document.getElementById("sort-csupport-fave");
+    let sortSupportBySeasonBtn = document.getElementById("sort-csupport-season");
+    sortSupportByTitleBtn.classList.add("clickable");
+    sortSupportByFaveBtn.classList.add("clickable");
+    sortSupportBySeasonBtn.classList.add("clickable");
+    this.setSortOnClicksForTable(this.vaSupportTableBody, sortSupportByTitleBtn, sortSupportByFaveBtn, sortSupportBySeasonBtn);
+
+    // Set default sort state indicators
+    sortMainByFaveBtn.classList.add("active-organization");
+    sortSupportByFaveBtn.classList.add("active-organization");
+    sortMainByTitleBtn.classList.remove("active-organization");
+    sortMainBySeasonBtn.classList.remove("active-organization");
+    sortSupportByTitleBtn.classList.remove("active-organization");
+    sortSupportBySeasonBtn.classList.remove("active-organization");
+    this.vaMainTableBody.setAttribute("data-order", "favourites");
+    this.vaSupportTableBody.setAttribute("data-order", "favourites");
+    
+  },
+
+  setSortOnClicksForTable(table, sortByTitleBtn, sortByFaveBtn, sortBySeasonBtn) {
+
+    let buttons = [sortByTitleBtn, sortByFaveBtn, sortBySeasonBtn];
+
+    sortByTitleBtn.onclick = function() {
+      let thumbnailWrappers;
+      if (table.getAttribute("data-order") == "title") {
+        thumbnailWrappers = Array.prototype.slice.call(table.childNodes).reverse();
+      }
+      else {
+        thumbnailWrappers = tinysort(table.childNodes, ".thumbnail-caption > .title");
+        for (let button of buttons) {
+          button.classList.remove("active-organization");
+        }
+        sortByTitleBtn.classList.add("active-organization");
+      }
+      table.setAttribute("data-order", "title");
+      table.innerHTML = "";
+      for (let wrapper of thumbnailWrappers) {
+        table.appendChild(wrapper);
+      }
+    }
+
+    sortByFaveBtn.onclick = function() {
+      let thumbnailWrappers;
+      if (table.getAttribute("data-order") == "favourites") {
+        thumbnailWrappers = Array.prototype.slice.call(table.childNodes).reverse();
+      }
+      else {
+        thumbnailWrappers = tinysort(table.childNodes, {data: "favourites"});
+        for (let button of buttons) {
+          button.classList.remove("active-organization");
+        }
+        sortByFaveBtn.classList.add("active-organization");
+      }
+      table.setAttribute("data-order", "favourites");
+      table.innerHTML = "";
+      for (let wrapper of thumbnailWrappers) {
+        table.appendChild(wrapper);
+      }
+    }
+
+    sortBySeasonBtn.onclick = function() {
+      let thumbnailWrappers;
+      if (table.getAttribute("data-order") == "season") {
+        thumbnailWrappers = Array.prototype.slice.call(table.childNodes).reverse();
+      }
+      else {
+        thumbnailWrappers = tinysort(table.childNodes, {selector: ".thumbnail-caption > .season", data: "sortable-id"});
+        for (let button of buttons) {
+          button.classList.remove("active-organization");
+        }
+        sortBySeasonBtn.classList.add("active-organization");
+      }
+      table.setAttribute("data-order", "season");
+      table.innerHTML = "";
+      for (let wrapper of thumbnailWrappers) {
+        table.appendChild(wrapper);
+      }
+    }
+
   },
 
   clearSideContainers() {

@@ -49,6 +49,21 @@ function fourDigitYear(yearString) {
 
 }
 
+function sortableSeasonId(naturalSeasonString) {
+  // "Winter 2017" return "20171"
+
+  let parts = naturalSeasonString.split(" ");
+  let quarters = {
+    "winter": 1,
+    "spring": 2,
+    "summer": 3,
+    "fall": 4
+  }
+
+  return parts.slice(-1)[0].trim() + quarters[parts[0].trim().toLowerCase()];
+
+}
+
 // Thank you Stack Overflow: https://stackoverflow.com/a/33369954
 // Numbers, strings, and booleans return false
 function isJson(item) {
