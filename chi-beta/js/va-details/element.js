@@ -207,12 +207,12 @@ function formatStats(va) {
   Popularity: ${va.popularity} favorites<br>
   Number of characters voiced: ${va.rolesCount}<br>
 
-  Most popular show: <a href="${popular.show.siteUrl}" target="_blank">
+  Most popular title: <a href="${popular.show.siteUrl}" target="_blank">
   ${popular.show.title.romaji}</a>
     (voiced <a href="${popular.character.url}" target="_blank">
     ${popular.character.name}</a>)<br>
 
-  Highest rated show: <a href="${acclaimed.show.siteUrl}" target="_blank">
+  Highest rated title: <a href="${acclaimed.show.siteUrl}" target="_blank">
   ${acclaimed.show.title.romaji}</a>
       (voiced <a href="${acclaimed.character.url}" target="_blank">
       ${acclaimed.character.name}</a>)<br>

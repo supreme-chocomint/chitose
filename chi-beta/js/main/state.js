@@ -6,12 +6,14 @@ function lock() {
   document.getElementsByTagName("body")[0].classList.add("locked");
   document.getElementById("lock-icon").innerHTML = "🔒";
   document.getElementById("lock-icon").style.display = "";
+  document.getElementById("va-table-tools").classList.add("disabled");
 }
 
 function unlock() {
   document.getElementsByTagName("body")[0].classList.remove("locked");
   document.getElementById("lock-icon").innerHTML = "";
   document.getElementById("lock-icon").style.display = "none";
+  document.getElementById("va-table-tools").classList.remove("disabled");
 }
 
 function setStorageState() {

@@ -252,6 +252,7 @@ th { /* Makes header occupy one line only */
   background-position: top center;
   background-repeat: no-repeat;
   position: relative; /* allow things to be positioned inside */
+  border-radius: 4px;
 }
 
 .thumbnail-wrapper {

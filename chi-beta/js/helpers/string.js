@@ -17,10 +17,10 @@ function getExplainString() {
   let string = `
   <p>
   <b>Examples:</b><br>
-  <b>Search by show:</b> "Humanity has Declined", "Jinrui wa Suitai Shimashita",
+  <b>Search by anime:</b> "Humanity has Declined", "Jinrui wa Suitai Shimashita",
   or "人類は衰退しました"<br>
   <b>Search by character:</b> "Phos", "Phos from Land of the Lustrous"
-  (character_name from show_name), "Phos, 宝石の国" (character_name, show_name),
+  (character_name from anime_name), "Phos, 宝石の国" (character_name, anime_name),
   or variants. Languages can be mixed-and-matched.
   </p>
   `;
@@ -31,7 +31,7 @@ function getVaFragmentationErrorString() {
   return "Too many requests sent to AniList, due to the voice actor's data " +
   "being too fragmented (often the case with dub actors with lots of work done). " +
   "As a result, character data may be noticeably incomplete and biased " +
-  "towards popular characters/shows.";
+  "towards popular characters/titles.";
 }
 
 function getVaFragmentationNoticeString() {
