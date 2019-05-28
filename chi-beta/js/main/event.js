@@ -1,21 +1,7 @@
 window.onload = function() {
 
   buildDisplayModes();
-
-  let body = document.getElementsByTagName("body")[0];
-  let defaultTheme = "light";
-
-  let hasStorageAccess = setStorageState();  // handle browser disabling cookies
-  if (hasStorageAccess) {
-    let themeIsSet = setThemeFromStorage();
-    if (!themeIsSet) {
-      body.classList.add(defaultTheme);
-    }
-  }
-  else {
-    body.classList.add(defaultTheme);
-  }
-
+  let hasStorageAccess = setTheme();
   setOnEvents();
 
   // redirect if required; to main tab is default

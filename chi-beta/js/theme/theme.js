@@ -1,3 +1,19 @@
+function setTheme() {
+  let body = document.getElementsByTagName("body")[0];
+  let defaultTheme = "light";
+  let hasStorageAccess = setStorageState();  // handle browser disabling cookies
+  if (hasStorageAccess) {
+    let themeIsSet = setThemeFromStorage();
+    if (!themeIsSet) {
+      body.classList.add(defaultTheme);
+    }
+  }
+  else {
+    body.classList.add(defaultTheme);
+  }
+  return hasStorageAccess;
+}
+
 function darkModeSwitchOnClick() {
   let body = document.getElementsByTagName("body")[0];
   let _switch = document.getElementById("dark-mode-switch");

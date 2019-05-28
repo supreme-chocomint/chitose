@@ -25,8 +25,12 @@
 
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src='js/main/state.js'></script>
+  <script src='js/theme/theme.js'></script>
   <script>
     window.onload = function() {
+      try { setTheme(); }  // attempt to change dark mode switch string will fail
+      catch (ExpectedException) { console.log(ExpectedException, "TypeError is expected, and a hack."); }
       let images = [
         "assets/errors/kaguya-ch42.jpg",
         "assets/errors/sao-alternate-ep9.jpg",

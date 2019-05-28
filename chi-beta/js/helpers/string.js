@@ -9,7 +9,8 @@ function getDescriptionString() {
     "or view the details of an individual VA.<br><br>" +
     "Things not loading? Double-check that " + aniListLink +
     " (the data provider) and " + cdnjsLink +
-    " (the icon provider) are online.";
+    " (the icon provider) are online.<br>" +
+    "View the changelog and acknowledgements <a href='changelog.html'>here</a>.";
   return string;
 }
 
