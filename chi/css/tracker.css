@@ -41,7 +41,7 @@
 body {
   background-color: var(--bg-color);
   color: var(--color);
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Raleway', sans-serif;
 }
 
 /* State-based
@@ -127,6 +127,10 @@ html {
 
 /* Text
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#header {
+    font-family: 'Quicksand', 'Raleway', sans-serif
+}
 
 #header h2, #header h5 {
   display: inline-block;
