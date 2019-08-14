@@ -1,14 +1,16 @@
 // Functions that return long hard-coded strings
 
 function getDescriptionString() {
+  let integrationBlurb = "<a href='https://bitbucket.org/themightyhotel/chi-integration/raw/master/integration.user.js'>" +
+  "Simple site integration for MAL, AniList, ANN, and AP is available</a>" + 
+  "(see <a href='https://bitbucket.org/themightyhotel/chi-integration'>here</a> for details)."
   let aniListLink = "<a href='https://anilist.co/' target='_blank'>AniList</a>"
   let cdnjsLink = "<a href='https://cdnjs.com/' target='_blank'>CDNJS</a>"
   let string = "Find out what your favorite voice actors are " +
     "up to in any particular season.<br>" +
     "Browse, search, and follow voice actors of any language (that AniList has), " +
     "or view the details of an individual VA.<br>" +
-    "<a href='https://themightyhotel.bitbucket.io/userscripts/integration.user.js'>" +
-    "Simple site integration for MAL, AniList, ANN, and AP is available</a> (requires installing via Tampermonkey).<br><br>" +
+    integrationBlurb + "<br><br>" +
     "Things not loading? Double-check that " + aniListLink +
     " (the data provider) and " + cdnjsLink +
     " (the icon provider) are online.<br>" +
