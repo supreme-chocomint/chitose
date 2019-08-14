@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>c h i 歳 - Error 404</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/tracker.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src='js/compressed.js'></script>
+  <script>
+    window.onload = function() {
+      try { setTheme(); }  // attempt to change dark mode switch string will fail
+      catch (ExpectedException) { console.log(ExpectedException, "TypeError is expected, and a hack."); }
+      let images = [
+        "assets/errors/kaguya-ch42.jpg",
+        "assets/errors/sao-alternate-ep9.jpg",
+        "assets/errors/bang-dream-fanart.jpg"
+      ];
+      let srcs = [
+        "kaguya wants to be confessed to, chapter 42",
+        "sword art online alternative: ggo, episode 9",
+        "bang dream franchise, drawn by <a href='https://twitter.com/bndr_enrk/status/1107239478265966592'>えのろく</a>"
+      ];
+      let i = Math.floor(Math.random() * images.length);
+      document.getElementById("image").src = images[i];
+      document.getElementById("image").alt = images[i];
+      document.getElementById("image-src").innerHTML = `source: ${srcs[i]}`;
+      document.getElementById("image-src").style.fontSize = "1.2rem";
+    }
+  </script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="u-full-width" style="margin-top: 5%">
+        <h4>Error 404: Not Found</h4>
+        <img id="image" style="width:auto; height:auto; max-width:60%; max-height:60rem;"></img>
+        <p>AniList couldn't find what you were looking for.<br>
+          If you came straight to this page, double-check the URL you entered.
+          If you got here while browsing the website,
+          confirm that AniList is online; otherwise you probably found a bug.<br><br>
+          Click <a href="./">here</a> to return to the main page.
+        </p>
+        <p id="image-src"></p>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

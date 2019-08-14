@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>c h i 歳 - Error 429</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/tracker.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src='js/compressed.js'></script>
+  <script>
+    window.onload = function() {
+      try { setTheme(); }  // attempt to change dark mode switch string will fail
+      catch (ExpectedException) { console.log(ExpectedException, "TypeError is expected, and a hack."); }
+      let videos = [
+        "assets/errors/kyousougiga-ep0.mp4",
+        "assets/errors/one-punch-man-ep1.mp4",
+        "assets/errors/revue-starlight-ep1.mp4",
+        "assets/errors/owari-no-seraph-ep3.mp4",
+        "assets/errors/rolling-girls-ep10.mp4"
+      ];
+      let i = Math.floor(Math.random() * videos.length);
+      document.getElementById("video").src = videos[i];
+      document.getElementById("video-src").innerHTML = `source: ${videos[i].split("/").slice(-1)[0]}`;
+      document.getElementById("video-src").style.fontSize = "1.2rem";
+    }
+  </script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="u-full-width" style="margin-top: 5%">
+        <h4>Error 429: Too Many Requests</h4>
+        <video controls autoplay loop id="video" style="width:100%;">
+          Your browser doesn't support mp4 videos.
+        </video>
+        <p>You sent too many requests to AniList, and it didn't like that.<br>
+          This is most likely to happen while viewing a VA's overview page.
+          Wait a few seconds (or worse case, a minute), then try again.<br>
+          In the meantime, here's a random clip to kill time.<br><br>
+          Click <a href="./">here</a> to return to the main page.
+        </p>
+        <p id="video-src"></p>
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8">
+  <title>c h i 歳 - Changelog</title>
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet"> 
+
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/tracker.css">
+
+  <!-- JS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src='js/compressed.js'></script>
+  <script>
+    window.onload = function() {
+      try { setTheme(); }  // attempt to change dark mode switch string will fail
+      catch (ExpectedException) { console.log(ExpectedException, "TypeError is expected, and a hack."); }
+    }
+  </script>
+
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+  <link rel="manifest" href="assets/favicon/site.webmanifest">
+
+</head>
+<body>
+
+  <!-- Primary Page Layout
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <div class="container">
+    <div class="row">
+      <div class="u-full-width" style="margin-top: 5%">
+        <h4>Changelog</h4>
+        <h5>ver. 2.3</h5>
+        <p>
+          - Made display modes a preference instead of a URL query
+          - Added userscript integration
+        </p>
+        <h5>ver. 2.2</h5>
+        <p>
+        - Added autofocus to search bar<br>
+        - Tweaked strings<br>
+        - Fixed weird font rendering issue in Firefox
+        </p>
+
+        <h5>ver. 2.1</h5>
+        <p>
+        - Added sorting for character lists<br>
+        - Added debut season to all characters in VA details page<br>
+        - Added dark mode support for error pages<br>
+        - Added changelog and acknowledgements page<br>
+        - Switched to CDN for Font Awesome, instead of local copy<br>
+        - Tweaked design/UI<br>
+        </p>
+
+        <h5>ver. 2.0</h5>
+        <p>
+        - Added search by character and search by title<br>
+        - Added language filter for VAs<br>
+        - Added grid mode<br>
+        - Added VA details page<br>
+        - Added error pages for 404 and 429<br>
+        - Added season data caching<br>
+        - Fixed permanent page locking caused by trying to import VAs with invalid ID<br>
+        - Tweaked design/UI<br>
+        </p>
+
+        <h5>ver. 1.1</h5>
+        <p>
+        - Added roles count to season table<br>
+        </p>
+
+        <h5>ver. 1.0</h5>
+        <p>
+        - Added core season browsing feature<br>
+        - Added search by VA<br>
+        - Added dark mode<br>
+        - Added ability to follow VAs<br>
+        - Added follows import/export<br>
+        </p>
+
+        <h4>Acknowledgements</h4>
+        <p>
+        - CSS boilerplate from <a href="http://getskeleton.com/">Skeleton</a><br>
+        - Fonts from Google Fonts<br>
+        - Icons for following, deletion, and sorting from Font Awesome<br>
+        - Character sorting uses <a href="https://github.com/Sjeiti/TinySort">TinySort</a><br>
+        - Thank you to everyone that suggested feature and UI improvements!
+        </p>
+        
+      </div>
+    </div>
+  </div>
+
+<!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+</body>
+</html>
