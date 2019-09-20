@@ -78,6 +78,8 @@ function onLanguageChange() {
 
 function populateVATableWithSeason(callback) {
 
+  if (callback == null) callback = function() {}
+
   let quarterElement = document.getElementById("quarter-picker");
   let vaTable = window.currentDisplay.vaTable;
 

@@ -385,9 +385,7 @@ function handleError(error) {
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
     }
-  } catch (e) {
-    alert("Error. See console for more details.");
-  }
+  } catch (e) {}
 
   console.error(error);
 
