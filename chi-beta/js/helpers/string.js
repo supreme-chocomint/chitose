@@ -2,7 +2,7 @@
 
 function getDescriptionString() {
   let integrationBlurb = "<a href='https://bitbucket.org/themightyhotel/chi-integration/raw/master/integration.user.js'>" +
-  "Simple site integration for MAL, AniList, ANN, and AP is available</a>" + 
+  "Simple site integration for MAL, AniList, ANN, and AP is available</a> " + 
   "(see <a href='https://bitbucket.org/themightyhotel/chi-integration'>here</a> for details)."
   let aniListLink = "<a href='https://anilist.co/' target='_blank'>AniList</a>"
   let cdnjsLink = "<a href='https://cdnjs.com/' target='_blank'>CDNJS</a>"
