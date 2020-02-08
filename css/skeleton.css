@@ -31,7 +31,7 @@
 .container {
   position: relative;
   width: 100%;
-  max-width: 960px;
+  max-width: 1152px;
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box; }
@@ -48,8 +48,8 @@
     padding: 0; }
 }
 
-/* For devices larger than 550px */
-@media (min-width: 550px) {
+/* For devices larger than 850px (original: 550px) */
+@media (min-width: 850px) {
   .container {
     width: 80%; }
   .column,
@@ -58,6 +58,14 @@
   .column:first-child,
   .columns:first-child {
     margin-left: 0; }
+
+  /* Custom */
+  div#navigation {
+    margin-bottom: 10%;
+  }
+  #va-side-containers {
+    display: flex; /* Make child divs have same height as this */
+  }
 
   .one.column,
   .one.columns                    { width: 4.66666666667%; }
@@ -344,7 +352,7 @@ input,
 textarea,
 select,
 fieldset {
-  margin-bottom: 1.5rem; }
+  margin-bottom: 1rem; } /* 1.5->1 so button and button-primary look the same */
 pre,
 blockquote,
 dl,
@@ -401,9 +409,21 @@ on small devices, paste the mobile query code up in the buttons section and styl
 there.
 */
 
-
 /* Larger than mobile */
-@media (min-width: 400px) {}
+@media (min-width: 400px) {
+  #language-filter {
+    float: right;
+  }
+  .thumbnail-wrapper {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    width: 12rem !important;
+  }
+  .thumbnail-wrapper > .thumbnail {
+    height: 17rem !important;
+    width: 12rem !important;
+  }
+}
 
 /* Larger than phablet (also point when grid becomes active) */
 @media (min-width: 550px) {}
