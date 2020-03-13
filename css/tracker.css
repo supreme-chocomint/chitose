@@ -170,6 +170,7 @@ td.symbol {
 
 .internal_link {
   color: var(--internal-link-color);
+  cursor: pointer;
 }
 
 .action_link {

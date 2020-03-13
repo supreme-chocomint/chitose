@@ -30,3 +30,8 @@ function portraitThumbnailOnClick(element) {
 function characterThumbnailOnClick(element) {
   element.nextSibling.firstChild.click();
 }
+
+function characterSectionLinkOnClick(e) {
+  let jumpToId = e.target.getAttribute("data-destination");
+  document.getElementById(jumpToId).scrollIntoView(true);
+}

@@ -67,6 +67,7 @@ function searchFromHashIfNeeded() {
 
 function setOnClicks() {
 
+  // Single clickables
   let searchButton = document.getElementById("search-button");
   let refreshButton = document.getElementById("refresh-button");
   let displayModeSwitch = document.getElementById("display-mode-switch");
@@ -77,6 +78,10 @@ function setOnClicks() {
   let returnButton = document.getElementById("return-button");
   let allCharactersSwitch = document.getElementById("all-characters-switch");
 
+  // Classes of clickables
+  let characterSectionLinks = document.getElementsByClassName("character-section-link");
+
+  // Typical events
   searchButton.onclick = function() { searchButtonOnClick(); }
   refreshButton.onclick = function() { refreshButtonOnClick(); }
   displayModeSwitch.onclick = function() { displayModeSwitchOnClick(); }
@@ -86,6 +91,13 @@ function setOnClicks() {
   exportButton.onclick = function() { exportButtonOnClick(); }
   returnButton.onclick = function() { returnButtonOnClick(); }
   allCharactersSwitch.onclick = function() { allCharactersSwitchOnClick(); }
+
+  // Hyperlink-like behaviour
+  // Require clicked element as reference
+  for (let link of characterSectionLinks) {
+    link.onclick = function(e) { characterSectionLinkOnClick(e); };
+  }
+
   setNavigationOnClicks();
 
 }
