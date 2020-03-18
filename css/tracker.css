@@ -218,6 +218,13 @@ input#dark-mode-switch {
   pointer-events: var(--mouse-response);
 }
 
+#left-nav, #right-nav {
+  cursor: pointer;
+  /* Disable text highlighting on double-click */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
 .follow-icon {
   font-size: 2rem;
 }
