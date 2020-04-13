@@ -5,7 +5,8 @@ function buildSeasonPickers() {
 
 function buildYearPicker() {
   let yearPicker = document.getElementById("year-picker");
-  for (let year = 1950; year <= 2020; year++) {
+  // years are hard-coded because AniList API doesn't have a way to get all listed years
+  for (let year = 1950; year <= 2050; year++) {
     let option = document.createElement("option");
     option.value = year;
     option.innerHTML = year;

@@ -3,7 +3,7 @@ function VAOnClick(voiceActorId) {
   let rolesTableBody =  window.currentDisplay.rolesTableBody;
   let seasonElement = document.getElementById("quarter-picker");
   let season = seasonElement.options[seasonElement.selectedIndex].value.toUpperCase();
-  let year = document.getElementById("year-picker").value;
+  let year = parseInt(document.getElementById("year-picker").value);  // picker values are strings
 
   let variables = {
       perPage: 50,
