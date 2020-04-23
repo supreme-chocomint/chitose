@@ -1,5 +1,6 @@
 function VAOnClick(voiceActorId) {
 
+  let rolesTable =  window.currentDisplay.rolesTable;
   let rolesTableBody =  window.currentDisplay.rolesTableBody;
   let seasonElement = document.getElementById("quarter-picker");
   let season = seasonElement.options[seasonElement.selectedIndex].value.toUpperCase();
@@ -13,6 +14,8 @@ function VAOnClick(voiceActorId) {
   };
 
   if (!isLocked()) {
+
+    rolesTable.scrollIntoViewIfNeeded();
 
     lock();
     clearRolesTable();
