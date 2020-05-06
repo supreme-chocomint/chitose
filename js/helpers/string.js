@@ -5,6 +5,7 @@ function getDescriptionString() {
   "(see <a href='https://github.com/supreme-chocomint/chitose-integration'>here</a> for installation details)."
   let aniListLink = "<a href='https://anilist.co/' target='_blank'>AniList</a>"
   let cdnjsLink = "<a href='https://cdnjs.com/' target='_blank'>CDNJS</a>"
+  let githubIssuesLink = "<a href='https://github.com/supreme-chocomint/chitose/issues' target='_blank'>Github</a>"
   let string = "Find out what your favorite voice actors are " +
     "up to in any particular season.<br>" +
     "Browse, search, and follow voice actors of any language (that AniList has), " +
@@ -13,6 +14,7 @@ function getDescriptionString() {
     "Things not loading? Double-check that " + aniListLink +
     " (the data provider) and " + cdnjsLink +
     " (the icon provider) are online.<br>" +
+    "Bugs and other issues can be reported on " + githubIssuesLink + ". " +
     "View the changelog and acknowledgements <a href='changelog.html'>here</a>.";
   return string;
 }
