@@ -1,5 +1,7 @@
 # chi歳
 
+Pronounced "chitose", and named after Karasuma Chitose.
+
 ## Overview
 
 A web app/site for searching and following voice actors (VAs). Main features include:
@@ -10,9 +12,10 @@ A web app/site for searching and following voice actors (VAs). Main features inc
 - VA following/tracking, as well as import/export of those follows
 - Dark and light theme
 - Minimalist (i.e. mostly text) and grid-based (i.e. has more pictures) modes
-- Mobile-friendly
+- Mobile-friendly, with "Add to Home Screen" support (tested on Android)
+- Integrates with MyAnimeList, AniList, Anime-Planet, and Anime News Network via the [integration userscript](https://github.com/supreme-chocomint/chitose-integration)
 
-App originally hosted on Bitbucket, migrated because I don't like it anymore. Uses data from AniList, and CSS from [the Skeleton boilerplate](http://getskeleton.com).
+App originally hosted on Bitbucket and now lives on Github. Uses data from AniList, and CSS from [the Skeleton boilerplate](http://getskeleton.com).
 
 ## Code Structure
 
