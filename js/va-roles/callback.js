@@ -5,6 +5,7 @@ function collectSeasonalRolesCallback(voiceActorId, year, quarter, data) {
   collectSeasonalRoles(voiceActorId, data);
   cacheSeasonRawData(year, quarter, data);
 
+  let rolesTable = window.currentDisplay.rolesTable;
   let rolesTableBody = window.currentDisplay.rolesTableBody;
   let asyncCount = rolesTableBody.getAttribute("data-async-count");
 
@@ -16,6 +17,7 @@ function collectSeasonalRolesCallback(voiceActorId, year, quarter, data) {
       if (rolesTableBody.innerHTML == "") {
         addNoResultsIndicator("roles-table-body");
       }
+      conditionalScrollIntoView(rolesTable);  // scroll to table in general, rather than just body
       unlock();
     }
   } else {

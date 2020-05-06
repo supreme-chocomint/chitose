@@ -15,8 +15,6 @@ function VAOnClick(voiceActorId) {
 
   if (!isLocked()) {
 
-    rolesTable.scrollIntoViewIfNeeded();
-
     lock();
     clearRolesTable();
     unclick();
@@ -30,6 +28,7 @@ function VAOnClick(voiceActorId) {
       if (rolesTableBody.innerHTML == "") {
         addNoResultsIndicator("roles-table-body");
       }
+      conditionalScrollIntoView(rolesTable);  // scroll to table in general, rather than just body
       unlock();
     }
     else {
