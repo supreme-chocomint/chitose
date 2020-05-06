@@ -125,6 +125,12 @@ html {
   margin-top: 1rem;
 }
 
+/* Wrapper for mostly-text content on changelog and error pages */
+.simple-content {
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+}
+
 /* Text
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
