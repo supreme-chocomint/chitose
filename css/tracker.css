@@ -254,11 +254,6 @@ input#dark-mode-switch {
   width: 16ch;
 }
 
-th { /* Makes header occupy one line only */
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 /* Images
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
