@@ -1,9 +1,8 @@
 // Functions that return long hard-coded strings
 
 function getDescriptionString() {
-  let integrationBlurb = "<a href='https://bitbucket.org/themightyhotel/chi-integration/raw/master/integration.user.js'>" +
-  "Simple site integration for MAL, AniList, ANN, and AP is available</a> " + 
-  "(see <a href='https://bitbucket.org/themightyhotel/chi-integration'>here</a> for details)."
+  let integrationBlurb = "Simple site integration for MAL, AniList, ANN, and AP is available</a> " + 
+  "(see <a href='https://github.com/supreme-chocomint/chitose-integration'>here</a> for installation details)."
   let aniListLink = "<a href='https://anilist.co/' target='_blank'>AniList</a>"
   let cdnjsLink = "<a href='https://cdnjs.com/' target='_blank'>CDNJS</a>"
   let string = "Find out what your favorite voice actors are " +
