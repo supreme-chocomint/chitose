@@ -11,9 +11,9 @@ function searchButtonOnClick() {
   let isCompoundSearch = false;
   let followUp;
   let variables = {
-      perPage: 50,
-      page: 1,
-      search: searchTerm
+    perPage: 50,
+    page: 1,
+    search: searchTerm
   };
 
   if (!isLocked()) {
@@ -52,7 +52,7 @@ function searchButtonOnClick() {
             variables,
             collectCharacterIdsHelperCallback
           );
-          callback = function(data) {
+          callback = function (data) {
             collectCompoundSearchResultsCallback(data, variables);
           };
           variables.search = character; // restore
@@ -72,7 +72,7 @@ function searchButtonOnClick() {
       variables,
       callback
     );
-    window.cachedQueryVariables =  variables;
+    window.cachedQueryVariables = variables;
 
   }
 }
@@ -116,9 +116,38 @@ function collectAnimeSearchResultsCallback(data) {
 
 // Onclick for elements created by collectAnimeSearchResultsCallback()
 // Gets VAs and characters from media id
-function collectMediaRoles(media) {
-  let data = {Media: media};
-  fillCharacterBrowseTable(data);
+function collectMediaRoles(media, page = 1, data) {
+
+  let variables = {
+    id: media.id,
+    page: page,
+    perPage: 25,
+  };
+
+  // If starting collection
+  if (!data) {
+    data = { Media: media };
+    data.Media.characters = { edges: [] };
+    lock();
+  }
+
+  makeRequest(
+    getQuery("CHARACTERS BY ANIME ID"),
+    variables,
+    function (pageOfData) {
+      const newCharacters = pageOfData.data.Media.characters.edges;
+      if (newCharacters.length != 0) {
+        data.Media.characters.edges = data.Media.characters.edges.concat(newCharacters);
+        collectMediaRoles(media, page + 1, data)
+      }
+      else {
+        fillCharacterBrowseTable(data);
+        unlock();
+      }
+
+    }
+  );
+
 }
 
 function parseCharacterBrowseData(edge) {
@@ -130,20 +159,20 @@ function parseCharacterBrowseData(edge) {
       name: name
     }
   }
-  edge.voiceActors.sort(function(a, b) {
+  edge.voiceActors.sort(function (a, b) {
     return a.language > b.language;
   })
-  let onclick = function() {
+  let onclick = function () {
     unclick();
     fillVALanguageTable(name, edge.voiceActors);
   }
   addVasToGlobalHash(edge.voiceActors);
-  return {role: role, onclick: onclick};
+  return { role: role, onclick: onclick };
 }
 
 function collectCharacterSearchResultsCallback(data) {
 
-  let notAdult = function(media) { return !(media.node.isAdult) };
+  let notAdult = function (media) { return !(media.node.isAdult) };
   let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
   fillCharacterSearchTable(characterArray);
   unlock();
@@ -165,7 +194,7 @@ function collectCompoundSearchResultsCallback(data, append) {
     return;
   }
 
-  let notAdult = function(media) { return !(media.node.isAdult) };
+  let notAdult = function (media) { return !(media.node.isAdult) };
   let characterArray = data.data.Page.characters.filter(c => c.media.edges.some(notAdult));
 
   // only fill if done or have something to fill
@@ -178,7 +207,7 @@ function collectCompoundSearchResultsCallback(data, append) {
 
   if (data.data.Page.pageInfo.hasNextPage) {
     window.cachedQueryVariables.page = parseInt(window.cachedQueryVariables.page) + 1;
-    let callback = function(data) {
+    let callback = function (data) {
       let appendResults = true;
       collectCompoundSearchResultsCallback(data, appendResults);
     };
@@ -230,7 +259,7 @@ function parseCharacterSearchData(character) {
     }
   }
 
-  let edgesByEntryPopularity = character.media.edges.sort(function(a, b) {
+  let edgesByEntryPopularity = character.media.edges.sort(function (a, b) {
     return b.node.popularity - a.node.popularity;  // sort descending
   });
 
@@ -261,7 +290,7 @@ function parseCharacterSearchData(character) {
   voiceActorsArray = Object.values(voiceActors);
   role.character.nameEmbellish = `from ${character.media.edges[0].node.title.romaji}`;
 
-  let sortedVoiceActors = voiceActorsArray.sort(function(a, b) {
+  let sortedVoiceActors = voiceActorsArray.sort(function (a, b) {
     // sort by language, then media popularity
     if (a.language == b.language) {
       if (a.media[0].popularity > b.media[0].popularity) {
@@ -279,7 +308,7 @@ function parseCharacterSearchData(character) {
     }
   })
 
-  let onclick = function() {
+  let onclick = function () {
     unclick();
     let hasMediaEntries = true;
     fillVALanguageTable(name, sortedVoiceActors, hasMediaEntries);
@@ -287,7 +316,7 @@ function parseCharacterSearchData(character) {
 
   addVasToGlobalHash(sortedVoiceActors);
 
-  return {role: role, onclick: onclick};
+  return { role: role, onclick: onclick };
 
 }
 

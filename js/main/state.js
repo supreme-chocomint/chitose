@@ -7,6 +7,7 @@ function lock() {
   document.getElementById("lock-icon").innerHTML = "🔒";
   document.getElementById("lock-icon").style.display = "";
   document.getElementById("va-table-tools").classList.add("disabled");
+  Array.from(document.getElementsByClassName("va-table-body")).forEach(e => e.classList.add("disabled"));
 }
 
 function unlock() {
@@ -14,6 +15,7 @@ function unlock() {
   document.getElementById("lock-icon").innerHTML = "";
   document.getElementById("lock-icon").style.display = "none";
   document.getElementById("va-table-tools").classList.remove("disabled");
+  Array.from(document.getElementsByClassName("va-table-body")).forEach(e => e.classList.remove("disabled"));
 }
 
 function setStorageState() {

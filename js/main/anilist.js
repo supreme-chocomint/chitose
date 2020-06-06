@@ -182,36 +182,6 @@ function getQuery(type) {
         coverImage {
           large
         }
-        characters (sort: FAVOURITES_DESC) {
-          edges {
-            id
-            voiceActors {
-              id
-              name {
-                first
-                last
-                native
-              }
-              language
-              siteUrl
-              image {
-                large
-              }
-            }
-            node {
-              id
-              siteUrl
-              name {
-                first
-                last
-                native
-              }
-              image {
-                large
-              }
-            }
-          }
-        }
       }
     }
 
@@ -273,6 +243,44 @@ function getQuery(type) {
   }
   `;
 
+  let charactersByAnimeIdQuery = `
+  query ($id: Int, $page: Int, $perPage: Int) {
+    Media (id: $id) {
+      characters (sort: FAVOURITES_DESC, page: $page, perPage: $perPage) {
+        edges {
+          id
+          voiceActors {
+            id
+            name {
+              first
+              last
+              native
+            }
+            language
+            siteUrl
+            image {
+              large
+            }
+          }
+          node {
+            id
+            siteUrl
+            name {
+              first
+              last
+              native
+            }
+            image {
+              large
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+
+
   let fullSeasonDataQuery = `
   query ($season: MediaSeason!, $seasonYear: Int!, $page: Int, $perPage: Int, $format: MediaFormat!) {
     Page(page: $page, perPage: $perPage) {
@@ -297,7 +305,7 @@ function getQuery(type) {
             id
             role
             voiceActors { ` + voiceActorBasicFragment +
-            `}
+    `}
             node {
               id
               name {
@@ -332,6 +340,8 @@ function getQuery(type) {
       return animeSearchCharacterIdsQuery;
     case "CHARACTER SEARCH":
       return characterSearchQuery;
+    case "CHARACTERS BY ANIME ID":
+      return charactersByAnimeIdQuery;
     case "VA ID":
       return staffIdQuery;
     case "CHARACTER ID":
@@ -345,30 +355,30 @@ function getQuery(type) {
 function makeRequest(query, variables, callback, errorHandler) {
 
   let url = 'https://graphql.anilist.co',
-      options = {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json',
-          },
-          body: JSON.stringify({
-              query: query,
-              variables: variables
-          })
-      };
+    options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        query: query,
+        variables: variables
+      })
+    };
 
   if (errorHandler == undefined) {
     errorHandler = handleError;
   }
 
   fetch(url, options).then(handleResponse)
-                     .then(function(data){ callback(data) })
-                     .catch(errorHandler);
+    .then(function (data) { callback(data) })
+    .catch(errorHandler);
 }
 
 function handleResponse(response) {
   return response.json().then(function (json) {
-      return response.ok ? json : Promise.reject(json);
+    return response.ok ? json : Promise.reject(json);
   });
 }
 
@@ -385,7 +395,7 @@ function handleError(error) {
     else {
       alert(`AniList error - status: ${status}, message: ${message}. See console for details.`);
     }
-  } catch (e) {}
+  } catch (e) { }
 
   console.error(error);
 
