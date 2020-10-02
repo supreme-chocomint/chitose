@@ -34,7 +34,7 @@ function populateFollowTable() {
     window.currentDisplay.followTableBody.appendChild(dummy);  // so async works
     console.log(error);
     if (window.importErrors) {
-      indow.importErrors++;
+      window.importErrors++;
     } else {
       window.importErrors = 1;
     }
