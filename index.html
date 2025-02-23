@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
   <title>c h i 歳 - voice actor tracker</title>
-  <meta name="description" content="Track and lookup anime voice actors by season. Browse the voice actors of any season, and follow your favorites for easy access. Search in English or Japanese, and get direct links to AniList to find out more about particular shows, characters, or people.">
+  <meta name="description"
+    content="Track and lookup anime voice actors by season. Browse the voice actors of any season, and follow your favorites for easy access. Search in English or Japanese, and get direct links to AniList to find out more about particular shows, characters, or people.">
   <meta name="author" content="someone who actually liked Girlish Number">
-  <meta name="theme-color" content="#171a21"/>
+  <meta name="theme-color" content="#171a21" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -17,10 +19,11 @@
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Raleway:400,600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP:100&amp;subset=japanese" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
-  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"
+    integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
   <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <link rel="stylesheet" href="css/normalize.css">
@@ -30,7 +33,8 @@
   <!-- JS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <script src='service-worker-registration.js'></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.js" integrity="sha256-G2Ef4tKKUoh4D7ElJWVLcHr/Mt0ita2PO6kLGMBWEHc=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.js"
+    integrity="sha256-G2Ef4tKKUoh4D7ElJWVLcHr/Mt0ita2PO6kLGMBWEHc=" crossorigin="anonymous"></script>
   <script src='js/conditional-scroll-into-view.js'></script>
   <script src='js/display-mode/grid.js'></script>
   <script src='js/display-mode/minimalist.js'></script>
@@ -61,17 +65,6 @@
   <script src='js/va-roles/callback.js'></script>
   <script src='js/va-roles/element.js'></script>
   <script src='js/va-roles/event.js'></script>
-
-  <!-- ga-lite analytics -->
-  <script>
-  (function(e,t,n,i,s,a,c){e[n]=e[n]||function(){(e[n].q=e[n].q||[]).push(arguments)}
-  ;a=t.createElement(i);c=t.getElementsByTagName(i)[0];a.async=true;a.src=s
-  ;c.parentNode.insertBefore(a,c)
-  })(window,document,"galite","script","https://cdn.jsdelivr.net/npm/ga-lite@2/dist/ga-lite.min.js");
-  
-  galite('create', 'UA-165670650-1', 'auto');
-  galite('send', 'pageview');
-  </script>
 
   <!-- Favicon [https://favicon.io] and Manifest
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -135,28 +128,34 @@
 
           <table class="static-display-top minimalist va-table u-full-width" style="display:none;">
             <caption id="va-table-caption">Viewing:</caption>
-            <thead id="va-table-head"><tr>
-              <th id="va-table-head-name">Name</th>
-              <th id="va-table-head-link">Season Roles</th>
-              <th id="va-table-head-roles"># Roles</th>
-              <th class="symbol" id="va-table-head-follow">&nbsp;</th>
-              <th id="va-table-head-extra1">Link</th>
-            </tr></thead>
+            <thead id="va-table-head">
+              <tr>
+                <th id="va-table-head-name">Name</th>
+                <th id="va-table-head-link">Season Roles</th>
+                <th id="va-table-head-roles"># Roles</th>
+                <th class="symbol" id="va-table-head-follow">&nbsp;</th>
+                <th id="va-table-head-extra1">Link</th>
+              </tr>
+            </thead>
             <tbody class="minimalist va-table-body"></tbody>
           </table>
 
           <div class="grid follow-table" style="display:none;">
-            <div><h5 class="grid va-character-header" id="follow-table-header">Following</h5></div>
+            <div>
+              <h5 class="grid va-character-header" id="follow-table-header">Following</h5>
+            </div>
             <div class="grid va-character-wrapper follow-table-body"></div>
           </div>
 
           <table class="minimalist follow-table u-full-width" style="display:none;">
             <caption id="follow-table-caption">Following</caption>
-            <thead><tr>
-              <th>Name ★</th>
-              <th>Season Roles</th>
-              <th class="symbol">&nbsp;</th>
-            </tr></thead>
+            <thead>
+              <tr>
+                <th>Name ★</th>
+                <th>Season Roles</th>
+                <th class="symbol">&nbsp;</th>
+              </tr>
+            </thead>
             <tbody class="minimalist follow-table-body"></tbody>
           </table>
 
@@ -236,10 +235,10 @@
     <div class="row" id="va-info-name"></div>
 
     <div class="row" id="va-info-bio">
-        <div id="va-info-bio-portrait"></div>
-        <div>
-          <p id="va-info-bio-text"></p>
-        </div>
+      <div id="va-info-bio-portrait"></div>
+      <div>
+        <p id="va-info-bio-text"></p>
+      </div>
     </div>
 
     <div id="va-character-containers">
@@ -250,8 +249,7 @@
 
           <div class="grid va-popular-characters">
             <div>
-              <h5 class="static-display-top grid va-character-header"
-                  id="va-popular-header" style="display:none;">
+              <h5 class="static-display-top grid va-character-header" id="va-popular-header" style="display:none;">
                 Popular Characters
               </h5>
             </div>
@@ -276,8 +274,7 @@
 
           <div class="grid va-uw-characters">
             <div>
-              <h5 class="static-display-top grid va-character-header"
-                  id="va-uw-header" style="display:none;">
+              <h5 class="static-display-top grid va-character-header" id="va-uw-header" style="display:none;">
                 Underwatched Characters
               </h5>
             </div>
@@ -304,8 +301,7 @@
 
         <div>
 
-          <div class="static-display-top grid va-character-header"
-              id="va-cmain-header" style="display:none;">
+          <div class="static-display-top grid va-character-header" id="va-cmain-header" style="display:none;">
             <a id="cmain"></a>
             <h5>Main Characters</h5>
             <a class="character-section-link internal_link" data-destination="csupport">(jump to supporting)</a><br>
@@ -333,8 +329,7 @@
 
         <div>
 
-          <div class="static-display-top grid va-character-header"
-              id="va-csupport-header" style="display:none;">
+          <div class="static-display-top grid va-character-header" id="va-csupport-header" style="display:none;">
             <a id="csupport"></a>
             <h5>Supporting Characters</h5>
             <a class="character-section-link internal_link" data-destination="cmain">(jump to main)</a><br>
@@ -372,7 +367,8 @@
 
   </div>
 
-<!-- End Document
+  <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
+
 </html>
