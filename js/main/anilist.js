@@ -367,13 +367,19 @@ function makeRequest(query, variables, callback, errorHandler) {
       })
     };
 
+  let combinedErrorHandler;
   if (errorHandler == undefined) {
-    errorHandler = handleError;
+    combinedErrorHandler = baseErrorHandler;
+  } else {
+    combinedErrorHandler = function (error) {
+      errorHandler(error);
+      baseErrorHandler(error);
+    };
   }
 
   fetch(url, options).then(handleResponse)
     .then(function (data) { callback(data) })
-    .catch(errorHandler);
+    .catch(combinedErrorHandler);
 }
 
 function handleResponse(response) {
@@ -382,11 +388,14 @@ function handleResponse(response) {
   });
 }
 
-function handleError(error) {
+function baseErrorHandler(error) {
 
   try {
-    let status = error.errors[0].status;
-    let message = error.errors[0].message;
+    // AniList is missing Access-Control-Allow-Origin header on 429 for some reason.
+    //  This prevents a proper error payload from being returned.
+    let status = error.errors != undefined ? error.errors[0].status : 429;
+    let message = error.errors != undefined ? error.errors[0].message : error.toString();
+
     if (status == 429) {
       window.location.href = "429.html#" + JSON.stringify(error);  // add to history
     } else if (status == 404) {

@@ -28,8 +28,7 @@ function populateFollowTable() {
   let idArray = Object.keys(following);
   window.currentDisplay.clearFollowTable();
 
-  let errorHandler = function(error) {
-    let status = error.errors[0].status;
+  let errorHandler = function (error) {
     let dummy = document.createElement("span");
     window.currentDisplay.followTableBody.appendChild(dummy);  // so async works
     console.log(error);
@@ -45,7 +44,7 @@ function populateFollowTable() {
     makeRequest(
       getQuery("VA ID"),
       variables,
-      function(data) {
+      function (data) {
         // Need length to unlock when done
         collectFollowingCallback(idArray.length, data);
       },

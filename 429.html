@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
 
   <!-- Basic Page Needs
@@ -10,6 +11,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
   <meta name="theme-color" content="#171a21" />
+  <meta name="theme-color" content="#171a21" />
 
   <!-- Mobile Specific Metas
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -17,6 +19,7 @@
 
   <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 
   <!-- CSS
@@ -38,7 +41,10 @@
         "assets/errors/one-punch-man-ep1.mp4",
         "assets/errors/revue-starlight-ep1.mp4",
         "assets/errors/owari-no-seraph-ep3.mp4",
-        "assets/errors/rolling-girls-ep10.mp4"
+        "assets/errors/rolling-girls-ep10.mp4",
+        "assets/errors/rwby-ice-queendom-ep1.mp4",
+        "assets/errors/case-study-of-vanitas-ep9.mp4",
+        "assets/errors/link-click-s2-ep2.mp4"
       ];
       let i = Math.floor(Math.random() * videos.length);
       document.getElementById("video").src = videos[i];
@@ -56,6 +62,7 @@
 
 </head>
 
+
 <body>
 
   <!-- Primary Page Layout
@@ -68,7 +75,7 @@
           Your browser doesn't support mp4 videos.
         </video>
         <p>You sent too many requests to AniList, and it didn't like that.<br>
-          This is most likely to happen while viewing a VA's overview page.
+          This is most likely to happen while viewing a VA's overview page, or reloading too often.
           Wait a few seconds (or worse case, a minute), then try again.<br>
           In the meantime, here's a random clip to kill time.<br><br>
           Click <a href="./">here</a> to return to the main page.
@@ -79,7 +86,9 @@
   </div>
 
   <!-- End Document
+  <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 </body>
+
 
 </html>
