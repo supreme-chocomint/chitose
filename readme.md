@@ -2,6 +2,8 @@
 
 Pronounced "chitose", and named after Karasuma Chitose.
 
+![Karasuma Chitose, from Girlish Number, episode 5](assets/chitose.jpg)
+
 ## Overview
 
 A web app/site for searching and following voice actors (VAs). Main features include:
